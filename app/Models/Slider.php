@@ -64,13 +64,13 @@ class Slider extends Model
         return $slider;
     }
 
-    public function getSlidersFront()
+    public static function getSlidersFront()
     {
         $sliders = Slider::select('slider_id','url','link','popup')->where('popup',0)->where('estado',1)->where('oculto',0)->orderBy('posicion', 'asc')->get();
         return $sliders;
     }
 
-    public function getPopupsFront()
+    public static function getPopupsFront()
     {
         $sliders = Slider::select('slider_id','url','link','popup')->where('popup',1)->where('estado',1)->where('oculto',0)->orderBy('posicion', 'asc')->get();
         return $sliders;

@@ -131,7 +131,7 @@ class Categoria extends Model
         return $categorias;
     }  
     
-    public function get_frontCategoria()
+    public static function get_frontCategoria()
     {
         $data = Categoria::select('categoria_id','categoria','url')
                 ->where('parent_id',0)->where('estado',1)

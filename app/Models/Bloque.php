@@ -64,7 +64,7 @@ class Bloque extends Model
         return $data;
     }
 
-    public function getBloquesFront()
+    public static function getBloquesFront()
     {
         $bloques = Bloque::select('bloques.bloque_id', 'bloques.bloque_tipo_id','bloque_tipos.codigo', 'bloques.config','bloques.titulo','bloques.icono')
         ->join('bloque_tipos', function($join)
