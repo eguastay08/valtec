@@ -22,7 +22,7 @@ class Categoria extends Model
         return $this->HasMany(Producto_m_Categoria::class);
     }
 
-    public function getCategoriesWithParents()
+    public static function getCategoriesWithParents()
     {
         $categorias = DB::table('categorias')
         ->select('categorias.categoria_id','categorias.categoria','categorias.parent_id',
@@ -32,7 +32,7 @@ class Categoria extends Model
         return $categorias;
     }
 
-    public function getListParents()
+    public static function getListParents()
     {
         $data = Categoria::select('categoria_id','categoria')
                 ->where('parent_id',0)->where('estado',1)
@@ -41,7 +41,7 @@ class Categoria extends Model
         return $data;
     }
     
-    public function getParentsExits($parent, $slug)
+    public static function getParentsExits($parent, $slug)
     {
         $categoria = Categoria::where('parent_id',$parent)
                       ->where('url',$slug)->where('oculto',0)->count();
@@ -49,20 +49,20 @@ class Categoria extends Model
         return $categoria;
     }
 
-    public function getCategoryExits($slug)
+    public static function getCategoryExits($slug)
     {
         $categoria =  Categoria::where('url',$slug)->where('oculto',0)->count();
 
         return $categoria;
     }
 
-    public function get_tree_select($parent = NULL)
+    public static function get_tree_select($parent = NULL)
     {
         $categoria = self::get_tree($parent);
         return self::multi_loop($categoria);
     }
 
-    public function get_tree($parent = NULL)
+    public static function get_tree($parent = NULL)
     {
         $array_menu = array();
         $where = array();
@@ -114,7 +114,7 @@ class Categoria extends Model
         return $options;
     }
 
-    public function getCategoriaBloqueFront($categoria_id)
+    public static function getCategoriaBloqueFront($categoria_id)
     {
         $categorias = Categoria::select('categoria_id','categoria','url')
                                 ->where('categoria_id',$categoria_id)->first();
@@ -123,7 +123,7 @@ class Categoria extends Model
         return $categorias;
     }
 
-    public function getUrlxCategoria($categoria_id)
+    public static function getUrlxCategoria($categoria_id)
     {
         $categorias = Categoria::select('url')
                         ->where('categoria_id',$categoria_id)->first();
@@ -140,7 +140,7 @@ class Categoria extends Model
         return $data;
     }
 
-    public function getCategoriaTitleFront($url)
+    public static function getCategoriaTitleFront($url)
     {
         $data = Categoria::select('categoria_id','categoria','url')
                 ->where('url',$url)->where('parent_id',0)->where('oculto',0)->first();
@@ -148,7 +148,7 @@ class Categoria extends Model
         return $data;
     }
 
-    public function subCategoriaTitleFront($id, $url)
+    public static function subCategoriaTitleFront($id, $url)
     {
         $data = Categoria::select('categoria')
                 ->where('url',$url)->where('parent_id',$id)->where('oculto',0)->first();
@@ -156,7 +156,7 @@ class Categoria extends Model
         return $data;
     }
 
-    public function getImgCat($id, $sub)
+    public static function getImgCat($id, $sub)
     {
         $data = Categoria::select('categoria_id','nombre_img','size_img','img');
         if($sub!=""):
@@ -171,7 +171,7 @@ class Categoria extends Model
         return $data;
     }
 
-    public function getCatxUrl($url, $sub)
+    public static function getCatxUrl($url, $sub)
     {
         $categoria   = Categoria::select('categoria_id')
                 ->where('url',$url)->where('parent_id',0)->where('estado',1)->where('oculto',0)->first();

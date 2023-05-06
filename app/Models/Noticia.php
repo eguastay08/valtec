@@ -18,7 +18,7 @@ class Noticia extends Model
 
     protected $fillable = ['noticia','descripcion','url','estado','oculto','usuario_registra','fecha_registro','usuario_modifica','fecha_modifica'];
 
-    public function getNoticiasWithImage($ntitulo = '', $ncat = '', $nestado = '_all_')
+    public static function getNoticiasWithImage($ntitulo = '', $ncat = '', $nestado = '_all_')
     {
 
         $noticias =  DB::table('noticias as n')
@@ -59,7 +59,7 @@ class Noticia extends Model
         return $noticias;
     }
 
-    public function getNoticiasFront()
+    public static function getNoticiasFront()
     {
         $noticias =  DB::table('noticias as n')
         ->select('n.noticia_id','n.noticia','n.url as link','ni.url as imgnoticia')
@@ -76,7 +76,7 @@ class Noticia extends Model
 
     }
 
-    public function getNoticiasGlobal()
+    public static function getNoticiasGlobal()
     {
         $noticias = Noticia::select('noticias.noticia_id', 'noticias.noticia',
         'noticias.estado','noticias.url','ni.url as imgnoticia')
@@ -94,7 +94,7 @@ class Noticia extends Model
         return $noticias;
     }
 
-    public function getNoticeUrlData($url)
+    public static function getNoticeUrlData($url)
     {
         $data = Noticia::select('noticia_id')
                 ->where('url',$url)
@@ -104,7 +104,7 @@ class Noticia extends Model
         return $data;
     }
 
-    public function getNoticiaxUrl($url)
+    public static function getNoticiaxUrl($url)
     {
         $arrayNoticia= Noticia::select('noticias.noticia_id','noticias.noticia','noticias.descripcion','noticias.fecha_registro','noticias.url',
         'noticias.estado','ni.url as imgnoticia')
@@ -138,7 +138,7 @@ class Noticia extends Model
         return $arrayNoticia;
     }
 
-    public function getImagenesNoticia($noticia_id)
+    public static function getImagenesNoticia($noticia_id)
     {
         $dataimages = DB::table('noticia_imagens')
                             ->select('noticia_imagen_id', 'noticia_id', 'url')
@@ -153,7 +153,7 @@ class Noticia extends Model
     }
 
 
-    public function getCategoriasNoticia($noticia_id)
+    public static function getCategoriasNoticia($noticia_id)
     {
         $datacategorias = DB::table('noticia_m_noticia_categorias as nmc')
                             ->select('nmc.noticia_m_noticia_categoria_id', 'nmc.noticia_id', 'nmc.noticia_categoria_id', 'nc.noticia_categoria', 'nc.url')
@@ -171,7 +171,7 @@ class Noticia extends Model
         return $datacategorias;
     }
 
-    public function getEtiquetasNoticia($noticia_id)
+    public static function getEtiquetasNoticia($noticia_id)
     {
         $dataTags = DB::table('noticia_m_noticia_tags as nmt')
                         ->select('nmt.noticia_m_noticia_tag_id', 'nmt.noticia_id', 'nmt.noticia_tag_id', 'nt.noticia_tag', 'nt.url')
@@ -189,7 +189,7 @@ class Noticia extends Model
         return $dataTags;
     }
 
-    public function getNoticiasRelacionadas($url)
+    public static function getNoticiasRelacionadas($url)
     {
         $categorias_noticias = DB::table('noticias as n')
                             ->select('n.noticia_id', 'nc.noticia_categoria_id')
@@ -235,7 +235,7 @@ class Noticia extends Model
 
     }
 
-    public function getNoticiasxCategoriaFront($url, $sub)
+    public static function getNoticiasxCategoriaFront($url, $sub)
     {
         $noticiacategoria_id = DB::table('noticia_categorias')
                 ->select('noticia_categoria_id')
@@ -289,7 +289,7 @@ class Noticia extends Model
 
     }
 
-    public function getNoticiasByEtiquetaFront($url)
+    public static function getNoticiasByEtiquetaFront($url)
     {
         $noticias = Noticia::select('noticias.noticia_id', 'noticias.noticia','noticias.estado','noticias.url','ni.url as imgnoticia')
         ->leftJoin('noticia_imagens as ni', function($join)

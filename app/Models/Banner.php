@@ -17,25 +17,25 @@ class Banner extends Model
 
     protected $fillable = ['bloque_id','banner__estilo_id','titulo','link','columnas','posicion','banner','nombre_banner','size_banner','banner_superpuesto','nombre_banner_superpuesto','size_banner_superpuesto','estado','oculto','usuario_registro','fecha_registro','usuario_modifica','fecha_modifica'];
 
-    public function countBanner($bloque)
+    public static function countBanner($bloque)
     {
         $banner = Banner::where('bloque_id',$bloque)->where('oculto',0)->count();
         return $banner;
     }
 
-    public function latestPositionBannerByStyle($bloque)
+    public static function latestPositionBannerByStyle($bloque)
     {
         $banner = Banner::select('posicion')->where('bloque_id',$bloque)->where('oculto',0)->max('posicion');
         return $banner;
     }
 
-    public function getBannerByPosition($posicion)
+    public static function getBannerByPosition($posicion)
     {
         $banner = Banner::select('banner_id')->where('posicion',$posicion)->first();
         return $banner;
     }
 
-    public function getBanners($estado)
+    public static function getBanners($estado)
     {
         $banners= Banner::select('banners.*','bloques.titulo as nombrebloque')
                 ->join('bloques', function($join)
@@ -56,14 +56,14 @@ class Banner extends Model
         return $banners;
     }
 
-    public function getBannerPosicionCount($posicion)
+    public static function getBannerPosicionCount($posicion)
     {
         // $count = Banner::where('posicion',$posicion)->whereNotIn('banner_id', $banner_id)->count(); 
         $count = Banner::where('posicion',$posicion)->where('oculto',0)->count(); 
         return $count;
     }
 
-    public function getBannerGlobalFront($bloque_id)
+    public static function getBannerGlobalFront($bloque_id)
     {
         $banners = Banner::select('banners.banner_id', 'banners.bloque_id', 'banners.banner__estilo_id','banners.titulo',
             'banners.link','banners.banner','banners.banner_superpuesto','banners.columnas','banners.posicion', 'banners.estado', 'bl.titulo as bloque_titulo')
@@ -87,7 +87,7 @@ class Banner extends Model
         return $banners;
     }
 
-    public function BannerPago()
+    public static function BannerPago()
     {
         $data = Banner::select('banner_id','bloque_id','banner__estilo_id','titulo','link','banner','banner_superpuesto','columnas','posicion')
         ->where('bloque_id',23)

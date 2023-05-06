@@ -35,7 +35,7 @@ class Producto extends Model
     }
 
 
-    public function getProductswithImage($nproducto = '', $ncategorias = '', $oferta = '_all_', $carrousel = '_all_', $estado = '_all_')
+    public static function getProductswithImage($nproducto = '', $ncategorias = '', $oferta = '_all_', $carrousel = '_all_', $estado = '_all_')
     {
 
         $productos =  DB::table('productos as p')
@@ -88,7 +88,7 @@ class Producto extends Model
         return $productos;
     }
 
-    public function getProductosGlobalFront($categoria_id, $nroitems)
+    public static function getProductosGlobalFront($categoria_id, $nroitems)
     {      
         $productos = Producto::select('productos.producto_id', 'productos.producto','productos.precio', 'productos.descuento', 'productos.precio_oferta',
         'productos.stock','productos.agotado','productos.sku','productos.estado','productos.url','pi.url as imgproducto')
@@ -113,7 +113,7 @@ class Producto extends Model
         
     }   
 
-    public function getProductoDetalle($producto)
+    public static function getProductoDetalle($producto)
     {
         $data= Producto::select('productos.producto_id','productos.producto','productos.descripcion_producto','productos.sku','productos.url','productos.precio', 'productos.descuento', 'productos.precio_oferta',
         'productos.stock','productos.agotado','productos.estado','productos.url','pi.url as imgproducto')
@@ -136,7 +136,7 @@ class Producto extends Model
 
     }
 
-    public function getProductDataUrl($url)
+    public static function getProductDataUrl($url)
     {
         $data = Producto::select('producto_id')
                 ->where('url',$url)
@@ -147,7 +147,7 @@ class Producto extends Model
         return $data;
     }
 
-    public function getProductoxUrl($url)
+    public static function getProductoxUrl($url)
     {
         $arrayProducto= Producto::select('productos.producto_id','productos.producto','productos.descripcion_producto','productos.url','productos.video','productos.precio', 'productos.descuento', 'productos.precio_oferta',
         'productos.con_stock','productos.stock','productos.sku','productos.agotado','productos.envio_domicilio','productos.recojo','productos.contraentrega','productos.estado','productos.url','pi.url as imgproducto')
@@ -194,7 +194,7 @@ class Producto extends Model
         return $arrayProducto;
     }
 
-    public function getImagenesProducto($producto_id)
+    public static function getImagenesProducto($producto_id)
     {
         $dataimages = DB::table('producto__imagens')
                             ->select('producto__imagens_id', 'producto_id', 'url')
@@ -207,7 +207,7 @@ class Producto extends Model
     }
 
 
-    public function getCategoriasProducto($producto_id)
+    public static function getCategoriasProducto($producto_id)
     {
         $datacategorias = DB::table('producto_m__categorias as pc')
                             ->select('pc.producto_m__categoria_id', 'pc.producto_id', 'pc.categoria_id', 'c.categoria', 'c.url')
@@ -225,7 +225,7 @@ class Producto extends Model
         return $datacategorias;
     }
 
-    public function getEtiquetaProducto($producto_id)
+    public static function getEtiquetaProducto($producto_id)
     {
         $dataTags = DB::table('producto_m__tags as pt')
                         ->select('pt.producto_m__tag_id', 'pt.producto_id', 'pt.tag_id', 't.tag')
@@ -243,7 +243,7 @@ class Producto extends Model
         return $dataTags;
     }
 
-    public function getProductosRelacionados($url)
+    public static function getProductosRelacionados($url)
     {
         $categorias_producto = DB::table('productos as p')
                                 ->select('p.producto_id', 'pc.categoria_id')
@@ -290,7 +290,7 @@ class Producto extends Model
 
     }
     
-    public function getProductosGlobalxUrlCategoria($url, $sub, $precioD, $precioH, $productobuscar , $order)
+    public static function getProductosGlobalxUrlCategoria($url, $sub, $precioD, $precioH, $productobuscar , $order)
     {      
         $categoria_id = DB::table('categorias')
                     ->select('categoria_id')
@@ -400,7 +400,7 @@ class Producto extends Model
         
     }   
 
-    public function getProductosGlobalxEtiqueta($url, $precioD, $precioH, $productobuscar, $order)
+    public static function getProductosGlobalxEtiqueta($url, $precioD, $precioH, $productobuscar, $order)
     {
         $productos = Producto::select('productos.producto_id', 'productos.producto','productos.precio', 'productos.descuento', 'productos.precio_oferta',
                     'productos.stock','productos.sku','productos.agotado','productos.estado','productos.url','pi.url as imgproducto')
@@ -466,7 +466,7 @@ class Producto extends Model
 
     }
 
-    public function getProductosGlobal($precioD, $precioH, $productobuscar, $order)
+    public static function getProductosGlobal($precioD, $precioH, $productobuscar, $order)
     {
         $productos = Producto::select('productos.producto_id', 'productos.producto','productos.precio', 'productos.descuento', 'productos.precio_oferta',
         'productos.stock','productos.sku','productos.agotado','productos.estado','productos.url','pi.url as imgproducto')
@@ -515,7 +515,7 @@ class Producto extends Model
     }
 
     //Buscar Producto desde el buscador
-    public function getProductsSearch($productoBuscar)
+    public static function getProductsSearch($productoBuscar)
     {
         $nproducto = (string) $productoBuscar;
         $productos = Producto::select('productos.producto_id','productos.producto','productos.url','pi.url as imgproducto')
@@ -534,7 +534,7 @@ class Producto extends Model
     }
 
     // Obtener Max Precio
-    public function getMaxPrecioxProducto($productobuscar)
+    public static function getMaxPrecioxProducto($productobuscar)
     {
         $precioMaxProducto = Producto::where('productos.estado',1)
                                         -> where('productos.oculto',0);
@@ -549,13 +549,13 @@ class Producto extends Model
 
     }
 
-    public function getStock($producto_id)
+    public static function getStock($producto_id)
     {
         $stock =  Producto::select('stock')->where('producto_id', $producto_id)->first();
         return $stock;
     }
 
-    public function getMaxPrecioProductosxCategoria($url, $sub)
+    public static function getMaxPrecioProductosxCategoria($url, $sub)
     {
         $categoria_id = DB::table('categorias')
         ->select('categoria_id')
@@ -604,7 +604,7 @@ class Producto extends Model
         
     }
 
-    public function getMaxPrecioProductosxEtiqueta($url)
+    public static function getMaxPrecioProductosxEtiqueta($url)
     {
         $tag_id = DB::table('tags')
         ->select('tag_id')
