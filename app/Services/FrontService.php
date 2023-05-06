@@ -23,7 +23,7 @@ use Carbon\Carbon;
 class FrontService
 {
 
-    public function getBloqueDataFron()
+    public static function getBloqueDataFron()
     {
         $bloques = Bloque::getBloquesFront();
         
@@ -85,98 +85,98 @@ class FrontService
         return $bloques;
     }
 
-    public function getMonedaFront()
+    public static function getMonedaFront()
     {
         $monedas = Moneda::getMonedaFront();
 
         return $monedas;
     }
 
-    public function getMenusxIdParent($parent_id)
+    public static function getMenusxIdParent($parent_id)
     {
         $menus = Menu::getMenusxParent($parent_id);
 
         return $menus;
     }
 
-    public function getProductoDetalle($producto)
+    public static function getProductoDetalle($producto)
     {
         $producto = Producto::getProductoDetalle($producto);
 
         return $producto;
     }   
 
-    public function getMenusFront()
+    public static function getMenusFront()
     {
         $menus = Menu::getMenus();
 
         return $menus;
     }
 
-    public function getProductDataUrl($url)
+    public static function getProductDataUrl($url)
     {
         $data = Producto::getProductDataUrl($url);
 
         return $data;
     }
 
-    public function getProductoxUrl($url)
+    public static function getProductoxUrl($url)
     {
         $producto = Producto::getProductoxUrl($url);
         
         return $producto;
     }
 
-    public function getMediosPagoFront()
+    public static function getMediosPagoFront()
     {
         $mediospago = Medio_Pago::getMedioPagosFront();
 
         return $mediospago;
     }
 
-    public function getProductosRelacionadosFront($url)
+    public static function getProductosRelacionadosFront($url)
     {
         $productos_relacionads = Producto::getProductosRelacionados($url);
 
         return $productos_relacionads;
     }
 
-    public function getCategoriasTreeFront()
+    public static function getCategoriasTreeFront()
     {
         $categorias = Categoria::get_tree();
 
         return $categorias;
     }
 
-    public function getTagsFront()
+    public static function getTagsFront()
     {
         $tags = Tag::getTagsFront();
 
         return $tags;
     }
 
-    public function getTagTitle($url)
+    public static function getTagTitle($url)
     {
         $data = Tag::getTagTitle($url);
 
         return $data;
     }
 
-    public function getCatxUrl($url, $sub)
+    public static function getCatxUrl($url, $sub)
     {
         $data = Categoria::getCatxUrl($url, $sub);
 
         return $data;
     }
 
-    public function getTagxUrl($url)
+    public static function getTagxUrl($url)
     {
         $data = Tag::getTagxUrl($url);
 
         return $data;
     }
 
-    public function getProductosGlobalxUrlCategoria($url, $sub, $precioD, $precioH, $productobuscar, $order)
+    public static function getProductosGlobalxUrlCategoria($url, $sub, $precioD, $precioH, $productobuscar, $order)
     {
 
         $productosxcategoria = Producto::getProductosGlobalxUrlCategoria($url, $sub, $precioD, $precioH, $productobuscar, $order);
@@ -184,105 +184,105 @@ class FrontService
         return $productosxcategoria;
     }
 
-    public function getMaxPrecioProductosxCategoria($url, $sub)
+    public static function getMaxPrecioProductosxCategoria($url, $sub)
     {
         $maxprecioProductosxCategoria = Producto::getMaxPrecioProductosxCategoria($url, $sub);
 
         return $maxprecioProductosxCategoria;
     }
 
-    public function getMaxPrecioProductosxEtiqueta($url)
+    public static function getMaxPrecioProductosxEtiqueta($url)
     {
         $maxprecioProductosxEtiqueta= Producto::getMaxPrecioProductosxEtiqueta($url);
 
         return $maxprecioProductosxEtiqueta;
     }
     
-    public function getProductosGlobalxEtiqueta($url, $precioD, $precioH, $productobuscar, $order)
+    public static function getProductosGlobalxEtiqueta($url, $precioD, $precioH, $productobuscar, $order)
     {
         $productosxEtiquetas = Producto::getProductosGlobalxEtiqueta($url, $precioD, $precioH, $productobuscar, $order);
 
         return $productosxEtiquetas;
     }
 
-    public function getProductosGlobal($precioD, $precioH, $productobuscar, $order)
+    public static function getProductosGlobal($precioD, $precioH, $productobuscar, $order)
     {
         $productosdata = Producto::getProductosGlobal($precioD, $precioH, $productobuscar, $order);
 
         return $productosdata;
     }
 
-    public function getProductsSearch($producto)
+    public static function getProductsSearch($producto)
     {
         $data  = Producto::getProductsSearch($producto);
 
         return $data;
     }
 
-    public function getMaxPrecioxProducto($producto)
+    public static function getMaxPrecioxProducto($producto)
     {
         $data = Producto::getMaxPrecioxProducto($producto);
 
         return $data;
     }
 
-    public function getNoticiasGlobal()
+    public static function getNoticiasGlobal()
     {
         $noticiasData = Noticia::getNoticiasGlobal();
 
         return $noticiasData;
     }
 
-    public function getNoticiaxUrl($url)
+    public static function getNoticiaxUrl($url)
     {
         $noticia = Noticia::getNoticiaxUrl($url);
         
         return $noticia;
     }
 
-    public function getNoticeUrlData($url)
+    public static function getNoticeUrlData($url)
     {
         $noticia = Noticia::getNoticeUrlData($url);
         
         return $noticia;
     }
 
-    public function getNotCatxUrl($url, $sub)
+    public static function getNotCatxUrl($url, $sub)
     {
         $data = Noticia_Categoria::getNotCatxUrl($url, $sub);
 
         return $data;
     }
 
-    public function getNoticiasCategoriasTreeFront()
+    public static function getNoticiasCategoriasTreeFront()
     {
         $noticias_categorias = Noticia_Categoria::get_treeNoticiasCategories();
 
         return $noticias_categorias;
     }
 
-    public function getNotTagxUrl($url)
+    public static function getNotTagxUrl($url)
     {
         $data = Noticia_Tag::getNotTagxUrl($url);
 
         return $data;
     }
 
-    public function getNoticiasTagsFront()
+    public static function getNoticiasTagsFront()
     {
         $tags = Noticia_Tag::getNoticiasTagsFront();
 
         return $tags;
     }
 
-    public function getNoticiasRelacionadosFront($url)
+    public static function getNoticiasRelacionadosFront($url)
     {
         $noticias_relacionadas = Noticia::getNoticiasRelacionadas($url);
 
         return $noticias_relacionadas;
     }
 
-    public function getNoticiasxCategoriaFront($url, $sub)
+    public static function getNoticiasxCategoriaFront($url, $sub)
     {
 
         $noticiasxcategoria = Noticia::getNoticiasxCategoriaFront($url, $sub);
@@ -290,14 +290,14 @@ class FrontService
         return $noticiasxcategoria;
     }
 
-    public function getNoticiasByEtiquetaFront($url)
+    public static function getNoticiasByEtiquetaFront($url)
     {
         $noticiasxEtiquetas = Noticia::getNoticiasByEtiquetaFront($url);
 
         return $noticiasxEtiquetas;
     }
 
-    public function getImgCat($id, $sub = '')
+    public static function getImgCat($id, $sub = '')
     {
         $data = Categoria::getImgCat($id, $sub);
 
@@ -305,7 +305,7 @@ class FrontService
                             
     }
 
-    public function getPaymentDescription($paymentId){
+    public static function getPaymentDescription($paymentId){
         
         $medioPagoDescription = Medio_Pago::getPaymentDescription($paymentId);
 
@@ -313,14 +313,14 @@ class FrontService
 
     }
 
-    public function getBannerPago()
+    public static function getBannerPago()
     {
         $bannerPago = Banner::BannerPago();
 
         return $bannerPago;
     }
 
-    public function highlightKeywords($text, $keyword)
+    public static function highlightKeywords($text, $keyword)
     {
         $wordsAry = explode(" ", $keyword);
         $wordsCount = count($wordsAry);
@@ -334,7 +334,7 @@ class FrontService
     }
 
 
-    public function ConvertFechaToString($inputfecha)
+    public static function ConvertFechaToString($inputfecha)
     {
         $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
         $fecha = Carbon::parse($inputfecha);
@@ -343,7 +343,7 @@ class FrontService
         return $fechaString;
     }
      
-    public function ConvertDatetoTime($inputfecha)
+    public static function ConvertDatetoTime($inputfecha)
     {
         $hora = Carbon::parse($inputfecha)->format('g:i A');
         // $hora = Carbon::createFromFormat('H:i:s',$inputfecha)->format('h:i');

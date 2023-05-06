@@ -30,25 +30,25 @@ class Bloque extends Model
         return $bloque;
     }
 
-    public function countBloque()
+    public static function countBloque()
     {
         $bloque = Bloque::where('oculto',0)->count();
         return $bloque;
     }
 
-    public function latestPosition()
+    public static function latestPosition()
     {
         $bloque = Bloque::select('posicion')->where('oculto',0)->max('posicion');
         return $bloque;
     }
 
-    public function getBloqueByPosition($posicion)
+    public static function getBloqueByPosition($posicion)
     {
         $bloque = Bloque::select('bloque_id')->where('posicion',$posicion)->first();
         return $bloque;
     }
 
-    public function getBloqueTipoxBanner()
+    public static function getBloqueTipoxBanner()
     {
         $data = Bloque::select('bloques.bloque_id', 'bloques.titulo')
                         ->join('bloque_tipos', function($join)

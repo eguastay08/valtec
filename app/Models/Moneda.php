@@ -24,7 +24,7 @@ class Moneda extends Model
         return $monedas;
     }
 
-    public function getMonedaFront()
+    public static function getMonedaFront()
     {
         $monedas = Moneda::select('codigo', 'prefijo','sufijo','tipo_cambio')
                 ->where('estado',1)->where('oculto',0)->get();

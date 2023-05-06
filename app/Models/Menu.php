@@ -17,7 +17,7 @@ class Menu extends Model
 
     protected $fillable = ['nombre','link','padre','icono','nombre_icono','size_icono','posicion','estado','oculto','usuario_registro','fecha_registro','usuario_modifica','fecha_modifica'];
 
-    public function getMenus($padre = 0)
+    public static function getMenus($padre = 0)
     {
         $array_menu = array();
 
