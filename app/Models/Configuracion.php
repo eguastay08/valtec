@@ -17,7 +17,7 @@ class Configuracion extends Model
 
     protected $fillable = ['nombre','vaiable','valor','system'];
 
-    public function get_Configuraciones()
+    public static function get_Configuraciones()
     {
         $data  = Configuracion::select('configuracion_id','nombre','variable','valor')
                 ->orderBy('configuracion_id','asc')
@@ -26,7 +26,7 @@ class Configuracion extends Model
         return $data;
     }
 
-    public function get_valorxvariable($variable)
+    public static function get_valorxvariable($variable)
     {
         $data  = Configuracion::select('valor')
                 ->where('variable',$variable)
