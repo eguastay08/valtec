@@ -19,6 +19,8 @@
     </div>
 
     <div class="container-xxl container-fluid as-product">
+        @php $encryptProductoId=Hashids::encode($producto['producto_id']); @endphp
+       
 
         <div class="row">
 
@@ -174,39 +176,11 @@
 
                         @endif
 
-                        <h5 class="mt-3 text-center">Precio:</h5>
-
-                        <div class="text-center price-product">
-                            @if($producto['descuento']!= '')
-                                <div class="d-flex justify-content-center align-items-center"><div class="oldPrice">{{$moneda[0]['prefijo'].' '.$producto['precio']}}</div> <span class="tag-discount"> -{{$producto['descuento']}}% </span></div>
-                                <div class="Price mt-3">{{$moneda[0]['prefijo'].' '.$producto['precio_oferta']}}</div>
-                            @else 
-                                <div class="Price mt-2">{{$moneda[0]['prefijo'].' '.$producto['precio']}}</div>
+                        <div class="precios_div">
+                            @if($producto['descuento']>0)
+                                @php $dif = strtotime($producto['fecha_finalizacion']); @endphp
                             @endif
-                        </div>
-
-                        <br>
-
-                        <div class="product-buttons text-center">
-
-                            <?php $parameter=Hashids::encode($producto['producto_id']);?>
-
-                            @if($producto['agotado']==0)
-
-                                <input type="hidden" id="pcantidad" name="pcantidad" value="1">
-                                <input type="hidden" id="pkey" name="pkey" value="<?php echo $parameter ?>">
-                                <input type="hidden" id="producto_imagen" name="producto_imagen" value="{{$producto['imgproducto']}}">
-                                <button type="button" class="btn btn-stylec style-btn-comprar btn-block bradius btnComprarCart"><i class="fas fa-shopping-cart"></i> Comprar</button>
-
-                            @else 
-
-                                <span class="btn btn-agotado btn-block disabled bradius"><i class="fas fa-exclamation-circle"></i> Agotado</span>
-
-                            @endif
-
-
-                            <a type="button" class="btn btn-stylec btn-wtsp-send bradius d-block mt-3" href="https://api.whatsapp.com/send?phone=+51997308677&text=Hola%2C+deseo+información+de+este+producto%3A%0A{{$producto['producto']}}%0A{{url('/producto/'.$producto['url'])}}" target="_blank"><i class="fab fa-whatsapp"></i> ¿Necesitas Ayuda?</a>
-
+                            @include('front-partials.precio_oferta-front')
                         </div>
 
                     </div>
@@ -260,7 +234,7 @@
                                     <!-- Fin Imagen Producto -->
 
                                     <!-- Descuento producto -->
-                                    @if($producto_relacionado['descuento']!="")
+                                    @if($producto_relacionado['descuento'] > 0)
                                         <div class="descuento-tag rounded"><span class="lbl-discount"><p>-{{$producto_relacionado['descuento']}}%</p></span></div>
                                     @endif
                                     <!-- Fin Descuento Producto -->
@@ -328,9 +302,36 @@
 
 <!-- <script src="{{ asset('assets/vendor/elevatezoom/jquery.elevateZoom.min.js') }}"></script> -->
 <script src="{{ asset('assets/vendor/drift-main/dist/Drift.min.js') }}"></script>
-
+<script src="{{ asset('assets/vendor/flipdown-master/src/flipdown.js') }}"></script>
 
 <script>
+    @if($producto['descuento']>0)
+        // Set up FlipDown -- recibe la fecha fin en segundos.
+        var flipdown = new FlipDown(<?php echo $dif; ?>, {headings: ["Días", "Horas", "Minutos", "Segundos"],})
+
+        // Start the countdown
+        .start()
+
+        // Do something when the countdown ends
+        .ifEnded(() => {
+            url=$('meta[name=app-url]').attr("content") + "/producto/precio_oferta";
+            $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: url,
+                    type: "POST",
+                    data: {
+                        data_producto: <?php echo '"'.$encryptProductoId.'"'; ?>
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        $('.precios_div').html(response);
+                    }
+            });
+            console.log('The countdown has ended!');
+        });
+    @endif
 
     $('.slider-for').slick({
         slidesToShow: 1,
@@ -342,40 +343,40 @@
     });
     
     $('.slider-nav-thumbnails').slick({
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        asNavFor: '.slider-for',
-        dots: false,
-        centerMode: false,
-        focusOnSelect: true,
-        infinite: false,
-        responsive: [
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1,
-                    infinite: false,
-                    dots: false
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            asNavFor: '.slider-for',
+            dots: false,
+            centerMode: false,
+            focusOnSelect: true,
+            infinite: false,
+            responsive: [
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 1,
+                        infinite: false,
+                        dots: false
+                    }
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 1
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 1
+                    }
                 }
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1
-                }
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1
-                }
-            }
 
-        ]
-});
+            ]
+    });
 
     // var options = {
     //     paneContainer: document.querySelector(".slider-for"),
@@ -444,12 +445,28 @@
         });
     }
 
+    
+    // $("#getting-started").countdown('2023/05/15', function(event) {
+    //     $(this).text(
+    //     event.strftime('%D Días %H:%M:%S')
+    //     );
+    // });
 
-//     $('#productimage').elevateZoom({
-//         zoomType:"inner",
-// cursor:"crosshair"
-//         // gallery:'product-gallery',
-//    }); 
+    // $('#getting-started').countdown({
+    //     targetDate: {
+    //         'day':         13,
+    //         'month':     5,
+    //         'year':     2023,
+    //         'hour':     15,
+    //         'min':         14,
+    //         'sec':         0
+    //     },
+    //     omitWeeks: true,
+    //     onComplete: function() {
+    //        alert('FIN DE LA CUENTA');
+    //     }
+    // });
+
 
 </script>
 

@@ -82,7 +82,7 @@
                                 <div class="col-lg-2 col-md-2 col-sm-12">
                                     <div class="custom-control custom-checkbox ml-2 mt-4">
                            
-                                        <input class="checkbox" type="checkbox" name="checkdescuento" id="checkdescuento" onclick="activarDescuento()" {{ isset($producto) && $producto->descuento != '' ? 'checked': ''}}>
+                                        <input class="checkbox" type="checkbox" name="checkdescuento" id="checkdescuento" onclick="activarDescuento()" {{ isset($producto) && $producto->descuento > 0 ? 'checked': ''}}>
                                         <label class="form-check-label" for="chkEstadoProducto">Con Descuento</label>
                           
                                     </div>
@@ -90,7 +90,7 @@
 
                                 <div class="col-lg-2 col-md-2 col-sm-12">
                                     <label for="descuentoProducto"><b>&nbsp;&nbsp;Descuento:</b></label>
-                                    <select class="form-control form-control-lg ml-2" name="descuentoProducto" id="descuentoProducto" {{ isset($producto) && $producto->descuento != '' ? '': 'disabled'}}>        
+                                    <select class="form-control form-control-lg ml-2" name="descuentoProducto" id="descuentoProducto" {{ isset($producto) && $producto->descuento > 0 ? '': 'disabled'}}>        
                                             @for ($j = 0; $j <=100; $j++)
                                                 <option value="{{ $j }}" {{isset($producto) && intval($producto->descuento)==$j ? 'selected' : ''}}>{{ $j }}%</option>
                                             @endfor

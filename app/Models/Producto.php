@@ -149,7 +149,7 @@ class Producto extends Model
 
     public static function getProductoxUrl($url)
     {
-        $arrayProducto= Producto::select('productos.producto_id','productos.producto','productos.descripcion_producto','productos.url','productos.video','productos.precio', 'productos.descuento', 'productos.precio_oferta',
+        $arrayProducto= Producto::select('productos.producto_id','productos.producto','productos.descripcion_producto','productos.url','productos.video','productos.precio', 'productos.descuento', 'productos.precio_oferta','productos.fecha_finalizacion',
         'productos.con_stock','productos.stock','productos.sku','productos.agotado','productos.envio_domicilio','productos.recojo','productos.contraentrega','productos.estado','productos.url','pi.url as imgproducto')
         ->leftJoin('producto__imagens as pi', function($join)
         {
@@ -547,6 +547,21 @@ class Producto extends Model
         return $precioMaxProducto;
 
 
+    }
+
+    public static function getPrecioXProducto($data_producto)
+    {
+        $data = Producto::select('productos.producto_id','productos.producto','productos.url', 'productos.descuento', 'productos.precio', 'productos.precio_oferta', 'productos.agotado','pi.url as imgproducto')
+                        ->leftJoin('producto__imagens as pi', function($join)
+                        {
+                            $join->on('productos.producto_id', '=', 'pi.producto_id');
+                            $join->where('pi.principal',1);
+                        })
+                        ->where('productos.producto_id',$data_producto)
+                        ->where('productos.oculto',0)
+                        ->first();
+
+        return $data;
     }
 
     public static function getStock($producto_id)

@@ -42,6 +42,8 @@ class ProductoService
             $data['fecha_finalizacion'] = $request->fechafinalizacion;
         else:
             $data['precio'] = $precio;
+            $data['precio_oferta'] = 0.00;
+            $data['descuento'] = 0;
         endif;
 
         $data['monedas'] = (int) $request->txtMonedasProducto;
@@ -112,6 +114,10 @@ class ProductoService
             else:
                 $data['precio'] = $precio;
             endif;
+            
+            $data['precio_oferta'] = 0.00;
+            $data['descuento'] = 0;
+            $data['fecha_finalizacion'] = null;
         endif;
 
         $data['monedas'] = (int) $request->txtMonedasProducto;

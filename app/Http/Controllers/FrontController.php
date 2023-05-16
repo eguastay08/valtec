@@ -63,6 +63,16 @@ class FrontController extends Controller
         return $producto;
     }
 
+    public function postPrecioOfertaProducto(Request $request)
+    {
+        $decrypt_id = Hashids::decode($request['data_producto']);
+        $updatePrecio = FrontService::updatePrecioProducto($decrypt_id[0]);
+        $moneda = FrontService::getMonedaFront();
+        $producto = FrontService::getPrecioXProducto($decrypt_id[0]);
+        // return $request['data_producto'];
+        return view('front-partials.precio_oferta-front', compact('moneda', 'producto'));
+    }
+
     public function getProductFront($url)
     {
 

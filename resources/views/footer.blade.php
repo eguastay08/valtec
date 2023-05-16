@@ -19,7 +19,7 @@
                         <a href="#" class="btn-social" title="Vísitanos en Instagram" target="_blank">
                             <i class="fab fa-instagram" aria-hidden="true"></i>
                         </a>
-                        <a href="#" class="chat-whatsapp" title="Mándanos un Whatsapp" target="_blank">
+                        <a h href="https://api.whatsapp.com/send?phone=51997308677" class="chat-whatsapp" title="Mándanos un Whatsapp" target="_blank">
                             <i class="fab fa-whatsapp" aria-hidden="true"></i>
                         </a>
                         <a href="#" class="btn-social" title="Vísitanos en Youtube" target="_blank">

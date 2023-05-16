@@ -19,7 +19,7 @@
 
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/variables.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css?v=1.0') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/custom-styles.css') }}">
 
     <!-- Slick Js -->
@@ -35,6 +35,9 @@
     <link href="{{ asset('assets/vendor/noUiSlider/dist/nouislider.min.css') }}" rel="stylesheet">
 
     <link href="{{ asset('assets/vendor/drift-main/dist/drift-basic.min.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('assets/vendor/flipdown-master/dist/flipdown.css') }}" rel="stylesheet">
+
 
 </head>
 

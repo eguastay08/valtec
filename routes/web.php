@@ -19,6 +19,8 @@ Route::get('/getMenus', 'FrontController@getAsNavMenus');
 
 Route::get('producto/detalle/{id}', 'FrontController@getProductoDetalle');
 
+Route::post('producto/precio_oferta', 'FrontController@postPrecioOfertaProducto');
+
 Route::get('producto/{url}', 'FrontController@getProductFront');
 
 Route::get('productos', 'FrontController@getProductsFront');

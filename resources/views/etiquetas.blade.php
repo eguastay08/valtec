@@ -179,7 +179,7 @@
                                                     <!-- Fin Imagen Producto -->
 
                                                     <!-- Descuento producto -->
-                                                    @if($productoxtag['descuento']!="")
+                                                    @if($productoxtag['descuento'] > 0)
                                                         <div class="descuento-tag rounded"><span class="lbl-discount"><p>-{{$productoxtag['descuento']}}%</p></span></div>
                                                     @endif
                                                     <!-- Fin Descuento Producto -->
@@ -251,7 +251,7 @@
 
                     </div>
 
-                    {{ $productosxtag->appends(request()->query())->links('front-partials.pagination-front') }}
+                    {{ $productosxtag->appends(request()->query())->onEachSide(1)->links('front-partials.pagination-front') }}
 
                 </article>
 

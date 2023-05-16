@@ -2587,6 +2587,11 @@ input.box_error:focus, input.box_error:active {
 {
     padding: 25px;
 }
+
+.oferta-message
+{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
 /* 
 
 .form-control:focus

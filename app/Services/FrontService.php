@@ -320,6 +320,30 @@ class FrontService
         return $bannerPago;
     }
 
+    public static function updatePrecioProducto($data_producto)
+    {
+        $data =  [
+            "precio_oferta" => 0.00,
+            "descuento" => 0,
+            "fecha_finalizacion" => null,
+            "fecha_modifica"=>now()
+        ];    
+
+        $producto = Producto::find($data_producto);
+
+        $producto->update($data);
+
+        return true;
+      
+    }
+
+    public static function getPrecioXProducto($data_producto)
+    {
+        $data = Producto::getPrecioXProducto($data_producto);
+
+        return $data;
+    }
+
     public static function highlightKeywords($text, $keyword)
     {
         $wordsAry = explode(" ", $keyword);

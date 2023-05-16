@@ -25,7 +25,7 @@
                                         <!-- Fin Imagen Producto -->
 
                                         <!-- Descuento producto -->
-                                        @if($producto['descuento']!="")
+                                        @if($producto['descuento'] > 0)
                                             <div class="descuento-tag rounded"><span class="lbl-discount"><p>-{{$producto['descuento']}}%</p></span></div>
                                         @endif
                                         <!-- Fin Descuento Producto -->
@@ -35,7 +35,7 @@
                                 </div>
 
                                 
-                                <div class="product-title mb-2">
+                                <div class="product-title mb-1">
                                     <!-- product name -->
                                     <a href="{{ url('producto/'.$producto['url']) }}" class="grid-producto-nombre mt-auto" title="{{$producto['producto']}}">
                                         <h3 class="grid-producto-title">{{$producto['producto']}}</h3>
@@ -112,7 +112,7 @@
                                         <!-- Fin Imagen Producto -->
 
                                         <!-- Descuento producto -->
-                                        @if($producto['descuento']!="")
+                                        @if($producto['descuento'] > 0)
                                             <div class="descuento-tag rounded"><span class="lbl-discount"><p>-{{$producto['descuento']}}%</p></span></div>
                                         @endif
                                         <!-- Fin Descuento Producto -->
@@ -121,7 +121,7 @@
 
                                 </div>
 
-                                <div class="product-title mb-2">
+                                <div class="product-title mb-1">
                                     <!-- product name -->
                                     <a href="{{ url('producto/'.$producto['url']) }}" class="grid-producto-nombre mt-auto" title="{{$producto['producto']}}">
                                         <h3 class="grid-producto-title">{{$producto['producto']}}</h3>

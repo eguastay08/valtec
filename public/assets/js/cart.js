@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    // addCartClick();
+
     function loadcarrito()
     {
         url=$('meta[name=app-url]').attr("content")  + "/load-cart";
@@ -28,39 +30,43 @@ $(document).ready(function () {
         });
     }
 
-
-    $('.btnComprarCart').on('click', function() {
-        $(this).prop('disabled', true);
-        let url = $('meta[name=app-url]').attr("content")+ "/add-cart";
-        let data = {
-            cantidad: $("#pcantidad").val(),
-            producto_id: $('#pkey').val(),
-            producto_imagen: $('#producto_imagen').val()
-        }
-
-        $.ajax({
-            // headers: {
-            //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            // },
-            url: url,
-            type: "POST",
-            data: data,
-            success: function(response) {
-                $('.btnComprarCart').prop('disabled', false);
-                if(response.code == 200)
-                {
-                    loadcarrito();
-                    $('#CartCount').html(response.nroproductos);
-                    $('#ModalCart').modal('show'); 
-                }
-                else 
-                {
-                    
-                }
+    // function addCartClick()
+    // {
+        $(document).on('click', '.btnComprarCart', function(){
+        // $('.btnComprarCart').on('click', function() {
+            $(this).prop('disabled', true);
+            let url = $('meta[name=app-url]').attr("content")+ "/add-cart";
+            let data = {
+                cantidad: $("#pcantidad").val(),
+                producto_id: $('#pkey').val(),
+                producto_imagen: $('#producto_imagen').val()
             }
-        })
-
-    });
+    
+            $.ajax({
+                // headers: {
+                //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                // },
+                url: url,
+                type: "POST",
+                data: data,
+                success: function(response) {
+                    $('.btnComprarCart').prop('disabled', false);
+                    if(response.code == 200)
+                    {
+                        loadcarrito();
+                        $('#CartCount').html(response.nroproductos);
+                        $('#ModalCart').modal('show'); 
+                    }
+                    else 
+                    {
+                        
+                    }
+                }
+            })
+    
+        });
+    // }
+  
 
     window.UpdateItemCart = function(item, i)
     {

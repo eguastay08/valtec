@@ -197,7 +197,7 @@
                                             <!-- Fin Imagen Producto -->
 
                                             <!-- Descuento producto -->
-                                            @if($pdata['descuento']!="")
+                                            @if($pdata['descuento'] > 0)
                                                 <div class="tag-descuento rounded"><span class="lbl-discount"><p>-{{$pdata['descuento']}}%</p></span></div>
                                             @endif
                                             <!-- Fin Descuento Producto -->
@@ -268,7 +268,7 @@
 
                 </div>
 
-                {{ $productosdata->appends(request()->query())->links('front-partials.pagination-front') }}
+                {{ $productosdata->appends(request()->query())->onEachSide(1)->links('front-partials.pagination-front') }}
 
             </article>
 
