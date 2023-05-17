@@ -10,13 +10,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="Somos una empresa dedicada a la comercialización de productos de entretinimiento">
 
-    <!-- Evitar el cache -->
-    <meta http-equiv="Expires" content="0">
-    <meta http-equiv="Last-Modified" content="0">
-    <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <!--  -->
-
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&amp;display=swap" rel="stylesheet">
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('assets/images/faviconfinal.png') }}" />
@@ -25,9 +18,9 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}">
 
     <!-- Main Style CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/variables.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/main.css?v=1.0') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/custom-styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/variables.css?v=1.0') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css?v=2.0') }}">
+    <link href="{{ asset('assets/css/custom-styles.css?v=20230516193800') }}" rel="stylesheet">
 
     <!-- Slick Js -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/slick/slick/slick.css') }}">
@@ -153,8 +146,8 @@
 
     <script src="{{ asset('assets/vendor/noUiSlider/dist/nouislider.min.js') }}"></script>
 
-    <script src="{{ asset('assets/js/scripts.js') }}"></script>
-    <script src="{{ asset('assets/js/cart.js') }}"></script>
+    <script src="{{ asset('assets/js/scripts.js?v=1.0') }}"></script>
+    <script src="{{ asset('assets/js/cart.js?v=1.0') }}"></script>
 
     <script type="text/javascript">
         $(window).load(function() {
