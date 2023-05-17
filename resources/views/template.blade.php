@@ -10,6 +10,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="Somos una empresa dedicada a la comercialización de productos de entretinimiento">
 
+    <!-- Evitar el cache -->
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Last-Modified" content="0">
+    <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <!--  -->
+
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&amp;display=swap" rel="stylesheet">
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('assets/images/faviconfinal.png') }}" />
