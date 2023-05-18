@@ -27,13 +27,13 @@
 
                 <p>Ser la plataforma retail de la industria del entretenimiento electrónico, coleccionables y afines a la cultura pop en el Perú, buscando generar valor en la experiencia de compra de nuestros clientes.</p>
                 
-                <p><strong>Misión de Nec Digital Store:</strong></p>
+                <p><strong>Misión de EShop Ecommerce Store:</strong></p>
                 
                 <p>Convertirnos en la marca líder en la industria del entretenimiento , coleccionables y afines a la cultura pop, llevando experiencias y servicio diferenciado al hogar de nuestros clientes.</p>
 
                 <p><strong>Propósito:</strong></p>
 
-                <p>Excelencia en el servicio en cada uno de los puntos de contacto entre Nec Digital Store y sus clientes, buscando experiencias positivas de compra; sin perder de vista la rentabilidad del negocio que garantice la continuidad en el tiempo.</p>
+                <p>Excelencia en el servicio en cada uno de los puntos de contacto entre EShop Ecommerce Store y sus clientes, buscando experiencias positivas de compra; sin perder de vista la rentabilidad del negocio que garantice la continuidad en el tiempo.</p>
 
             </div>
 

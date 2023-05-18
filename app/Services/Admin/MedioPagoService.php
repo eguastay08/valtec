@@ -11,22 +11,22 @@ class MedioPagoService
     public function addArrayDataMedioPago($request)
     {   
         
-        $estado = $request->estado == "true" ? "1":"0";
+        $estado = $request->chkEstadoMedioPago  == "on" ? "1":"0";
         $oculto =0;
         $mediopagoimgnombre = "";
         // $descripcion = nl2br($request->descripcion);
         $regex = '@<p([^>]*)>\s*\n*\t*(&nbsp;)*\s*\n*\t*</p>@';
-        $text = preg_replace($regex, '', $request->descripcion);
+        $text = preg_replace($regex, '', $request->txtDescripcionMedioPago);
 
         $data = [
-            "nombre" =>  $request->medio_pago,
+            "nombre" =>  $request->txtNombreMedio,
             // "descripcion" => preg_replace('/\s&nbsp;\s/ig', ' ', $descripcion),
             // "descripcion" => nl2br($request->descripcion),
             "descripcion" => $text,
-            "deposito" =>$request->deposito,
-            "transferencia" => $request->transferencia,
-            "billetera_digital" => $request->billetera_digital,
-            "pago_online" => $request->pago_online,
+            "deposito" =>$request->DepositoRadio,
+            "transferencia" => $request->transferenciaRadio,
+            "billetera_digital" => $request->BilleteraDigitalRadio,
+            "pago_online" => $request->PagoOnlineRadio,
         ];
 
         if(isset($request->medioPagoImg) && $request->medioPagoImg!= ""):
@@ -43,7 +43,7 @@ class MedioPagoService
         $data['mediopagoimgnombre'] = $mediopagoimgnombre;
         $data['estado']  = $estado;
         $data['oculto'] = $oculto;
-        $data['usuario_registro'] = $request->usuario;
+        $data['usuario_registro'] = $request->hddusuario;
         $data['fecha_registro'] = now();
         
         return $data;
@@ -52,24 +52,24 @@ class MedioPagoService
 
     public function updateArrayDataMedioPaga($request)
     {
-        $estado = $request->estado == "true" ? "1":"0";
+        $estado = $request->chkEstadoMedioPago  == "on" ? "1":"0";
         $oculto =0;
         $mediopagoimgnombre = "";
         $temporal = 0;
         // $descripcion = nl2br($request->descripcion);
         $regex = '@<p([^>]*)>\s*\n*\t*(&nbsp;)*\s*\n*\t*</p>@';
-        $text = preg_replace($regex, '', $request->descripcion);
+        $text = preg_replace($regex, '', $request->txtDescripcionMedioPago);
         // var_dump($text);exit;
 
         $data = [
-            "nombre" =>  $request->medio_pago,
+            "nombre" =>  $request->txtNombreMedio,
             // "descripcion" => preg_replace('<p></p>', ' ', $descripcion),
             // "descripcion" => nl2br($request->descripcion),
             "descripcion" => $text,
-            "deposito" =>$request->deposito,
-            "transferencia" => $request->transferencia,
-            "billetera_digital" => $request->billetera_digital,
-            "pago_online" => $request->pago_online
+            "deposito" =>$request->DepositoRadio,
+            "transferencia" => $request->transferenciaRadio,
+            "billetera_digital" => $request->BilleteraDigitalRadio,
+            "pago_online" => $request->PagoOnlineRadio,
         ];
 
         if(isset($request->medioPagoImg) && $request->medioPagoImg!= ""):
@@ -87,7 +87,7 @@ class MedioPagoService
         $data['temporal'] = $temporal;
         $data['estado']  = $estado;
         $data['oculto'] = $oculto;
-        $data['usuario_modifica'] = $request->usuario;
+        $data['usuario_modifica'] = $request->hddusuario;
         $data['fecha_modifica'] = now();
         
         return $data;

@@ -32,13 +32,13 @@
                 <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionFormasCostoEntrega">
                     <div class="accordion-body">
 
-                        <p>Ubicación: Av. Inca Garcilaso de la Vega 1358, Cercado de Lima 15001, Galería Plazatec, Stand 355.(3er piso)</p> 
+                        <p>Ubicación: Av. Prueba prueba Test mundo nunca jamás </p> 
 
-                        <p>Referencia: Frente a centro cívico, estación central</p>
+                        <p>Referencia: Frente a la Municipalidad Provincial</p>
 
                         <p>Horario: Lunes a Sábados de 11:00 am a 8:00 pm</p>
 
-                        <p>Google maps : https://goo.gl/maps/CpQsDZu4m3mU9vrw6</p>
+                        <p>Google maps : https://www.google.com/maps/@-12.0463012,-77.0478524,13.61z</p>
 
                         <p>Waze : Eshop Ecommerce</p>
 
@@ -53,13 +53,14 @@
                 </h2>
                 <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionFormasCostoEntrega">
                     <div class="accordion-body">
-                        <p>Ubicación: Urb. Las Lilas, Jr. Manue Lorenzo Aguirre 121, Santiago de Surco</p>
 
-                        <p>Referencia: Cruce de av. Castilla con av. Republica de panama.</p>
+                        <p>Ubicación: Av. Prueba prueba Test mundo nunca jamás </p> 
+
+                        <p>Referencia: Cruce de av. Gamarra con av. Republica de Francia.</p>
 
                         <p>Horario: Lunes a Sábados de 12:00 am a 4:00 pm </p>
 
-                        <p>Google maps : https://goo.gl/maps/dXXwGNDZye7J3mPq8</p>
+                        <p>Google maps : https://www.google.com/maps/@-12.0463012,-77.0478524,13.61z</p>
                     </div>
                 </div>
             </div>
@@ -71,13 +72,13 @@
                 </h2>
                 <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionFormasCostoEntrega">
                     <div class="accordion-body">
-                        <p>Ubicación: Urb. Las Lilas, Jr. Manue Lorenzo Aguirre 121, Santiago de Surco</p>
+                        <p>Ubicación: Av. Prueba prueba Test mundo nunca jamás</p>
 
-                        <p>Referencia: Cruce de av. Castilla con av. Republica de panama.</p>
+                        <p>Referencia: Cruce de av. San Martin con av. Republica de Italia.</p>
 
                         <p>Horario: Lunes a Sábados de 12:00 am a 4:00 pm </p>
 
-                        <p>Google maps : https://goo.gl/maps/dXXwGNDZye7J3mPq8</p>
+                        <p>Google maps : https://www.google.com/maps/@-12.0463012,-77.0478524,13.61z</p>
                     </div>
                 </div>
             </div>

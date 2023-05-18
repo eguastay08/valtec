@@ -228,17 +228,16 @@ Route::prefix('admin')->group(function () {
     //Fin Módulo de Órdenes
 
     //Módulo Preguntas Frecuentes
-
-    Route::resource('medios_pagos', 'Admin\MedioPagoController');
+    Route::resource('medios_pagos', 'Admin\MedioPagoController', [ 'as' => 'admin' ]);
     Route::post('medios_pagos/activar/{id}', 'Admin\MedioPagoController@activar');
     Route::post('medios_pagos/desactivar/{id}', 'Admin\MedioPagoController@desactivar');
     Route::post('medios_pagos/subirImagenTmp', 'Admin\MedioPagoController@subirImagenTmp');
     Route::post('medios_pagos/eliminarImagenTmp', 'Admin\MedioPagoController@eliminarImagenTmp');
     Route::post('medios_pagos/eliminarimg', 'Admin\MedioPagoController@eliminarImg');
 
+
     Route::post('ckeditor/upload', 'Admin\MedioPagoController@upload')->name('ckeditor.upload');
     Route::post('tiny/upload', 'Admin\MedioPagoController@upload_tiny')->name('tiny.uploadtiny');
-
     
     // - -Fin Módulo Preguntas Frecuentes --
 

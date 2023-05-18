@@ -26,15 +26,19 @@
             <div id="accordionMediosdePago" class="accordion mt-4">
 
                 @isset($mediosPago)
+
                     @if(count($mediosPago)>0)
 
                         @php $contador = 0 @endphp
+
                         @foreach($mediosPago as $mp)
-                            @php $contador = $contador + 1 @endphp
-                            @if($mp->transferencia == 1)
+                          
+                            @if($mp->billetera_digital == 1)
+
+                                @php $contador = $contador + 1 @endphp
 
                                 @if($contador == 1)
-                                    <div class="col-12 text-center mb-2"><h5><i class="fas fa-exchange-alt"></i> TRANSFERENCIA BANCARIA</h5></div>
+                                    <div class="col-12 text-center mb-2"><h5><i class="fas fa-wallet"></i> BILLETERAS DIGITAL</h5></div>
                                 @endif
 
                                 <div id="mediopagodiv{{$contador}}" style="cursor:pointer" class="col-12 list-group-item payment-link mediopagodiv" data-color="#000" onclick="mostrarinfo({{$contador}});">
@@ -43,69 +47,104 @@
                                             <img src="{{asset($mp->imagen)}}" style="height: 100%">
                                         </div>
                                         <div class="pull-left payment-text">
-                                            <!-- {$medio_pago[$i]['nombre']} {if $medio_pago[$i]['informacion_adicional']} - {$medio_pago[$i]['informacion_adicional']}{/if} <span>({'subtitulo_transferencias_pago'|text:$texts})</span> -->
-                                            {{$mp->nombre}} (Transferencias Bancarias)
+                                            {{$mp->nombre}} (Billetera Digital)
                                         </div>  
                                     </div>
-                                    <div id="details{{$contador}}" class="details-pago payment-details mt-4 mb-4" style="display:none;">
+                                    <div id="details{{$contador}}" class="details-pago payment-details mt-4 mb-4 p-4" style="display:none;">
                                       {!!$mp->descripcion!!}
                                     </div>
                                 </div>
 
                             @endif
+
+                           
+
                         @endforeach
 
                         @php $contador2 = 0 @endphp
-                            @foreach($mediosPago as $mp)
-                                
-                                @if($mp->deposito == 1)
-                                @php $contador2 = $contador2 + 1 @endphp
-                                    @if($contador2 == 1)
-                                        <div class="col-12 text-center mt-4 mb-2"><h5><i class="far fa-money-bill-alt"></i> DEPÓSITO BANCARIO</h5></div>
-                                    @endif
-                                        <div id="mediopagodivdeposito{{$contador2}}" style="cursor:pointer" class="col-12 list-group-item payment-link mediopagodiv2" data-color="#000" onclick="mostrarinfodeposito({{$contador2}});">
-                                            <div style="overflow: hidden;" class="d-flex">
-                                                <div class="payment-image pull-left">
-                                                    <img src="{{asset($mp->imagen)}}" style="height: 100%">
-                                                </div>
-                                                <div class="pull-left payment-text">
-                                                    <!-- {$medio_pago[$i]['nombre']} {if $medio_pago[$i]['informacion_adicional']} - {$medio_pago[$i]['informacion_adicional']}{/if} <span>({'subtitulo_transferencias_pago'|text:$texts})</span> -->
-                                                    {{$mp->nombre}} (Depósito Bancario)
-                                                </div>
-                                            </div>
-                                            <div id="detailstdeposito{{$contador2}}" class="details-pago2 payment-details mt-4 mb-4" style="display:none">
-                                            {!!$mp->descripcion!!}
-                                            </div>
-                                        </div>
-                            
-                                @endif
 
-                            @endforeach
+                        @foreach($mediosPago as $mp)
+                            
+                            @if($mp->transferencia == 1)
+                                @php $contador2 = $contador2 + 1 @endphp
+                                @if($contador2 == 1)
+                                    <div class="col-12 text-center mt-4 mb-2"><h5><i class="fas fa-exchange-alt"></i> TRANSFERENCIAS BANCARIOS</h5></div>
+                                @endif
+                                <div id="mediopagodivdeposito{{$contador2}}" style="cursor:pointer" class="col-12 list-group-item payment-link mediopagodiv2" data-color="#000" onclick="mostrarInfoTransfer({{$contador2}});">
+                                    <div style="overflow: hidden;" class="d-flex">
+                                        <div class="payment-image pull-left">
+                                            <img src="{{asset($mp->imagen)}}" style="height: 100%">
+                                        </div>
+                                        <div class="pull-left payment-text">
+                                            {{$mp->nombre}} (Transferencia Bancaria)
+                                        </div>
+                                    </div>
+                                    <div id="detailsTransfer{{$contador2}}" class="details-pago2 payment-details mt-4 mb-4 p-4" style="display:none">
+                                    {!!$mp->descripcion!!}
+                                    </div>
+                                </div>
+                        
+                            @endif
+
+                        @endforeach
+
+                        @php $contador3 = 0 @endphp
+
+                        @foreach($mediosPago as $mp)
+                            
+                            @if($mp->deposito == 1)
+                                @php $contador3 = $contador3 + 1 @endphp
+                                @if($contador3 == 1)
+                                    <div class="col-12 text-center mt-4 mb-2"><h5><i class="far fa-money-bill-alt"></i> DEPÓSITOS BANCARIOS</h5></div>
+                                @endif
+                                <div id="mediopagodivdeposito{{$contador3}}" style="cursor:pointer" class="col-12 list-group-item payment-link mediopagodiv2" data-color="#000" onclick="mostrarinfodeposito({{$contador3}});">
+                                    <div style="overflow: hidden;" class="d-flex">
+                                        <div class="payment-image pull-left">
+                                            <img src="{{asset($mp->imagen)}}" style="height: 100%">
+                                        </div>
+                                        <div class="pull-left payment-text">
+                                            {{$mp->nombre}} (Depósito Bancario)
+                                        </div>
+                                    </div>
+                                    <div id="detailstdeposito{{$contador3}}" class="details-pago3 payment-details mt-4 mb-4 p-4" style="display:none">
+                                    {!!$mp->descripcion!!}
+                                    </div>
+                                </div>
+                        
+                            @endif
+
+                        @endforeach
+
+                        @php $contador4 = 0 @endphp
+
+                        @foreach($mediosPago as $mp)
+                            
+                            @if($mp->pago_online == 1)
+                                @php $contador4 = $contador4 + 1 @endphp
+                                @if($contador4 == 1)
+                                    <div class="col-12 text-center mt-4 mb-2"><h5><i class="fas fa-credit-card"></i>  PAGOS ONLINE</h5></div>
+                                @endif
+                                <div id="mediopagodivdeposito{{$contador4}}" style="cursor:pointer" class="col-12 list-group-item payment-link mediopagodiv2" data-color="#000" onclick="mostrarInfoPagoOnline({{$contador4}});">
+                                    <div style="overflow: hidden;" class="d-flex">
+                                        <div class="payment-image pull-left">
+                                            <img src="{{asset($mp->imagen)}}" style="height: 100%">
+                                        </div>
+                                        <div class="pull-left payment-text">
+                                            {{$mp->nombre}} (Pago Online)
+                                        </div>
+                                    </div>
+                                    <div id="detailsPagoOnline{{$contador4}}" class="details-pago4 payment-details mt-4 mb-4 p-4" style="display:none">
+                                    {!!$mp->descripcion!!}
+                                    </div>
+                                </div>
+
+                            @endif
+
+                        @endforeach
+
 
                     @endif
                 @endisset
-
-                <div class="col-12 text-center mt-3 mb-2">
-                    <h5><i class="fas fa-credit-card"></i> PAGOS ONLINE</h5>
-                </div>
-                <div id="mediopagoonline" style="cursor:pointer" class="col-12 list-group-item payment-link mediopagodiv3" onclick="pagoonlinedetalle();">
-                    <div style="overflow: hidden;" class="d-flex">
-                        <div class="payment-image pull-left">
-                            <img src="{{asset('assets/images/medios_pago_online/paypal.png')}}" style="height: 100%">
-                        </div>
-                        <div class="pull-left payment-text">
-                            Paypal (Pagos Online)
-                        </div>
-                        <div id="detailstonline" class="details-pago3 payment-details mt-4 mb-4" style="display:none">
-                            <br>
-                            <ol>
-                                <li> - El pedido se enviara al correo registrado en su cuenta paypal y dentro de nuestro horario de atención.</li>
-                                <li> - Horario de atencion : De L - S de 10am a 8pm - Los Pedidos del Domingo se envian el dia Lunes.</li>
-                                <li> - Cargo adicional 10%.</li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
 
             </div>
 
@@ -125,23 +164,35 @@
         {
             // console.log(value);
             $('.details-pago').css('display','none');
+            $('.payment-details').css('display','none');
             $('#details'+value).css('display','block');
+            $('.mediopagodiv').removeClass('border-medio');
+            $('#mediopagodiv'+value).addClass('border-medio');
+        }
+
+        window.mostrarInfoTransfer = function(value)
+        {
+            $('.details-pago2').css('display','none');
+            $('.payment-details').css('display','none');
+            $('#detailsTransfer'+value).css('display','block');
             $('.mediopagodiv').removeClass('border-medio');
             $('#mediopagodiv'+value).addClass('border-medio');
         }
 
         window.mostrarinfodeposito = function(value)
         {
-            $('.details-pago2').css('display','none');
+            $('.details-pago3').css('display','none');
+            $('.payment-details').css('display','none');
             $('#detailstdeposito'+value).css('display','block');
             $('.mediopagodiv').removeClass('border-medio');
             $('#mediopagodivdeposito'+value).addClass('border-medio');
         }
 
-        window.pagoonlinedetalle = function()
+        window.mostrarInfoPagoOnline = function(value)
         {
-            $('.details-pago3').css('display','none');
-            $('#detailstonline').css('display','block');
+            $('.details-pago4').css('display','none');
+            $('.payment-details').css('display','none');
+            $('#detailsPagoOnline'+value).css('display','block');
             $('.mediopagodiv3').removeClass('border-medio');
             $('#mediopagoonline').addClass('border-medio');
         }
@@ -155,14 +206,6 @@
         
     // });
 
-    // $('.mediopagodiv2').mouseover(function() {
-    //     let value = $(this).attr("data-count");
-    //     $('.details-pago2').css('display','none');
-    //     $('#detailst'+value).css('display','block');
-    //     $('.mediopagodiv2').removeClass('border-medio');
-    //     $(this).addClass('border-medio');
-        
-    // });
 
 </script>
 

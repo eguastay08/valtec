@@ -144,7 +144,7 @@
 
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <label for="chkEstadoNoticia"><b>&nbsp;&nbsp;Estado:<b></label>
+                                    <label for="chkEstadoNoticia"><b>&nbsp;&nbsp;Estado:</b></label>
                                     <div class="custom-control custom-checkbox ml-2">
                                         <input type="checkbox" class="custom-control-input" name="chkEstadoNoticia" id="chkEstadoNoticia" {{isset($noticia) && $noticia->estado == 1 ? 'checked':''}}>  
                                         <label class="custom-control-label" for="chkEstadoNoticia">Activo</label>

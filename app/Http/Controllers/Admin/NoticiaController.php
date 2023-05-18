@@ -539,9 +539,9 @@ class NoticiaController extends Controller
 
     public function upload_img_desc(Request $request)
     {
-        if (!$request->ajax()):
-            return redirect('/admin/noticias');
-        endif;
+        // if (!$request->ajax()):
+        //     return redirect('/admin/noticias');
+        // endif;
 
         if($request->hasFile('upload')) 
         {

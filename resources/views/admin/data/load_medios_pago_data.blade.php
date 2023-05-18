@@ -7,9 +7,9 @@
                 <th>Nombre</th>
                 <th>Descripción</th>
                 <th>Transferencia</th>
+                <th>Depósito</th>
                 <th>Billetera Digital</th>
                 <th>Pago Online</th>
-                <th>Depósito</th>
                 <th>Estado</th>
                 <th>Acciones</th>
             </tr>
@@ -41,7 +41,7 @@
                         <td>
                             <div class="btn-group" role="group">
                                 @can('admin.medios_pago.actualizar')
-                                <img src="{{ url('admin_assets/images/edit.png') }}" onclick="mostrarMedioPago(<?php echo "'".$parameter."'"; ?>)" title="Editar Medio de Pago" style="cursor: pointer; height:24px; width:24px;">
+                                    <a href="{{ route('admin.medios_pagos.edit',$parameter) }}"><img src="{{ url('admin_assets/images/edit.png') }}" title="Editar Medio de Pago" style="cursor: pointer; height:24px; width:24px;"></a>
                                 @endcan
 
                                 @can('admin.medios_pago.eliminar')

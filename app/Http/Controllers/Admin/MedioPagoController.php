@@ -50,8 +50,7 @@ class MedioPagoController extends Controller
      */
     public function create()
     {
-        //
-        return redirect('/admin/404');
+        return view('admin.modules.crud-medios-pago');
     }
 
     /**
@@ -68,11 +67,11 @@ class MedioPagoController extends Controller
         endif;
 
         $rules = [
-            'medio_pago' => 'required',
+            'txtNombreMedio' => 'required',
         ];
         
         $messages = [
-            'medio_pago.required' => 'El Nombre del Medio de Pago es requerido',
+            'txtNombreMedio.required' => 'El Nombre del Medio de Pago es requerido',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -87,7 +86,8 @@ class MedioPagoController extends Controller
                 if($data['mediopagoimgnombre']!=""):
                     echo MedioPagoService::moveMedioPagoImg($data['mediopagoimgnombre']);
                 endif;
-                return response()->json(['msg'=>'sucess', 'code' => '200']);
+                // return response()->json(['msg'=>'sucess', 'code' => '200']);
+                return response()->json(['msg'=>'sucess', 'code' => '200', 'url'=>url('/admin/medios_pagos')]);
             else:
                     return response()->json(['errors'=>$validator->errors(), 'code' => '425']);
             endif;
@@ -104,12 +104,12 @@ class MedioPagoController extends Controller
     public function show($medio_pago_id)
     {
         //
-        $decrypt_id = Hashids::decode($medio_pago_id);
-        if(count($decrypt_id) == 0):
-            return redirect('/admin/medios_pagos');
-        endif;
-        $mediopago = Medio_Pago::find($decrypt_id[0]);
-        return response()->json($mediopago);
+        // $decrypt_id = Hashids::decode($medio_pago_id);
+        // if(count($decrypt_id) == 0):
+        //     return redirect('/admin/medios_pagos');
+        // endif;
+        // $mediopago = Medio_Pago::find($decrypt_id[0]);
+        // return response()->json($mediopago);
     }
 
     /**
@@ -118,10 +118,20 @@ class MedioPagoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($medio_pago_id)
     {
-        //
-        return redirect('/admin/404');
+        $decrypt_id = Hashids::decode($medio_pago_id);
+
+        $dataMP = Medio_Pago::where('medio_pago_id', $decrypt_id)->where('oculto',0)->first();
+
+        if($dataMP == NULL):
+            return redirect('/admin/medios_pagos');
+        endif;
+        
+        $medio_pago = Medio_Pago::find($decrypt_id)->first();
+
+        return view('admin.modules.crud-medios-pago', compact('medio_pago'));
+
     }
 
     /**
@@ -131,20 +141,21 @@ class MedioPagoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $medio_pago_id)
+    public function update(Request $request, $mediopago_id)
     {
         //
+
         if (!$request->ajax()):
             return redirect('/admin/medios_pagos');
         endif;
 
-        $decrypt_id = Hashids::decode($medio_pago_id);
+        $decrypt_id = Hashids::decode($mediopago_id);
         $rules = [
-            'medio_pago' => 'required',
+            'txtNombreMedio' => 'required',
         ];
         
         $messages = [
-            'medio_pago.required' => 'El Nombre del Medio de Pago es requerido',
+            'txtNombreMedio.required' => 'El Nombre del Medio de Pago es requerido',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -163,7 +174,8 @@ class MedioPagoController extends Controller
                     endif;
                     echo MedioPagoService::moveMedioPagoImg($data['mediopagoimgnombre']);
                 endif;
-                return response()->json(['msg'=>'sucess', 'code' => '200']);
+                // return response()->json(['msg'=>'sucess', 'code' => '200']);
+                return response()->json(['msg'=>'sucess', 'code' => '200', 'url'=>url('/admin/medios_pagos')]);
             else:
                 return response()->json(['errors'=>$validator->errors(), 'code' => '425']);
            endif;
@@ -291,9 +303,9 @@ class MedioPagoController extends Controller
 
     public function upload(Request $request)
     {
-        if (!$request->ajax()):
-            return redirect('/admin/medios_pagos');
-        endif;
+        // if (!$request->ajax()):
+        //     return redirect('/admin/medios_pagos');
+        // endif;
 
         if($request->hasFile('upload')) {
             $originName = $request->file('upload')->getClientOriginalName();
