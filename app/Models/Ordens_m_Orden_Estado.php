@@ -142,4 +142,25 @@ class Ordens_m_Orden_Estado extends Model
         ];
         return $dataestado;
     }
+
+    public function OrdenPendienteMP($orden_id)
+    {
+        $data = [
+            "estado" => 0
+        ];
+        Ordens_m_Orden_Estado::where('orden_id', $orden_id)
+                        ->update($data);
+                     
+        // $ordens_estado = Ordens_m_Orden_Estado::find($orden_id);
+        // $ordens_estado->update($data);
+        $dataestado = [
+            "orden_id" => $orden_id,
+            "orden_estado_id" => 8,
+            "estado" => 1,
+            "oculto" => 0,
+            "usuario_registro"=>"Usuario",
+            "fecha_registro" => now()
+        ];
+        return $dataestado;
+    }
 }

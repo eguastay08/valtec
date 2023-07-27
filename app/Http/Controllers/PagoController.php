@@ -45,7 +45,7 @@ class PagoController extends Controller
     {  
         // MercadoPago\SDK::setClientId(config('services.mercadopago.client_id'));  
         // MercadoPago\SDK::setClientSecret(config('services.mercadopago.client_secret'));   
-        //   MercadoPago\SDK::setAccessToken(config('services.mercadopago.token'));
+        MercadoPago\SDK::setAccessToken(config('services.mercadopago.token'));
 
         // Datos Paypal
         $this->gateway = Omnipay::create('PayPal_Rest');
@@ -76,7 +76,7 @@ class PagoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {  
         $rules = [
             'pagonombresapellidos' => 'required',
             'pagoinformacionadicional' => 'required',
@@ -171,6 +171,7 @@ class PagoController extends Controller
                         "medio_pago_id" => $decript_medio_pago_id[0],
                         "nombres" =>$request->pagonombresapellidos,
                         "informacion_adicional"=>$request->pagoinformacionadicional,
+                        "email" => $request->pagoemail,
                         "descuento_id" => $descuento_id,
                         "comprobante"=>$imgComprobante[0],
                         "subtotal"=>$cart_subtotal,
@@ -182,7 +183,7 @@ class PagoController extends Controller
 
                     if($request->opayment != 1):
                   
-                        $data['email'] = $request->pagoemail;
+                        // $data['email'] = $request->pagoemail;
                         $data['fecha_pago'] = $request->fechapago;
                         $data['n_operacion'] = $nro_Orden;
                     endif;
@@ -254,38 +255,93 @@ class PagoController extends Controller
                             $tipo_cambio = Moneda::getTipoCambio();
                             $valorConvertido = $cart_total / $tipo_cambio[0]["tipo_cambio"];
                             $valor_Dolares = number_format($valorConvertido, 2, '.', '' );
-                            try {
-                                //code...
-                                $response = $this->gateway->purchase(array(
-                                    'amount'=>$valor_Dolares,
-                                    'items' => array(
-                                        array(
-                                            'name'=>'Pago Online - E-Shop Ecommerce',
-                                            'price' => $valor_Dolares,
-                                            'description'=>'E-shop Ecommerce',
-                                            'quantity'=>1,
-                                        )
-                                    ),
-                                    'currency'=>env('PAYPAL_CURRENCY'),
-                                    'returnUrl'=> route('order.paymentorder', $lastorden_id),
-                                    'cancelUrl'=> route('order.failureorder', $lastorden_id)
-                                ))->send();
+                            $medioPago = Medio_Pago::getDataValue($decript_medio_pago_id[0]);
+                            
+                            if($medioPago->data_value == 'paypal'):
+                                try {
+                                    //code...
+                                    $response = $this->gateway->purchase(array(
+                                        'amount'=>$valor_Dolares,
+                                        'items' => array(
+                                            array(
+                                                'name'=>'Pago Online - E-Shop Ecommerce',
+                                                'price' => $valor_Dolares,
+                                                'description'=>'E-shop Ecommerce',
+                                                'quantity'=>1,
+                                            )
+                                        ),
+                                        'currency'=>env('PAYPAL_CURRENCY'),
+                                        'returnUrl'=> route('order.paymentorder', $lastorden_id),
+                                        'cancelUrl'=> route('order.failureorder', $lastorden_id)
+                                    ))->send();
 
-                                if($response->isRedirect()):
-                                    \Cart::clear();
-                                    $url =  $response->getRedirectUrl();
-                                    return response()->json(['msg'=>'sucess', 'code' => '201', 'url'=>$url]);
+                                    if($response->isRedirect()):
+                                        \Cart::clear();
+                                        $url =  $response->getRedirectUrl();
+                                        return response()->json(['msg'=>'sucess', 'code' => '201', 'url'=>$url]);
+                                    
+                                    else: 
+                                    
+                                        return $response->getMessage();
+
+                                    endif;
+
+                                } catch (\Throwable $th) {
+                                    return $th->getMessage();
+                                }
+                            elseif($medioPago->data_value == 'mercado-pago'):
+                            
+                                 // SDK de Mercado Pago
+                                require base_path('/vendor/autoload.php');
+                                // Agrega credenciales
+                                MercadoPago\SDK::setAccessToken(config('services.mercadopago.token'));
+
+                                // Crea un objeto de preferencia
+                                $preference = new MercadoPago\Preference();
+
+                                // Crea un ítem en la preferencia
+                                $numItem = 0;
+                                $namemp = '';
+                                $arrayItems = array();
+                                $cart_content = Cart::getContent();
+                                $cart_subtotal = Cart::getSubTotal();
+                                $cart_total = Cart::getTotal();
+
+                                foreach($cart_content as $cc)
+                                {
+                                    $namemp .= $cc->name." (".$cc->quantity.")";
+                                    if($numItem < count($cart_content))
+                                    {
+                                        $namemp .= ", ";
+                                    }
+                                }   
+
+                                $item = new MercadoPago\Item();
+                                $item->title = $namemp;
+                                $item->quantity = 1;
+                                $item->unit_price = $cart_total;
+
+                                $arrayItems[] = $item;
+                                $numItem++;
+
+                                $preference->back_urls = array(
+                                    "success"=>route('mercadopago.success',$lastorden_id),
+                                    "failure"=>route('mercadopago.fail', $lastorden_id),
+                                    "pending"=>route('mercadopago.pending', $lastorden_id),
+                                );
+
+                                $preference->auto_return = "approved";
+
+                                $preference->items = $arrayItems;
+                                $preference->save();
+
+                                $link = $preference->init_point;
                                 
-                                else: 
-                                
-                                    return $response->getMessage();
+                                \Cart::clear();
 
-                                endif;
+                                return response()->json(['msg'=>'sucess', 'code' => '201', 'url'=>$link]);
 
-                            } catch (\Throwable $th) {
-                                return $th->getMessage();
-                            }
-                           
+                            endif;
 
                         elseif($is_online['pago_online'] == 0):
 
@@ -360,6 +416,58 @@ class PagoController extends Controller
         //
     }
 
+    //MercadoPago
+    public function MercadoPagoSuccess($lastorden_id, Request $request)
+    {
+        if($request->input('payment_id')):
+
+            $data = [
+                "fecha_pago"=>now(),
+                "n_operacion"=>$request->input('payment_id')
+            ];
+
+            $order = Ordens::find($lastorden_id);
+
+            if($order->update($data)):
+                    
+                $type = "type=s";
+
+               $ordenpendiente = Ordens_m_Orden_Estado::PendienteVerificacion($lastorden_id);
+
+                Ordens_m_Orden_Estado::create($ordenpendiente);
+
+                PagoService::mailSuccessPago($lastorden_id);
+
+                return \Redirect::route('pago.confirmacion', $type);
+            else:
+                $type = "type=f";
+                
+                echo self::failOrder($lastorden_id);
+
+                return \Redirect::route('pago.confirmacion', $type);
+            endif;
+
+
+        endif;
+    }
+
+    public function MercadoPagoFail($lastorden_id, Request $request)
+    {
+        $type = "type=f";
+                    
+        echo self::failOrder($lastorden_id);
+
+        return \Redirect::route('pago.confirmacion', $type);
+    }
+
+    public function MercadoPagoPending($lastorden_id, Request $request)
+    {
+        $type = "type=p";
+        $orden = Ordens_m_Orden_Estado::OrdenPendienteMP($lastorden_id);
+        Ordens_m_Orden_Estado::create($orden);
+        return \Redirect::route('pago.confirmacion', $type);
+    }
+
     //paypal
 
     public function pay(Request $request)
@@ -397,7 +505,7 @@ class PagoController extends Controller
         // }
     }
 
-    //paymentMercadoPago
+    //paypal
     public function paymentorder($lastorden_id, Request $request)
     {
 
@@ -461,8 +569,6 @@ class PagoController extends Controller
 
         $orden = Ordens_m_Orden_Estado::OrdenCancelada($lastorden_id);
 
-        var_dump($orden);
-
         $productosOrden = Ordens_Detalle::getProductosxOrden($lastorden_id);
 
         foreach($productosOrden as $po):
@@ -493,8 +599,8 @@ class PagoController extends Controller
 
     public function pendindOrder()
     {
-        echo 'pendiente';
-        // $type = "type=p";
+
+        // $type = "type=pending";
         // return \Redirect::route('pago.confirmacion', $type);
     }
 

@@ -403,7 +403,7 @@
 
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-    <!-- <script src="https://sdk.mercadopago.com/js/v2"></script> -->
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
 
     <script>
         // const mp = new MercadoPago('TEST-fb98f022-db5f-4ffd-9599-34d2aab158a5');

@@ -57,5 +57,14 @@ class Medio_Pago extends Model
 
         return $data;
     }
+    
+    public function getDataValue($medio_pago_id)
+    {
+        $data =  Medio_Pago::select('data_value')
+        ->where('estado',1)->where('oculto',0)->where('medio_pago_id',$medio_pago_id)->first();
+
+        return $data;
+    }
+    
 
 }

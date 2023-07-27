@@ -58,6 +58,12 @@ class OrdenEstadoSeeder extends Seeder
                 "usuario_registro"=>"admin",
                 "fecha_registro"=>now()
             ],
+            [ 
+                "estado"=>"Pendiente Mercado Pago",
+                "oculto"=>0,
+                "usuario_registro"=>"admin",
+                "fecha_registro"=>now()
+            ],
         ];
 
         Ordens_Estado::insert($orden_estados);

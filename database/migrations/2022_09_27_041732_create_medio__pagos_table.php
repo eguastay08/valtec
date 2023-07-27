@@ -19,6 +19,9 @@ class CreateMedioPagosTable extends Migration
             $table->mediumText('descripcion')->nullable();
             $table->char('deposito',1);
             $table->char('transferencia',1);
+            $table->char('billetera_digital',1);
+            $table->char('pago_online',1);
+            $table->tinyText('data_value');
             $table->text('imagen')->nullabe();
             $table->string('nombre_img',200)->nullable();
             $table->string('size_img',200)->nullable();   

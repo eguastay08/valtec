@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Middleware\Cors;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,7 +35,6 @@ Route::get('etiquetas', function(){
     return redirect('/');
 });
 
-
 Route::get('categorias/{url}', 'FrontController@getCategoriaFront');
 
 Route::get('categorias/{url}/{sub}', 'FrontController@getCategoriaFront');
@@ -59,12 +58,9 @@ Route::get('noticia_categorias/{url}/{sub}', 'FrontController@getNoticiaByCatego
 
 Route::get('noticia_etiquetas/{url}', 'FrontController@getNoticiaByEtiquetaFront');
 
-
-
 Route::get('contacto', 'FrontController@contactForm');
 
 Route::get('opiniones', 'FrontController@getOpiniones');
-
 
 
 Route::get('load-cart', 'CartController@loadCart');
@@ -94,12 +90,16 @@ Route::get('confirmacion_correo', 'FrontController@getConfirmacion_Correo')->nam
 
 Route::post('webhooks', 'WebHooksController');
 
-Route::post('/oder/pay', 'PagoController@pay')->name('orders.pay');
+// Route::post('/oder/pay', 'PagoController@pay')->name('orders.pay');
+
 
 Route::get('/payment/{order}', 'PagoController@paymentorder')->name('order.paymentorder');
 Route::get('/payment/fail/{order}', 'PagoController@failOrder')->name('order.failureorder');
 Route::get('/payment/pending/{order}', 'PagoController@pendindOrder')->name('order.pendingorder');
 // Route::post('/forms/pago_online', 'PagoController@pago_online');
+Route::get('/order/pay/{order}','PagoController@MercadoPagoSuccess')->name('mercadopago.success');
+Route::get('/order/fail/{order}','PagoController@MercadoPagoFail')->name('mercadopago.fail');
+Route::get('/order/pending/{order}','PagoController@MercadoPagoPending')->name('mercadopago.pending');
 
 
 // Route::get('/', function () {
@@ -110,7 +110,7 @@ Route::get('/payment/pending/{order}', 'PagoController@pendindOrder')->name('ord
 
 //rutas para los módulos de Administración
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware(['cors'])->group(function () {
 
     //rutas Login
     Route::get('/login', 'Admin\ConnectController@getLogin')->name('login');
