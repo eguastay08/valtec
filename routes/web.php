@@ -110,7 +110,7 @@ Route::get('/order/pending/{order}','PagoController@MercadoPagoPending')->name('
 
 //rutas para los módulos de Administración
 
-Route::prefix('admin')->middleware(['cors'])->group(function () {
+Route::prefix('admin')->group(function () {
 
     //rutas Login
     Route::get('/login', 'Admin\ConnectController@getLogin')->name('login');
