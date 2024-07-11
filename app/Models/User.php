@@ -69,7 +69,7 @@ class User extends Authenticatable
     ];
 
 
-    public function getUsers($nusuario = '', $estado = '_all_')
+    public static function getUsers($nusuario = '', $estado = '_all_')
     {
         $usuarios= User::select('users.*');
 

@@ -28,7 +28,7 @@
                 <div class="row">
                     <section class="col-12">
                             <!-- <div class="slider-for"> -->
-                        <div class="slider-for">
+                        <div class="slider-for image-sect">
                             <picture>
                                 <img id="productimage" class="img-fluid" src="{{ asset($producto['imgproducto']) }}?w=400" data-zoom="{{ asset($producto['imgproducto']) }}?w=1200" />    
                             </picture>
@@ -41,13 +41,15 @@
 
                         </div>
 
-                        <div class="slider-nav-thumbnails slider-nav-style mt-3" id="product-gallery">
+                        @if(count($producto['imagenes'])>0)
+
+                        <div class="slider-nav-thumbnails slider-nav-style mt-3 w-80" id="product-gallery">
 
                             <picture class="picture-thumbnail">
                                 <img class="img-fluid img-thumbnail" src="{{ asset($producto['imgproducto']) }}" />
                             </picture>
                              
-                            @if(count($producto['imagenes'])>0)
+                          
                                   
                                   @php $si = 1 @endphp
                                   @foreach($producto['imagenes'] as $proimg)
@@ -57,9 +59,11 @@
                                       @php $si++ @endphp
                                   @endforeach
                                   
-                              @endif
+                              
 
                         </div>
+
+                        @endif
 
                     
                             <!-- </div> -->
@@ -67,7 +71,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6 col-12">
+            <div class="col-md-6 col-12 @if(count($producto['imagenes'])<1) mt-3 @endif">
 
                 <article class="mt-3">
 
@@ -118,7 +122,7 @@
 
                         @if($producto['envio_domicilio'] == 1)
 
-                            <div class="col-md-4 col-12 pay-way">
+                            <div class="col-lg-4 col-md-12 col-12 pay-way">
 
                                 <div class="dv-payway d-flex align-items-center bdv-settings p-3">
                                     <img src="{{ asset('assets/images/delivery-truck.png') }}" alt="Entrega a Domicilio" width="64" height="55">
@@ -131,7 +135,7 @@
 
                         @if($producto['recojo'] == 1)
 
-                            <div class="col-md-4 col-12 pay-way">
+                            <div class="col-lg-4 col-md-12 col-12 mt-md-2 mt-lg-0 mt-sm-0 pay-way">
 
                                 <div class="dv-payway d-flex align-items-center bdv-settings p-3">
                                     <img src="{{ asset('assets/images/shop.png') }}" alt="Retiro en Tienda" width="64" height="55">
@@ -145,7 +149,7 @@
 
                         @if($producto['contraentrega'] == 1)
 
-                            <div class="col-md-4 col-12 pay-way">
+                            <div class="col-lg-4 col-md-12 col-12 mt-md-2 mt-lg-0 mt-sm-0 pay-way">
 
                                 <div class="dv-payway d-flex align-items-center bdv-settings p-3">
                                     <img src="{{ asset('assets/images/contraentrega.png') }}" alt="Pago ContraEntrega" width="64" height="55">
@@ -223,7 +227,7 @@
 
                     <div class="col-md-c6 col-sm-c4 col-6 mt-3">
 
-                        <div class="grid-producto h-100 d-flex flex-column">
+                        <div class="grid-producto h-100 d-flex flex-column image-front-responsive">
 
                             <div class="product-image">
 
@@ -301,6 +305,7 @@
 
 
 <!-- <script src="{{ asset('assets/vendor/elevatezoom/jquery.elevateZoom.min.js') }}"></script> -->
+
 <script src="{{ asset('assets/vendor/drift-main/dist/Drift.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/flipdown-master/src/flipdown.js') }}"></script>
 
@@ -337,7 +342,7 @@
         slidesToShow: 1,
         slidesToScroll: 1,
         arrows: false,
-        dots: false,
+        dots: true,
         fade: true,
         asNavFor: '.slider-nav-thumbnails'
     });
@@ -347,7 +352,7 @@
             slidesToScroll: 1,
             asNavFor: '.slider-for',
             dots: false,
-            centerMode: false,
+            centerMode: true,
             focusOnSelect: true,
             infinite: false,
             responsive: [
@@ -371,7 +376,8 @@
                     breakpoint: 480,
                     settings: {
                         slidesToShow: 3,
-                        slidesToScroll: 1
+                        slidesToScroll: 1,
+                        centerMode: true,
                     }
                 }
 
@@ -392,24 +398,30 @@
 
     // new Drift(document.querySelector("#productimage"), options );
 
-    let DrifAllImg = document.querySelectorAll('#productimage');
-    let pane = document.querySelector(".slider-for");
 
-    $(DrifAllImg).each(function(i, el){
-        let drift = new Drift(
-        el, {
-            zoomFactor: 1.8,
-            paneContainer: pane,
-            inlinePane: false,
-            handleTouch: false,
-            showCloseButton: false,
-            showWhitespaceAtEdges: false,
-            hoverDelay: 80,
-            hoverBoundingBox: false,
-            appendToSelector: null,
-        }
-        );
-    })
+    //Si vienen de mobiles
+    // if( !/Android|webOS|iPhone|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+
+    //     let DrifAllImg = document.querySelectorAll('#productimage');
+    //     let pane = document.querySelector(".slider-for");
+
+    //     $(DrifAllImg).each(function(i, el){
+    //         let drift = new Drift(
+    //         el, {
+    //             zoomFactor: 1.8,
+    //             paneContainer: pane,
+    //             inlinePane: false,
+    //             handleTouch: false,
+    //             showCloseButton: false,
+    //             showWhitespaceAtEdges: false,
+    //             hoverDelay: 80,
+    //             hoverBoundingBox: false,
+    //             appendToSelector: null,
+    //         }
+    //         );
+    //     })
+    // }
+    
 
     window.MostrarDetalleProductsG = function(producto, img)
     {
@@ -444,6 +456,13 @@
             console.log("Error al cargar los datos");
         });
     }
+
+    // $(window).on('resize', function(){
+    //     if ($(window).width() < 768) {
+    //     $('.slider-for').slick('unslick');
+    //     }
+    // });
+
 
     
     // $("#getting-started").countdown('2023/05/15', function(event) {

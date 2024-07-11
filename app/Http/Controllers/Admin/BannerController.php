@@ -12,6 +12,7 @@ use Vinkla\Hashids\Facades\Hashids;
 use App\Models\Bloque;
 use App\Models\Banner_Estilo;
 use App\Models\Banner;
+use App\Models\Configuracion;
 
 use App\Services\Admin\{
 	BannerService,
@@ -40,12 +41,13 @@ class BannerController extends Controller
         $bloques = Bloque::getBloqueTipoxBanner();
         $bannerEstilos = Banner_Estilo::getBannerEstilo();
         $banners = Banner::getBanners($estado);
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
 
         if ($request->ajax()):
             return view('admin.data.load_banners_data', compact('bloques', 'bannerEstilos', 'banners'));
         endif;
 
-        return view('admin.modules.banners', compact('bloques','bannerEstilos', 'banners'));
+        return view('admin.modules.banners', compact('bloques','bannerEstilos', 'banners','desarrollador'));
     }
 
     /**

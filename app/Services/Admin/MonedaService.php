@@ -8,7 +8,7 @@ use DB;
 
 class MonedaService
 {
-    public function addArrayDataMoneda($request)
+    public static function addArrayDataMoneda($request)
     {   
         
         $data = [
@@ -27,7 +27,7 @@ class MonedaService
 
     }
 
-    public function updateArrayDataMoneda($request)
+    public static function updateArrayDataMoneda($request)
     {
         $data = [
             "nombre" =>  $request->nombre,
@@ -42,7 +42,7 @@ class MonedaService
         return $data;
     }
 
-    public function desactiveMonedas()
+    public static function desactiveMonedas()
     {
         DB::table('monedas')->update(array('estado'=>0));
     }

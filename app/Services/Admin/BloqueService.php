@@ -10,7 +10,7 @@ use App\Services\Admin\ImageService;
 
 class BloqueService
 {
-    public function addArrayData($request, $tipobloque, $posicion)
+    public static function addArrayData($request, $tipobloque, $posicion)
     {
         $estado = $request->chkEstadoBloque == "on" ? "1":"0";
         $oculto =0;
@@ -69,7 +69,7 @@ class BloqueService
         return $data;
     }
 
-    public function updateArrayData($request, $tipobloque)
+    public static function updateArrayData($request, $tipobloque)
     {
         $jsonData = '';
         $nombreicono = '';
@@ -152,14 +152,14 @@ class BloqueService
         // return array($data, $nombreicono);
     } 
 
-    public function eliminarIcon($icono)
+    public static function eliminarIcon($icono)
     {   
         // $url = public_path('admin/images/iconos/'.$icono);
         $url = public_path('assets/images/iconos/'.$icono);
         echo ImageService::eliminarImg($url);
     }
 
-    public function moveImage($filename)
+    public static function moveImage($filename)
     {
         // $destino =  public_path('admin/images/iconos/');
         $destino =  public_path('assets/images/iconos/');

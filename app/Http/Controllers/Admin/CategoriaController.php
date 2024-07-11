@@ -9,11 +9,18 @@ use App\Models\Categoria;
 use App\Http\Requests\Admin\CategoriaStoreRequest;
 use Illuminate\Support\Str;
 use Vinkla\Hashids\Facades\Hashids;
+use PDF;
+
+use App\Exports\CategoriaExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 use App\Services\Admin\{
 	CategoriaService,
     ImageService
 };
+
+use App\Models\Configuracion;
 
 class CategoriaController extends Controller
 {
@@ -30,6 +37,7 @@ class CategoriaController extends Controller
 
     public function index(Request $request)
     {
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
         $categoriabuscar = $request->get('categoria');
         $estadocategoria = $request->get('estado');
 
@@ -51,7 +59,7 @@ class CategoriaController extends Controller
             return view('admin.data.load_categorias_data', compact('categorias','padres'));
         endif;
 
-        return view('admin.modules.categorias', compact('categorias','padres'));
+        return view('admin.modules.categorias', compact('categorias','padres', 'desarrollador'));
 
     }
     
@@ -198,6 +206,7 @@ class CategoriaController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     * 
      */
     public function show($categoria_id)
     {
@@ -543,5 +552,25 @@ class CategoriaController extends Controller
         return response()->json(['code' => '200']);
     }
 
+    public function generarPdf(Request $request)
+    {
+        $categorias = DB::table('categorias')
+        ->select('categorias.categoria_id','categorias.categoria','categorias.parent_id','categorias.url','categorias.estado',
+        DB::raw("(SELECT a.categoria from categorias a where a.categoria_id = categorias.parent_id) as parent"),
+        DB::raw("(SELECT IF(categorias.estado = 1, 'Activo', 'Inactivo')) as activo"))
+        ->where('categorias.estado',1)->where('categorias.oculto',0)->orderBy('parent','ASC')->get();
+
+          
+        $pdf = PDF::loadView('admin/pdf/categorias_pdf', array('categorias' =>  $categorias))
+        ->setPaper('a4', 'portrait');
+    
+        return $pdf->download('reporte_categorias.pdf');
+ 
+    }
+
+    public function generarExcel()
+    {
+        return Excel::download(new CategoriaExport, 'Reporte_Categorias.xlsx');
+    }
 
 }

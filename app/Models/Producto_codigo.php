@@ -17,11 +17,11 @@ class Producto_codigo extends Model
 
     protected $fillable = ['producto_id','codigo','descripcion','estado','oculto','usuario_registra','fecha_registro', 'usuario_modifica', 'fecha_modifica'];
 
-    public function productoCod(){
+    public static function productoCod(){
         return $this->belongsTo(Producto::class);
     }
 
-    public function getCodigosByProducto($codigoproducto, $estado)
+    public static function getCodigosByProducto($codigoproducto, $estado)
     {
         $codigosProducto = Producto_codigo::where('producto_id',$codigoproducto);
 
@@ -34,13 +34,13 @@ class Producto_codigo extends Model
         return $codigosProducto;
     }
 
-    public function getCodigoxID($id)
+    public static function getCodigoxID($id)
     {
         $dataCodigo = Producto_codigo::select('codigo')->where('producto_codigos_id',$id)->first();
         return $dataCodigo;
     }
 
-    public function acodigos($codigo_id)
+    public static function acodigos($codigo_id)
     {
         $data = [
             "estado" => 3

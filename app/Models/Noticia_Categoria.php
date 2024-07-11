@@ -18,7 +18,7 @@ class Noticia_Categoria extends Model
     protected $fillable = ['noticia_categoria','descripcion','parent_id','url','estado','oculto','usuario_registra','fecha_registro','usuario_modifica','fecha_modifica'];
 
 
-    public function getParentsNCExits($parent, $slug)
+    public static function getParentsNCExits($parent, $slug)
     {
         $noticia_categoria = Noticia_Categoria::where('parent_id',$parent)
                       ->where('url',$slug)->where('oculto',0)->count();
@@ -26,7 +26,7 @@ class Noticia_Categoria extends Model
         return $noticia_categoria;
     }
 
-    public function getListParentsNoticias()
+    public static function getListParentsNoticias()
     {
         $data = Noticia_Categoria::select('noticia_categoria_id','noticia_categoria')
                 ->where('parent_id',0)->where('estado',1)
@@ -36,20 +36,20 @@ class Noticia_Categoria extends Model
     }
 
     
-    public function getNoticiaCategoryExits($slug)
+    public static function getNoticiaCategoryExits($slug)
     {
         $categoria =  Noticia_Categoria::where('url',$slug)->where('oculto',0)->count();
 
         return $categoria;
     }
 
-    public function get_tree_select_noticias_categorias($parent = NULL)
+    public static function get_tree_select_noticias_categorias($parent = NULL)
     {
         $categoria = self::get_tree_noticias_categorias($parent);
         return self::multi_loop_noticias_categorias($categoria);
     }
 
-    public function get_tree_noticias_categorias($parent = NULL)
+    public static function get_tree_noticias_categorias($parent = NULL)
     {
         $array_menu = array();
         $where = array();
@@ -85,7 +85,7 @@ class Noticia_Categoria extends Model
     }
 
     
-    private function multi_loop_noticias_categorias($noticia_categoria, $parentName = NULL)
+    private static function multi_loop_noticias_categorias($noticia_categoria, $parentName = NULL)
     {
         $options = array();
         foreach ($noticia_categoria as $nc) {
@@ -101,7 +101,7 @@ class Noticia_Categoria extends Model
         return $options;
     }
 
-    public function get_treeNoticiasCategories($parent = NULL)
+    public static function get_treeNoticiasCategories($parent = NULL)
     {
         $array_menu = array();
         $where = array();
@@ -136,7 +136,7 @@ class Noticia_Categoria extends Model
    
     }
 
-    public function getNoticiaCategoriaxUrl($url)
+    public static function getNoticiaCategoriaxUrl($url)
     {
         $data = Noticia_Categoria::select('noticia_categoria')
                     ->where('url', $url)
@@ -145,7 +145,7 @@ class Noticia_Categoria extends Model
     }
 
 
-    public function getNotCatxUrl($url, $sub)
+    public static function getNotCatxUrl($url, $sub)
     {
         $noticia_categoria = Noticia_Categoria::select('noticia_categoria_id')
                 ->where('url', $url)

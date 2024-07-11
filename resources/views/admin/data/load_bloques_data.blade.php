@@ -1,5 +1,4 @@
 <ul class="list-group">
-
     @if(count($bloques) > 0)
         @php($posicion=0)                 
         @foreach($bloques as $key => $blo)
@@ -25,11 +24,15 @@
                         @endcan
 
                         @can('admin.disenio.actualizar')
+                            @if($blo->codigo!='OFERTAS')
                             <img src="{{ url('admin_assets/images/edit.png') }}" onclick="mostrarBloque(<?php echo "'".$parameter."'"; ?>)" title="Editar Bloque" style="cursor: pointer; height:20px; width:20px;">
-                        @endcan
+                            @endif  
+                         @endcan
 
                         @can('admin.disenio.eliminar')
+                            @if($blo->codigo!='OFERTAS')
                             <img src="{{ url('admin_assets/images/delete3.png') }}" onclick="eliminarBloque(<?php echo "'".$parameter."'"; ?>)" title="Eliminar Bloque" style="cursor: pointer; height:20px; width:20px;">
+                            @endif   
                         @endcan
                         
                         @if($blo->estado!=0)

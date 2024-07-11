@@ -24,6 +24,8 @@ use App\Services\Admin\{
 
 use Carbon\Carbon;
 
+use App\Models\Configuracion;
+
 class NoticiaController extends Controller
 {
     /**
@@ -47,12 +49,13 @@ class NoticiaController extends Controller
 
         $noticias = Noticia::getNoticiasWithImage($ntitulo, $ncat, $nestado);
         $noticias_categorias = Noticia_Categoria::get_tree_select_noticias_categorias();
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
 
         if ($request->ajax()):
             return view('admin.data.load_noticias_data', compact('noticias', 'noticias_categorias'));
         endif;
 
-        return view('admin.modules.noticias', compact('noticias', 'noticias_categorias'));
+        return view('admin.modules.noticias', compact('noticias', 'noticias_categorias','desarrollador'));
     }
 
     /**
@@ -65,9 +68,10 @@ class NoticiaController extends Controller
         //
         $noticias_categorias = Noticia_Categoria::get_tree_select_noticias_categorias();
         $noticias_tags = Noticia_Tag::where('estado',1)->where('oculto',0)->get();
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
         // $noticias_tags = Tag::where('estado',1)->where('oculto',0)->get();
 
-        return view('admin.modules.crud-noticias', compact('noticias_categorias','noticias_tags'));
+        return view('admin.modules.crud-noticias', compact('noticias_categorias','noticias_tags', 'desarrollador'));
     }
 
     /**
@@ -243,8 +247,9 @@ class NoticiaController extends Controller
 
         $imgnoticiaprincipal = Noticia_Imagens::where('noticia_id', $decrypt_id)->where('principal',1)->first();
         $imgnoticiagaleria = Noticia_Imagens::where('noticia_id', $decrypt_id)->where('principal',0)->get();
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
 
-        return view('admin.modules.crud-noticias', compact('noticia', 'noticias_categorias', 'noticias_tags', 'noticiascategorias_Array', 'noticiasetiquetas_Array', 'imgnoticiaprincipal','imgnoticiagaleria'));
+        return view('admin.modules.crud-noticias', compact('noticia', 'noticias_categorias', 'noticias_tags', 'noticiascategorias_Array', 'noticiasetiquetas_Array', 'imgnoticiaprincipal','imgnoticiagaleria', 'desarrollador'));
 
     }
 

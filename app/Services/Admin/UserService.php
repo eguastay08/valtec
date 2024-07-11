@@ -10,7 +10,7 @@ use DB, Validator,Hash;
 class UserService
 {
 
-    public function addArrayUsuario($request)
+    public static function addArrayUsuario($request)
     {
         $estado = $request->chkEstadoUsuario == "on" ? "1":"0";
         $oculto =0;
@@ -45,7 +45,7 @@ class UserService
 
     }
 
-    public function updateArrayUsuario($request, $password)
+    public static function updateArrayUsuario($request, $password)
     {
         $estado = $request->chkEstadoUsuario == "on" ? "1":"0";
         $oculto =0;
@@ -83,40 +83,40 @@ class UserService
     
     }
     
-    public function moveFoto($filename)
+    public static function moveFoto($filename)
     {
         $destino =  public_path('admin_assets/images/usuarios/');
         echo ImageService::moveimage($filename ,$destino);
     }
 
-    public function exitsFotoUsuario($filename)
+    public static function exitsFotoUsuario($filename)
     {
         $url = public_path($filename);
         echo ImageService::eliminarImg($url);
     }
 
-    public function eliminarFotoUsuario($user_id, $filename)
+    public static function eliminarFotoUsuario($user_id, $filename)
     {
         $url = public_path('admin_assets/images/usuarios/'.$filename);
         $image = ImageService::eliminarImg($url);
         User::where("user_id", $user_id)->update(["foto" => "", "foto_name" => "", "foto_size" => ""]);
     }
     
-    public function getRolxUser($user_id)
+    public static function getRolxUser($user_id)
     {
         $data = DB::table('model_has_roles')->where('model_id', $user_id)->pluck('role_id')->toArray();
 
         return $data;
     }
 
-    public function CountRolesByUser($id)
+    public static function CountRolesByUser($id)
     {
         $count = DB::table('model_has_roles')->where('model_id', $id)->count();
 
         return $count;
     }
 
-    public function DeleteRolesByUser($id)
+    public static function DeleteRolesByUser($id)
     {
         $deleted = DB::table('model_has_roles')->where('model_id', $id)->delete();
     }

@@ -40,7 +40,7 @@ class BloqueTipoSeeder extends Seeder
                 "nombre"=>"Opiniones",
                 "parametros"=>"['icono']",
                 "estado"=>1,
-                "oculto"=>0,
+                "oculto"=>1,
                 "usuario_registro"=>"46749322",
                 "fecha_registro"=>now()
             ],
@@ -59,6 +59,15 @@ class BloqueTipoSeeder extends Seeder
                 "parametros"=>"['icono']",
                 "estado"=>1,
                 "oculto"=>0,
+                "usuario_registro"=>"46749322",
+                "fecha_registro"=>now()
+            ],
+            [
+                "codigo"=>"OFERTAS",
+                "nombre"=>"Ofertas",
+                "parametros"=>"['icono']",
+                "estado"=>1,
+                "oculto"=>1,
                 "usuario_registro"=>"46749322",
                 "fecha_registro"=>now()
             ],

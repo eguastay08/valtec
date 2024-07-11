@@ -57,8 +57,8 @@
                                             <span class="precioMinRange" id="priceMin"></span>
                                             <span class="precioMaxRange" id="priceMax"></span>
                                         </div>
-                                        <input type="hidden" name="preciod" id="preciod" value="{{$precioD != "" ? $precioD : ''}}">
-                                        <input type="hidden" name="precioh" id="precioh" value="{{$precioH != "" ? $precioH : ''}}">
+                                        <input type="hidden" name="preciodP" id="preciodP" value="{{$precioD != "" ? $precioD : ''}}">
+                                        <input type="hidden" name="preciohP" id="preciohP" value="{{$precioH != "" ? $precioH : ''}}">
 
                                     </div>
 
@@ -195,10 +195,10 @@
                                             <!-- Imagen Producto -->
                                             <img class="img-fluid" data-src="{{asset($pdata['imgproducto'])}}" src="{{asset($pdata['imgproducto'])}}" alt="Imagen Producto" title="{{$pdata['producto']}}">
                                             <!-- Fin Imagen Producto -->
-
+                                            
                                             <!-- Descuento producto -->
                                             @if($pdata['descuento'] > 0)
-                                                <div class="tag-descuento rounded"><span class="lbl-discount"><p>-{{$pdata['descuento']}}%</p></span></div>
+                                                <div class="descuento-tag rounded"><span class="lbl-discount"><p>-{{$pdata['descuento']}}%</p></span></div>
                                             @endif
                                             <!-- Fin Descuento Producto -->
 
@@ -308,8 +308,8 @@
         let precioSlider = document.getElementById('precioSlider');
         let PriceMin = document.getElementById('priceMin');
         let PriceMax = document.getElementById('priceMax');
-        let precioD = document.getElementById('preciod');
-        let precioH = document.getElementById('precioh');
+        let precioD = document.getElementById('preciodP');
+        let precioH = document.getElementById('preciohP');
         let rangemax = <?php echo $precioMaxPro ?>; 
  
         noUiSlider.create(precioSlider, {

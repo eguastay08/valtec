@@ -18,7 +18,7 @@ class Estilo extends Model
 
     protected $fillable = ['nombre','variable','elemento','propiedad','valor','posicion','oculto','usuario_registra','fecha_registro','usuario_modifica','fecha_modifica'];
 
-    public function get_Estilos()
+    public static function get_Estilos()
     {
         $data  = DB::table('estilos as e')
                 ->select('e.estilo_id','e.estilo_tipo_id','et.nombre as estilotipo','e.nombre','e.variable','e.elemento','e.propiedad','e.valor')

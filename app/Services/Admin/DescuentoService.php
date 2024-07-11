@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class DescuentoService
 {
 
-    public function addArrayDataDescuento($request)
+    public static function addArrayDataDescuento($request)
     {   
         $estado = $request->chkEstadoDescuento == "on" ? "1":"0";
         $oculto =0;
@@ -29,7 +29,7 @@ class DescuentoService
 
     }
 
-    public function updateArrayDataDescuento($request)
+    public static function updateArrayDataDescuento($request)
     {   
         $estado = $request->chkEstadoDescuento == "on" ? "1":"0";
         $oculto =0;

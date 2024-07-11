@@ -17,14 +17,14 @@ class Bloque extends Model
 
     protected $fillable = ['bloque_tipo_id','config','titulo','icono','nombre_icono','size_icono','posicion','estado','oculto','usuario_registra','fecha_registro','usuario_modifica','fecha_modifica'];
 
-    public function getBloques()
+    public static function getBloques()
     {
         // $bloque = Bloque::join('bloque_tipos', 'bloques.bloque_tipo_id', '=', 'bloque_tipos.bloque_tipo_id')
         //                     ->get(['bloques.bloque_id','bloques.bloque_tipo_id','bloque_tipos.nombre','bloques.config','bloques.titulo','bloques.icono','bloques.estado','bloques.posicion']);
-        $bloque = Bloque::select('bloques.bloque_id','bloques.bloque_tipo_id','bloque_tipos.nombre','bloques.config','bloques.titulo','bloques.icono','bloques.estado','bloques.posicion')
+        $bloque = Bloque::select('bloques.bloque_id','bloques.bloque_tipo_id','bloque_tipos.nombre','bloque_tipos.codigo','bloques.config','bloques.titulo','bloques.icono','bloques.estado','bloques.posicion')
                             ->join('bloque_tipos', 'bloques.bloque_tipo_id', '=', 'bloque_tipos.bloque_tipo_id')
+                            // ->where('bloque_tipos.codigo', '!=', 'OFERTAS')
                             ->where('bloques.oculto',0)
-                            ->whereNotIn('bloques.bloque_id',[23])
                             ->orderBy('bloques.posicion','asc')
                             ->get();
         return $bloque;
@@ -58,6 +58,7 @@ class Bloque extends Model
                         })
                         ->where('bloques.estado',1)
                         ->where('bloques.oculto',0)
+                        // ->whereNotIn('bloques.bloque_id', [23])
                         ->orderBy('bloques.titulo','asc')
                         ->get();
 
@@ -74,7 +75,7 @@ class Bloque extends Model
         })
         ->where('bloques.estado',1)
         ->where('bloques.oculto',0)
-        ->whereNotIn('bloques.bloque_id', [23])
+        // ->whereNotIn('bloques.bloque_id', [23])
         ->orderBy('bloques.posicion','asc')
         ->get()->toArray();
 

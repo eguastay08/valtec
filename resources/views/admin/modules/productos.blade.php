@@ -85,17 +85,18 @@
             
         </div>
 
-        @can('admin.productos.crear')
+      
         <div class="row">
-            <div class="col-xl-12 col-md-12 col-sm-12 d-flex justify-content-end">
+            <div class="col-12">
 
-                <div class="form-group mr-20-sm">
-                    <a type="button" class="btn btn-sm btn-dark btn-fw"  href="{{ route('admin.productos.create') }}"><img src="{{ url('admin_assets/images/add2.png') }}" alt="agregar" width="25px"> Agregar Producto</a>
+                <div class="form-group mr-20-sm boton-group">
+                        @can('admin.productos.crear')
+                        <a type="button" class="btn btn-sm btn-dark btn-fw"  href="{{ route('admin.productos.create') }}"><img src="{{ url('admin_assets/images/add2.png') }}" alt="agregar" width="25px"> Agregar Producto</a>
+                    @endcan
                 </div>
 
             </div>
         </div>
-        @endcan
 
         <div class="row">
             <div class="col-12 grid-margin">

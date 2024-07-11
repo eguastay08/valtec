@@ -44,8 +44,10 @@ class FrontController extends Controller
 
         $cart_content = Cart::getContent();
         $cart_total = Cart::getTotal();
+        
+        $nroproductosofertas =  FrontService::getCountProductosDescuentos();
 
-        return view('index', compact('sliders', 'popups', 'bloques', 'moneda', 'menus', 'web_title','descripcion_tienda','horario_atencion','treecategoria', 'cart_content','cart_total'));
+        return view('index', compact('sliders', 'popups', 'bloques', 'moneda','nroproductosofertas', 'menus', 'web_title','descripcion_tienda','horario_atencion','treecategoria', 'cart_content','cart_total'));
     }
 
     public function getAsNavMenus(Request $request)
@@ -104,9 +106,9 @@ class FrontController extends Controller
         return view('producto', compact('moneda', 'menus', 'producto', 'mediosPago', 'productos_relacionados','web_title','descripcion_tienda','horario_atencion','treecategoria', 'cart_content','cart_total'));
     }
 
-    public function getCategoriaFront($url, $sub = '', Request $request)
+    public function getCategoriaFront($url, Request $request)
     {
-
+        $sub = '';
         $catxUrl = FrontService::getCatxUrl($url, $sub);
         if($catxUrl===NULL):
             return redirect('/');
@@ -188,7 +190,90 @@ class FrontController extends Controller
         return view('categorias', compact('moneda', 'sub','categoriaTitle', 'subtitleCategoria','titulo_catFront','bannercat','menus','categorias', 'etiquetas', 'productosxcategorias', 'url_actual', 'sub_actual', 'url_lista', 'precioD', 'precioH', 'productobuscar', 'order', 'web_title','descripcion_tienda','horario_atencion','treecategoria', 'cart_content', 'cart_total', 'precioMaxCat'));
     }
 
-    public function getEtiquetaFront($url, Request $request)
+    public function getCategoriaFront2($url, $sub, Request $request)
+    {
+        $catxUrl = FrontService::getCatxUrl($url, $sub);
+        if($catxUrl===NULL):
+            return redirect('/');
+        endif;
+
+        $precioD = '';
+        $precioH = '';
+        $productobuscar = '';
+        $order = '';
+        $subtitleCategoria = '';
+        $titulo_catFront = '';
+        $precioMaxCat = 0;
+        $bannercat = '';
+
+        $web_title = Configuracion::get_valorxvariable('website_title');
+        $descripcion_tienda = Configuracion::get_valorxvariable('descripcion_tienda');
+        $horario_atencion = Configuracion::get_valorxvariable('horario_atencion');
+
+        $moneda = FrontService::getMonedaFront();
+
+        $menus = FrontService::getMenusFront();
+
+        $categorias = FrontService::getCategoriasTreeFront();
+
+        $etiquetas = FrontService::getTagsFront();
+
+        $treecategoria = Categoria::get_frontCategoria();
+        
+        $cart_content = Cart::getContent();
+        $cart_content = $cart_content->sort();
+        $cart_total = Cart::getTotal();
+  
+        // if(!$request->input('btnReset')):
+
+            if($request->input('preciod')):
+                $precioD = $request->input('preciod');
+            endif;
+    
+            if($request->input('precioh')):
+                $precioH = $request->input('precioh');
+            endif;
+    
+            if($request->input('productBusc')):
+                $productobuscar = $request->input('productBusc');
+            endif;
+    
+            if($request->input('order')):
+                $order = $request->input('order');
+            endif;
+         
+        // endif;
+
+        $categoriaTitle = Categoria::getCategoriaTitleFront($url);
+
+        $productosxcategorias = FrontService::getProductosGlobalxUrlCategoria($url, $sub, $precioD, $precioH, $productobuscar, $order);
+
+        $precioMaxCat = FrontService::getMaxPrecioProductosxCategoria($url, $sub);
+
+      
+        $url_actual = $url;
+        
+        $sub_actual = $sub;
+
+        // var_dump($categoriaTitle);exit;
+        //  var_dump($url.'/'.$sub); exit;
+        
+
+        if($sub != ""):
+            $url_lista = $url.'/'.$sub;
+            $subtitleCategoria = Categoria::subCategoriaTitleFront($categoriaTitle['categoria_id'], $url_lista);
+            $titulo_catFront = $categoriaTitle['categoria'] . ' / ' . $subtitleCategoria['categoria'];
+            $bannercat = FrontService::getImgCat($categoriaTitle['categoria_id'], $url_lista);
+        else:
+            $url_lista = $url;
+            $titulo_catFront = $categoriaTitle['categoria'];
+            $bannercat = FrontService::getImgCat($categoriaTitle['categoria_id']);
+        endif;
+
+        return view('categorias', compact('moneda', 'sub','categoriaTitle', 'subtitleCategoria','titulo_catFront','bannercat','menus','categorias', 'etiquetas', 'productosxcategorias', 'url_actual', 'sub_actual', 'url_lista', 'precioD', 'precioH', 'productobuscar', 'order', 'web_title','descripcion_tienda','horario_atencion','treecategoria', 'cart_content', 'cart_total', 'precioMaxCat'));
+    }
+
+    public function getEtiquetaFront($url = '', Request $request)
     {
 
         $tagxUrl = FrontService::getTagxUrl($url);
@@ -250,6 +335,59 @@ class FrontController extends Controller
         return view('etiquetas', compact('moneda', 'precioMaxTag','titleTag','menus', 'categorias', 'etiquetas', 'productosxtag', 'url', 'url_lista', 'precioD', 'precioH','productobuscar', 'order', 'page', 'web_title','descripcion_tienda','horario_atencion','treecategoria', 'cart_content', 'cart_total'));
     }
 
+    public function getProductosOfertas(Request $request)
+    {
+
+        $precioD = '';
+        $precioH = '';
+        $productobuscar = '';
+        $order = '';
+        $page = '';
+        if($request->input('page')):
+            $page = $request->input('page');
+        endif;
+        
+        if($request->input('preciodOferta')):
+            $precioD = $request->input('preciodOferta');
+        endif;
+
+        if($request->input('preciohOferta')):
+            $precioH = $request->input('preciohOferta');
+        endif;
+
+        if($request->input('productofertaBusc')):
+            $productobuscar = $request->input('productofertaBusc');
+        endif;
+
+        if($request->input('orderProductOferta')):
+            $order = $request->input('orderProductOferta');
+        endif;
+
+        $web_title = Configuracion::get_valorxvariable('website_title');
+        $descripcion_tienda = Configuracion::get_valorxvariable('descripcion_tienda');
+        $horario_atencion = Configuracion::get_valorxvariable('horario_atencion');
+
+        $treecategoria = Categoria::get_frontCategoria();
+
+        $moneda = FrontService::getMonedaFront();
+
+        $menus = FrontService::getMenusFront();
+
+        $categorias = FrontService::getCategoriasTreeFront();
+
+        $etiquetas = FrontService::getTagsFront();
+
+        $productosxOfertas = FrontService::getProductosGlobalxOfertas($precioD, $precioH, $productobuscar, $order);
+
+        $precioMaxOfertas = FrontService::getMaxPrecioProductosOfertas($productobuscar);
+        $cart_content = Cart::getContent();
+        $cart_content = $cart_content->sort();
+        $cart_total = Cart::getTotal();
+
+        return view('productosOfertas', compact('moneda', 'precioMaxOfertas','menus', 'categorias', 'etiquetas', 'productosxOfertas','precioD', 'precioH','productobuscar', 'order', 'page', 'web_title','descripcion_tienda','horario_atencion','treecategoria', 'cart_content', 'cart_total'));
+    }
+    
+
     public function getProductsSearch(Request $request)
     {   
         $productostring = $request->producto;
@@ -262,6 +400,7 @@ class FrontController extends Controller
             $aproductosdata[$i]['url'] = $productosArray[$i]['url'];
             $aproductosdata[$i]['imgproducto'] = $productosArray[$i]['imgproducto'];
             $aproductosdata[$i]['format_producto'] = FrontService::highlightKeywords($productosArray[$i]['producto'], $productostring);
+            //  $aproductosdata[$i]['format_producto'] =html_entity_decode($productosArray[$i]['producto']);
             // $wordsAry = explode(" ", $productosArray[$i]['producto']);
             // $wordsCount = count($wordsAry);
             // $text ='';
@@ -351,6 +490,7 @@ class FrontController extends Controller
         $mediosPago = FrontService::getMediosPagoFront();
         $captchakey = Configuracion::get_valorxvariable('go_site_key');
         $bannerPago = FrontService::getBannerPago();
+        $cadena64 = base64_encode('38198949:testpassword_dWEVUFGw7WYRfWFxEGJQKgjwfQzKrVnFdQQzjJ55kFlV5');
         
         $descuento = Cart::getConditions();
         $discount_array = array();
@@ -365,7 +505,7 @@ class FrontController extends Controller
    
 
         return view('pago', compact('moneda','menus','web_title','descripcion_tienda','horario_atencion','bannerPago',
-        'treecategoria','cart_content','cart_subtotal','cart_total', 'mediosPago', 'captchakey', 'discount_array'));
+        'treecategoria','cart_content','cart_subtotal','cart_total', 'mediosPago', 'captchakey', 'discount_array', 'cadena64'));
         
     }
 

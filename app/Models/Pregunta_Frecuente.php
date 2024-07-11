@@ -18,7 +18,7 @@ class Pregunta_Frecuente extends Model
     protected $fillable = ['pregunta','respuesta','posicion','estado','oculto','usuario_registra','fecha_registro','usuario_modifica','fecha_modifica'];
 
 
-    public function getPreguntasFrecuentes($estado)
+    public static function getPreguntasFrecuentes($estado)
     {
         $preguntas_frecuentes= Pregunta_Frecuente::select('pregunta_frecuente_id','pregunta','respuesta','posicion','estado');
         
@@ -33,31 +33,31 @@ class Pregunta_Frecuente extends Model
         return $preguntas_frecuentes;
     }
 
-    public function countPregunta()
+    public static function countPregunta()
     {
         $pregunta_frecuente = Pregunta_Frecuente::where('oculto',0)->count();
         return $pregunta_frecuente;
     }
 
-    public function latestPositionPregunta()
+    public static function latestPositionPregunta()
     {
         $pregunta_frecuente = Pregunta_Frecuente::select('posicion')->where('oculto',0)->max('posicion');
         return $pregunta_frecuente;
     }
 
-    public function getCountByPregunta($posicion)
+    public static function getCountByPregunta($posicion)
     {
         $count = Pregunta_Frecuente::where('posicion',$posicion)->where('oculto',0)->count(); 
         return $count;
     }
 
-    public function getPreguntaByPosition($posicion)
+    public static function getPreguntaByPosition($posicion)
     {
         $pregunta_frecuente = Pregunta_Frecuente::select('pregunta_frecuente_id')->where('posicion',$posicion)->first();
         return $pregunta_frecuente;
     }
 
-    public function preguntasFrecuentesFront()
+    public static function preguntasFrecuentesFront()
     {
         $preguntas_frecuentes= Pregunta_Frecuente::select('pregunta_frecuente_id','pregunta','respuesta','posicion','estado')
                                                     ->where('estado',1)

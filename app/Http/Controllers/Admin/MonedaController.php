@@ -15,6 +15,8 @@ use App\Services\Admin\{
 	ImageService
 };
 
+use App\Models\Configuracion;
+
 class MonedaController extends Controller
 {
     /**
@@ -33,12 +35,13 @@ class MonedaController extends Controller
     {
         //
         $monedas = Moneda::getMonedas();
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
 
         if($request->ajax()):
             return view('admin.data.load_monedas_data', compact('monedas'));
         endif;
 
-        return view('admin.modules.monedas', compact('monedas'));
+        return view('admin.modules.monedas', compact('monedas', 'desarrollador'));
     }
 
     /**

@@ -35,4 +35,5 @@ class Configuracion extends Model
         return $data;
     }
 
+
 }

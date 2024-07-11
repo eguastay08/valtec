@@ -27952,6 +27952,13 @@ body.avgrund-active {
   height: 200px;
 }
 
+.btn-default-export 
+{
+  color: #000 !important;
+  border-color:#000 !important;
+  background-color: #c2c2c2 !important;
+}
+
 /* Progressbar-js */
 .progress-bar-js-line {
   height: 6px;
@@ -29223,7 +29230,7 @@ div.tagsinput span.tag a {
 
 .profile-page .profile-header {
   width: 100%;
-  background: url("http://www.urbanui.com/") no-repeat center center;
+  /* background: url("http://www.urbanui.com/") no-repeat center center; */
   background-size: cover;
   padding: 60px 0;
   border-radius: 5px;
@@ -29378,6 +29385,7 @@ div.tagsinput span.tag a {
 /*# sourceMappingURL=maps/style.css.map */
 
 @media (min-width: 768px) {
+ 
   .btn-mt{
     margin-top:18px;
   }
@@ -29396,6 +29404,19 @@ div.tagsinput span.tag a {
     max-width:60%;
   } */
 
+  .boton-group
+  {
+    display: flex;
+    justify-content: end;
+  }
+
+  .boton-group a:nth-child(2)
+  {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  
+
 }
 
 
@@ -29403,6 +29424,19 @@ div.tagsinput span.tag a {
   .mt-20{
     margin-top:20px;
   } 
+
+  .boton-group
+  {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+  }
+
+  .boton-group a:nth-child(2)
+  {
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
 
 }
 

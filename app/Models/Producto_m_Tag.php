@@ -17,11 +17,11 @@ class Producto_m_Tag extends Model
 
     protected $fillable = ['producto_id','tag_id','oculto','usuario_registra','fecha_registro', 'usuario_modifica', 'fecha_modifica'];
 
-    public function Producto_productoTag(){
+    public static function Producto_productoTag(){
         return $this->belongsTo(Producto::class);
     }
 
-    public function Tag_ProductoTag(){
+    public static function Tag_ProductoTag(){
         return $this->belongsTo(Tag::class);
     }
 

@@ -49,18 +49,23 @@
             </div>
             
         </div>
-    
-        @can('admin.categorias.crear')
+       
         <div class="row">
-            <div class="col-xl-12 col-md-12 col-sm-12 d-flex justify-content-end">
+            <div class="col-12">
 
-                <div class="form-group mr-20-sm">
+                <div class="form-group mr-20-sm boton-group">
+                  
+                    <a href="{{url('admin/Excel/ReporteCategoriaExcel')}}" type="button" class="btn btn-sm btn-default-export  btn-fw" target="_blank"><img src="{{ url('admin_assets/images/excel.png') }}" alt="Exportar Excel" width="25px"> Exportar Excel</a>
+                    <a href="{{url('admin/pdf/ReporteCategoriaPdf')}}"  type="button" class="btn btn-sm btn-default-export  btn-fw"><img src="{{ url('admin_assets/images/pdf.png') }}" alt="Exportar PDF" width="25px"> Exportar PDF</a>    
+                 
+                    @can('admin.categorias.crear')
                     <button type="button" class="btn btn-sm btn-dark btn-fw" data-toggle="modal" data-target="#ModalCategoria"><img src="{{ url('admin_assets/images/add2.png') }}" alt="agregar" width="25px"> Agregar Categoría</button>
+                    @endcan
                 </div>
 
             </div>
         </div>
-        @endcan
+      
 
         <div class="row">
             <div class="col-12 grid-margin">

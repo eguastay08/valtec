@@ -62,17 +62,23 @@
                         <td>{!! \Carbon\Carbon::parse($or->fecha_registro)->format('d/m/Y H:i:s') !!}</td>
                         <td>
                             <div class="btn-group" role="group">
-                                @can('admin.moneda.actualizar')
+                                @can('admin.ordenes.ver_detalle')
                                     <a href="{{ route('admin.ordenes.show',$parameter) }}"><img src="{{ url('admin_assets/images/eye1.png') }}" onclick="VerDetalleOrden(<?php echo "'".$parameter."'"; ?>)" title="Ver Detalle de Orden" style="cursor: pointer; height:24px; width:24px;"></a>
                                 @endcan
 
-                                @if($or->comprobante!="")
-                                <img src="{{ url('admin_assets/images/comprobante.png') }}" onclick="MostrarComprobante(<?php echo "'".asset('assets/images/comprobantes/'.$or->comprobante)."'"; ?>)" style="cursor: pointer; height:24px; width:24px;" title="Visualizar comprobante" alt="Visualizar comprobante">                                @endif
+                                @can('admin.ordenes.visualizar_comprobante')
+                                    @if($or->comprobante!="")
+                                        <img src="{{ url('admin_assets/images/comprobante.png') }}" onclick="MostrarComprobante(<?php echo "'".asset('assets/images/comprobantes/'.$or->comprobante)."'"; ?>)" style="cursor: pointer; height:24px; width:24px;" title="Visualizar comprobante" alt="Visualizar comprobante">                                
+                                    @endif
+                                @endcan
 
                                 @if($or->orden_estado_id==2)
 
-                                    @can('admin.moneda.eliminar')
+                                    @can('admin.ordenes.aprobar_orden')
                                         <img src="{{ url('admin_assets/images/aprobado.png') }}" onclick="AprobarOrden(<?php echo "'".$parameter."'"; ?>)" title="Aprobar Orden" style="cursor: pointer; height:24px; width:24px;">
+                                    @endcan
+
+                                    @can('admin.ordenes.rechazar_orden')
                                         <img src="{{ url('admin_assets/images/delete3.png') }}" onclick="RechazarOrden(<?php echo "'".$parameter."'"; ?>)" title="Rechazar Orden" style="cursor: pointer; height:24px; width:24px;">
                                     @endcan
                                 
@@ -80,15 +86,20 @@
                                 @elseif($or->orden_estado_id==7)
 
                                     @can('admin.moneda.eliminar')
+                                        @can('admin.ordenes.aprobar_orden')
                                         <img src="{{ url('admin_assets/images/aprobado.png') }}" onclick="AprobarOrden(<?php echo "'".$parameter."'"; ?>)" title="Aprobar Orden" style="cursor: pointer; height:24px; width:24px;">
+                                        @endcan
+
+                                        @can('admin.ordenes.rechazar_orden')
                                         <img src="{{ url('admin_assets/images/delete3.png') }}" onclick="RechazarOrden(<?php echo "'".$parameter."'"; ?>)" title="Rechazar Orden" style="cursor: pointer; height:24px; width:24px;">
+                                        @endcan 
                                     @endcan
 
 
                                 @elseif($or->orden_estado_id==1)
 
-                                        @can('admin.moneda.eliminar')
-                                            <img src="{{ url('admin_assets/images/atendido.png') }}" onclick="AtenderOrden(<?php echo "'".$parameter."'"; ?>)" title="Eliminar Medio de Pago" style="cursor: pointer; height:24px; width:24px;">
+                                        @can('admin.ordenes.atender_orden')
+                                            <img src="{{ url('admin_assets/images/atendido.png') }}" onclick="AtenderOrden(<?php echo "'".$parameter."'"; ?>)" title="Orden Atendida" style="cursor: pointer; height:24px; width:24px;">
                                         @endcan
 
                                 @endif

@@ -9,6 +9,8 @@ use App\Models\Noticia_Tag;
 use Illuminate\Support\Str;
 use Vinkla\Hashids\Facades\Hashids;
 
+use App\Models\Configuracion;
+
 class NoticiaTagController extends Controller
 {
     /**
@@ -39,13 +41,15 @@ class NoticiaTagController extends Controller
         }
 
         $noticia_tags = $noticia_tags->where('oculto',0)->orderBy('noticia_tag','ASC')->paginate(10);
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
+
 
         if ($request->ajax()) {
 
             return view('admin.data.load_noticias_tag_data', compact('noticia_tags'));       
         }
 
-        return view('admin.modules.noticias_tags', compact('noticia_tags'));
+        return view('admin.modules.noticias_tags', compact('noticia_tags', 'desarrollador'));
     }
 
     /**

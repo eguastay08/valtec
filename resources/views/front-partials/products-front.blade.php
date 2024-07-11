@@ -14,7 +14,7 @@
 
                             <?php $encryptProduct=Hashids::encode($producto['producto_id']);?> 
 
-                            <div class="item-producto shadow-box d-flex flex-column" style="height:99% !important;">
+                            <div class="item-producto shadow-box d-flex flex-column image-front-responsive" style="height:99% !important;">
                                 
                                 <div class="product-image">
 
@@ -101,7 +101,7 @@
 
                         <div class="col-lg-2 col-md-3 col-6 mb-4">
 
-                            <div class="grid-producto h-100 d-flex flex-column">
+                            <div class="grid-producto h-100 d-flex flex-column image-front-responsive">
 
                                 <div class="product-image">
 

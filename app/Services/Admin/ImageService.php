@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\File;
 
 class ImageService
 {
-    public function subirImagenTmp($request)
+    public static function subirImagenTmp($request)
     {
         // $pathtmp = public_path('admin_assets/images/tmp/');
         $pathtmp = public_path('assets/images/tmp/');
@@ -31,7 +31,7 @@ class ImageService
         return $data;
     }
 
-    public function eliminarImagenTmp($request)
+    public static function eliminarImagenTmp($request)
     {
         // if( File::exists(public_path('admin_assets/images/tmp/'.$request->filename))):
         //     File::delete(public_path('admin_assets/images/tmp/'.$request->filename));
@@ -43,7 +43,7 @@ class ImageService
         return true;
     }
 
-    public function moveimage($filename, $destino)
+    public static function moveimage($filename, $destino)
     {
         // $origen = public_path('admin_assets/images/tmp');
         $origen = public_path('assets/images/tmp');
@@ -57,7 +57,7 @@ class ImageService
         unlink($origen.'/'.$filename);
     }
 
-    public function eliminarImg($url)
+    public static function eliminarImg($url)
     {
         if( File::exists($url)):
             File::delete($url);

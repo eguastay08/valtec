@@ -317,8 +317,9 @@ class Cssparser {
           $parenthesis = array();
 
           while($idx < $codeLen) {
-
-            $c = isset($code{$idx}) ? $code{$idx} : '';
+            //laravel 8
+            // $c = isset($code{$idx}) ? $code{$idx} : '';
+            $c = isset($code[$idx]) ? $code[$idx] : '';
 
             $idx++;
 

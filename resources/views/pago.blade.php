@@ -37,6 +37,7 @@
             </div>
 
         </div>
+        
 
         <form id="pagform" class="pform" method="POST">
 
@@ -376,6 +377,8 @@
                                 <button type="button" class="btn btn-form-step btn-prev  btn-dark me-4" style="border-radius:24px;"><i class="fas fa-chevron-left"></i> Anterior</a>
                                 <button type="submit" id="btnpagar" class="btn btn-pagar-style" style="border-radius:24px;">Realizar Compra</button>
                             </div>
+                            
+                             
 
                         </div>
 

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Validator;
 use Vinkla\Hashids\Facades\Hashids;
 use App\Models\Estilo;
+use App\Models\Configuracion;
 use App\Services\Admin\{
 	Cssparser
 };
@@ -29,8 +30,9 @@ class EstiloController extends Controller
     {
         //
         $estilos = Estilo::get_Estilos();
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
 
-        return view('admin.modules.estilos', compact('estilos'));
+        return view('admin.modules.estilos', compact('estilos', 'desarrollador'));
     }
 
     /**

@@ -17,7 +17,7 @@ class Noticia_Tag extends Model
 
     protected $fillable = ['noticia_tag','url','estado','oculto','usuario_registra','fecha_registro','usuario_modifica','fecha_modifica'];
 
-    public function getNoticiasTagsFront()
+    public static function getNoticiasTagsFront()
     {
         $data = Noticia_Tag::select('noticia_tag_id','noticia_tag','url')
                     ->where('estado',1)->where('oculto',0)
@@ -27,7 +27,7 @@ class Noticia_Tag extends Model
         return $data;
     }
 
-    public function getNoticiaTagxUrl($url)
+    public static function getNoticiaTagxUrl($url)
     {
         $data = Noticia_Tag::select('noticia_tag')
                     ->where('url', $url)
@@ -36,7 +36,7 @@ class Noticia_Tag extends Model
         return $data;
     }
 
-    public function getNotTagxUrl($url)
+    public static function getNotTagxUrl($url)
     {
         $data  = Noticia_Tag::select('noticia_tag')
         ->where('url',$url)->where('estado',1)->where('oculto',0)->first();

@@ -10,7 +10,7 @@ use App\Services\Admin\ImageService;
 
 class SliderService
 {
-    public function addArraySliderData($request, $arraySliderImg)
+    public static function addArraySliderData($request, $arraySliderImg)
     {
         $estado = $request->estado == "true" ? "1":"0";
         $oculto =0;
@@ -42,7 +42,7 @@ class SliderService
         return $data;
     }
 
-    public function updateArraySliderData($request, $arraySliderImgEdit)
+    public static function updateArraySliderData($request, $arraySliderImgEdit)
     {
         $estado = $request->estado == "true" ? "1":"0";
         $oculto =0;
@@ -72,13 +72,13 @@ class SliderService
 
     }
 
-    public function moveSlider($filename)
+    public static function moveSlider($filename)
     {
         $destino =  public_path('assets/images/sliders/');
         echo ImageService::moveimage($filename ,$destino);
     }
 
-    public function existImageSlider($slider_id,$filename)
+    public static function existImageSlider($slider_id,$filename)
     {
         $url = public_path('assets/images/sliders/'.$filename);
         echo ImageService::eliminarImg($url);

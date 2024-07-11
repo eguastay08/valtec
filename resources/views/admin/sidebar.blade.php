@@ -93,12 +93,14 @@
           </li> 
           @endcan
 
+          @can('admin.ordenes.index')
           <li class="nav-item">
             <a class="nav-link" href="{{ url('admin/ordenes') }}">
               <i class="fas fa-money-check-alt menu-icon"></i>
               <span class="menu-title">Órdenes</span>
             </a>
           </li> 
+          @endcan
 
           @can('admin.medios_pago.index')
           <li class="nav-item">
@@ -216,6 +218,13 @@
             </a>
           </li> 
           @endcan
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url('admin/reportes') }}">
+            <i class="fas fa-file-pdf menu-icon"></i>
+              <span class="menu-title">Reportes</span>
+            </a>
+          </li> 
 
         </ul>
       </nav>

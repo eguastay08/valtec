@@ -9,7 +9,7 @@ use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Support\Facades\File;
 
 use App\Models\User;
-
+use App\Models\Configuracion;
 //exportar modelo roles de spattie
 use Spatie\Permission\Models\Role; 
 
@@ -39,12 +39,13 @@ class UserController extends Controller
         $estado = isset($request->estado) ? $request->estado : '_all_';
 
         $usuarios = User::getUsers($nusuario, $estado);
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
 
         if ($request->ajax()):
             return view('admin.data.load_usuarios_data', compact('usuarios'));
         endif;
 
-        return view('admin.modules.usuarios', compact('usuarios'));
+        return view('admin.modules.usuarios', compact('usuarios'.'desarrollador'));
     }
 
     /**
@@ -56,7 +57,9 @@ class UserController extends Controller
     {
         //
         $roles = Role::all();
-        return view('admin.modules.crud-usuarios', compact('roles'));
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
+
+        return view('admin.modules.crud-usuarios', compact('roles','desarrollador'));
     }
 
     /**

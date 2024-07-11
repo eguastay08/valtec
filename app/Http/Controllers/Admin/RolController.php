@@ -18,6 +18,8 @@ use App\Services\Admin\{
 	RoleService
 };
 
+use App\Models\Configuracion;
+
 class RolController extends Controller
 {
     /**
@@ -39,12 +41,13 @@ class RolController extends Controller
         $estado = isset($request->estado) ? $request->estado : '_all_';
 
         $roles = RoleService::getRoles($rol, $estado);
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
 
         if ($request->ajax()):
             return view('admin.data.load_roles_data', compact('roles'));
         endif;
 
-        return view('admin.modules.roles', compact('roles'));
+        return view('admin.modules.roles', compact('roles','desarrollador'));
     }
 
     /**
@@ -57,7 +60,9 @@ class RolController extends Controller
         //
         $permissions = Permission::all();
         
-        return view('admin.modules.crud-roles', compact('permissions'));
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
+        
+        return view('admin.modules.crud-roles', compact('permissions', 'desarrollador'));
     }
 
     /**
@@ -138,8 +143,10 @@ class RolController extends Controller
         // ->where('oculto',0)->pluck('tag_id')->toArray();
 
         $permissions_rol = RoleService::getPermisosByrol($decrypt_id);
+
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
         
-        return view('admin.modules.crud-roles', compact('permissions', 'rol', 'permissions_rol'));
+        return view('admin.modules.crud-roles', compact('permissions', 'rol', 'permissions_rol', 'desarrollador'));
     }
 
     /**

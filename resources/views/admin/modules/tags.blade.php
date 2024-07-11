@@ -50,17 +50,26 @@
             
         </div>
 
-        @can('admin.tags.crear')
+      
         <div class="row">
-            <div class="col-xl-12 col-md-12 col-sm-12 d-flex justify-content-end">
+            <div class="col-12">
+                
+                <div class="form-group mr-20-sm boton-group">
 
-                <div class="form-group mr-20-sm">
-                    <button type="button" class="btn btn-sm btn-dark btn-fw" data-toggle="modal" data-target="#ModalTag"><img src="{{ url('admin_assets/images/add2.png') }}" alt="agregar" width="25px"> Agregar Etiqueta</button>
+                    <a href="{{url('admin/Excel/ReporteTagExcel')}}" type="button" class="btn btn-sm btn-default-export btn-fw" target="_blank"><img src="{{ url('admin_assets/images/excel.png') }}" alt="Exportar Excel" width="25px"> Exportar Excel</a>
+                    <a href="{{url('admin/pdf/ReporteTagPdf')}}"  type="button" class="btn btn-sm btn-default-export btn-fw"><img src="{{ url('admin_assets/images/pdf.png') }}" alt="Exportar PDF" width="25px"> Exportar PDF</a>
+                
+                    @can('admin.tags.crear')
+            
+                        <a type="button" class="btn btn-sm btn-dark btn-fw" data-toggle="modal" data-target="#ModalTag"><img src="{{ url('admin_assets/images/add2.png') }}" alt="agregar" width="25px"> Agregar Etiqueta</a>
+                  
+                    @endcan
+                    
                 </div>
 
             </div>
         </div>
-        @endcan
+
 
         <div class="row">
             <div class="col-12 grid-margin">

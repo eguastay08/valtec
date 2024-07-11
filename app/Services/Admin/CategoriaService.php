@@ -9,20 +9,20 @@ use App\Services\Admin\ImageService;
 
 class CategoriaService
 {
-    public function moveImgCategoria($filename)
+    public static function moveImgCategoria($filename)
     {
         // $destino =  public_path('admin/images/banners/');
         $destino =  public_path('assets/images/categorias/');
         echo ImageService::moveimage($filename ,$destino);
     }
 
-    public function existImageCategoria($filename)
+    public static function existImageCategoria($filename)
     {
         $url = public_path($filename);
         echo ImageService::eliminarImg($url);
     }
 
-    public function eliminarCategoriaImg($categoria_id, $filename, $superpuesto)
+    public static function eliminarCategoriaImg($categoria_id, $filename, $superpuesto)
     {
         // $url = public_path('admin/images/banners/'.$filename);
         $url = public_path('assets/images/categorias/'.$filename);

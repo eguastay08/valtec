@@ -20,7 +20,7 @@ return [
     'allowed_methods' => ['POST', 'GET', 'DELETE', 'PUT','*'],
 
     // 'allowed_origins' => ['*'],
-    'allowed_origins' => ['http://lolstore.test:82', 'http://adev.website/']
+    'allowed_origins' => ['http://lolstore.test:82', 'http://adev.website/'],
 
     'allowed_origins_patterns' => [],
 

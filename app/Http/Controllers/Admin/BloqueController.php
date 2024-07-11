@@ -12,6 +12,7 @@ use Vinkla\Hashids\Facades\Hashids;
 use App\Models\Bloque_tipo;
 use App\Models\Categoria;
 use App\Models\Bloque;
+use App\Models\Configuracion;
 
 use App\Services\Admin\{
 	BloqueService,
@@ -38,16 +39,17 @@ class BloqueController extends Controller
     public function index(Request $request)
     {
         //
-        $tipoBloques = Bloque_tipo::select('bloque_tipo_id', 'nombre')->where('oculto',0)->get();
+        $tipoBloques = Bloque_tipo::select('bloque_tipo_id', 'nombre')->where('bloque_tipos.codigo', '!=', 'OFERTAS')->where('estado',1)->where('oculto',0)->get();
         $categorias = Categoria::get_tree_select();
         // $bloques = Bloque::select('bloque_tipo_id','config','titulo','icono','estado','posicion')->where('oculto',0)->get();
         $bloques = Bloque::getBloques();
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
 
         if ($request->ajax()):
             return view('admin.data.load_bloques_data', compact('tipoBloques', 'categorias','bloques'));
         endif;
 
-        return view('admin.modules.diseno', compact('tipoBloques','categorias','bloques'));
+        return view('admin.modules.diseno', compact('tipoBloques','categorias','bloques', 'desarrollador'));
     }
 
     /**

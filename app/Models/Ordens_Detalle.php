@@ -17,7 +17,7 @@ class Ordens_Detalle extends Model
 
     protected $fillable = ['orden_id','producto_id','cantidad','precio','subtotal','codigo_producto','oculto','usuario_registro','fecha_registro'];
 
-    public function getOrdenDetalle($orden_id)
+    public static function getOrdenDetalle($orden_id)
     {
         $ordendetalle = Ordens_Detalle::select('ordens_detalles.orden_detalle_id','ordens_detalles.orden_id',
                                                  'ordens_detalles.producto_id', 'pro.producto','pi.url as image','ordens_detalles.cantidad',
@@ -40,7 +40,7 @@ class Ordens_Detalle extends Model
         
     }
 
-    public function getProductosxOrden($orden_id)
+    public static function getProductosxOrden($orden_id)
     {
         $ordenproducto = Ordens_Detalle::select('orden_detalle_id','orden_id','producto_id','cantidad', 'codigo_producto')
                         ->where('orden_id', $orden_id)    
@@ -49,7 +49,7 @@ class Ordens_Detalle extends Model
         return $ordenproducto;
     }
 
-    public function getProductosOrdenEmail($orden_id)
+    public static function getProductosOrdenEmail($orden_id)
     {
         $productos = Ordens_Detalle::select('ordens_detalles.orden_detalle_id','ordens_detalles.orden_id',
                                         'ordens_detalles.producto_id','ordens_detalles.cantidad as quantity', 'ordens_detalles.precio as price',
@@ -69,7 +69,7 @@ class Ordens_Detalle extends Model
         return $productos;
     }
 
-    public function aproCodigos($codigos)
+    public static function aproCodigos($codigos)
     {
         $codigoArray = json_decode($codigos);
         return $codigoArray;

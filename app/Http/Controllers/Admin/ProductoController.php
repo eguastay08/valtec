@@ -22,6 +22,8 @@ use App\Services\Admin\{
 	ImageService
 };
 
+use App\Models\Configuracion;
+
 class ProductoController extends Controller
 {
     /**
@@ -45,12 +47,13 @@ class ProductoController extends Controller
 
         $productos = Producto::getProductswithImage($nproducto, $ncategorias, $oferta, $carrousel, $estado);
         $categorias = Categoria::get_tree_select();
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
 
         if ($request->ajax()):
             return view('admin.data.load_productos_data', compact('productos', 'categorias'));
         endif;
 
-        return view('admin.modules.productos', compact('productos', 'categorias'));
+        return view('admin.modules.productos', compact('productos', 'categorias', 'desarrollador'));
     }
 
     /**
@@ -64,8 +67,10 @@ class ProductoController extends Controller
         $categorias = Categoria::get_tree_select();
 
         $tags = Tag::where('estado',1)->where('oculto',0)->get();
+        
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
 
-        return view('admin.modules.crud-productos', compact('categorias','tags'));
+        return view('admin.modules.crud-productos', compact('categorias','tags', 'desarrollador'));
     }
 
     /**
@@ -85,7 +90,7 @@ class ProductoController extends Controller
         $rules = [
             'categoriaProducto' => 'required',
             'nombreProducto' => 'required|unique:productos,producto',
-            'skuProducto' => 'required|unique:productos,sku',
+            'skuProducto' => 'required|max:40|unique:productos,sku',
             // 'imagenProducto'=>'mimes:jpeg,png,jpg,gif|max:2048',
             // 'galeriaProducto.*'=>'mimes:jpeg,png,jpg,gif|max:2048',
         ];
@@ -95,6 +100,7 @@ class ProductoController extends Controller
             'nombreProducto.required' => 'El campo Nombre del Producto es requerido',
             'nombreProducto.unique' => 'Ya existe el Producto',
             'skuProducto.required'=> 'El Campo SKU (Código del Producto es requerido)',
+            'skuProducto.max' => 'El campo SKU debe contener como máximo 11 carácteres',
             'skuProducto.unique' => 'Ya existe el SKU (Código) registrado',
             // 'imagenProducto.size'=>'El Tamaño de la Imagen principal no debe ser mayor a 2MB',
             // 'imagenProducto.mimes'=>'La extensión de la Imagen principal debe ser JPEG, PNG, JPG, GIF',
@@ -248,8 +254,9 @@ class ProductoController extends Controller
 
         $imgproductoprincipal = Producto_Imagen::where('producto_id', $decrypt_id)->where('principal',1)->first();
         $imgproductogaleria = Producto_Imagen::where('producto_id', $decrypt_id)->where('principal',0)->get();
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
 
-        return view('admin.modules.crud-productos', compact('producto', 'categorias', 'tags', 'producto_categorias', 'productos_etiquetas', 'imgproductoprincipal','imgproductogaleria'));
+        return view('admin.modules.crud-productos', compact('producto', 'categorias', 'tags', 'producto_categorias', 'productos_etiquetas', 'imgproductoprincipal','imgproductogaleria','desarrollador'));
     }
 
     /**
@@ -578,11 +585,13 @@ class ProductoController extends Controller
 
         $codigos_productos = Producto_codigo::getCodigosByProducto($decrypt_id[0],$estadoCodigoProducto);
 
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
+
         if ($request->ajax()) {
             return view('admin.data.load_codigos_productos_data', compact('producto', 'codigos_productos'));
         }
 
-        return view('admin.modules.codigos-productos',compact('producto', 'codigos_productos'));
+        return view('admin.modules.codigos-productos',compact('producto', 'codigos_productos', 'desarrollador'));
     }
 
     public function storeCodigoProducto(Request $request)

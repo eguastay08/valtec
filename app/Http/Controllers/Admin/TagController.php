@@ -8,6 +8,11 @@ use DB, Validator;
 use App\Models\Tag;
 use Illuminate\Support\Str;
 use Vinkla\Hashids\Facades\Hashids;
+use PDF;
+
+use App\Exports\TagExport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Configuracion;
 
 use App\Services\Admin\{
     ImageService,
@@ -44,6 +49,7 @@ class TagController extends Controller
         }
 
         $tags = $tags->where('oculto',0)->orderBy('tag','ASC')->paginate(5);
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
 
         if ($request->ajax()) {
 
@@ -51,7 +57,7 @@ class TagController extends Controller
         
         }
 
-        return view('admin.modules.tags', compact('tags'));
+        return view('admin.modules.tags', compact('tags','desarrollador'));
         
     }
 
@@ -345,5 +351,27 @@ class TagController extends Controller
         $image = ImageService::eliminarImg($url);
         Tag::where("tag_id", $decrypt_id[0])->update(["img" => "", "nombre_img" => "", "size_img" => ""]);
         return response()->json(['code' => '200']);
+    }
+
+    public function generarPdf(Request $request)
+    {
+        $tags = Tag::where('oculto',0)->orderBy('tag','ASC')->get();
+
+        // $data = [
+        //     'title' => 'Listado de Etiquetas',
+        //     'date' => date('m/d/Y'),
+        //     'tags' => $tags
+        // ];
+          
+        $pdf = PDF::loadView('admin/pdf/tags_pdf', array('tags' =>  $tags))
+        ->setPaper('a4', 'portrait');
+    
+        return $pdf->download('reporte_etiquetas.pdf');
+ 
+    }
+
+    public function generarExcel()
+    {
+        return Excel::download(new TagExport, 'Reporte_Etiquetas.xlsx');
     }
 }

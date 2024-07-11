@@ -17,11 +17,11 @@ class Producto_Imagen extends Model
 
     protected $fillable = ['producto_id','nombre','size','url','principal','usuario_registro','fecha_registro'];
 
-    public function productoImg(){
+    public static function productoImg(){
         return $this->belongsTo(Producto::class);
     }
 
-    public function existImage($producto_image_id)
+    public static function existImage($producto_image_id)
     {
         $data = Producto_Imagen::where('producto__imagens_id',$producto_image_id)->count();
 

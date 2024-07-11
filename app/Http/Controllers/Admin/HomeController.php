@@ -11,6 +11,7 @@ use App\Models\Tag;
 use App\Models\User;
 use App\Models\Banner;
 use App\Models\Slider;
+use App\Models\Configuracion;
 
 class HomeController extends Controller
 {
@@ -28,8 +29,9 @@ class HomeController extends Controller
         $nroUsers = User::where('oculto',0)->get()->count();
         $nroSliders = Slider::where('oculto',0)->get()->count();
         $nroBanners = Banner::where('oculto',0)->get()->count();
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
 
-        return view('admin.dashboard', compact('nrocategorias','nroProductos','nroTags', 'nroUsers', 'nroSliders', 'nroBanners'));
+        return view('admin.dashboard', compact('nrocategorias','nroProductos','nroTags', 'nroUsers', 'nroSliders', 'nroBanners', 'desarrollador'));
     }
 
     public function get404AdminNotFound()

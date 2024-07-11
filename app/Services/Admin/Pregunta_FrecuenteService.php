@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Hash;
 
 class Pregunta_FrecuenteService
 {
-    public function addArrayDataPreguntaFrecuente($request, $posicion)
+    public static function addArrayDataPreguntaFrecuente($request, $posicion)
     {
         $estado = $request->estado == "true" ? "1":"0";
         $oculto =0;
@@ -25,7 +25,7 @@ class Pregunta_FrecuenteService
         return $data;
     }
 
-    public function updateArrayDataPreguntaFrecuente($request)
+    public static function updateArrayDataPreguntaFrecuente($request)
     {
         $estado = $request->estado == "true" ? "1":"0";
         $oculto =0;

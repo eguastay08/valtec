@@ -17,7 +17,7 @@ class Medio_Pago extends Model
 
     protected $fillable = ['nombre','descripcion','deposito','transferencia','billetera_digital','pago_online','imagen','nombre_img','size_img','estado','oculto','usuario_registro','fecha_registro','usuario_modifica','fecha_modifica'];
 
-    public function getMedioPagos($mediopago, $estado)
+    public static function getMedioPagos($mediopago, $estado)
     {
         $mediospagoData = Medio_Pago::select('medio_pago_id', 'nombre', 'descripcion','deposito','transferencia','billetera_digital','pago_online','imagen','nombre_img','size_img','estado','oculto');
         
@@ -34,15 +34,15 @@ class Medio_Pago extends Model
         return $mediospagoData;
     }
 
-    public function getMedioPagosFront()
+    public static function getMedioPagosFront()
     {
-        $mediospagoData = Medio_Pago::select('medio_pago_id','nombre','descripcion','deposito','transferencia','billetera_digital','pago_online','imagen')
+        $mediospagoData = Medio_Pago::select('medio_pago_id','nombre','data_value','descripcion','deposito','transferencia','billetera_digital','pago_online','imagen')
                                         ->where('estado',1)->where('oculto',0)->orderBy('fecha_registro')->get();
 
         return $mediospagoData;
     }
 
-    public function getPaymentDescription($payment_id)
+    public static function getPaymentDescription($payment_id)
     {
         $mediospagoData = Medio_Pago::select('medio_pago_id','nombre','descripcion','pago_online')
         ->where('estado',1)->where('oculto',0)->where('medio_pago_id',$payment_id)->get();
@@ -50,7 +50,7 @@ class Medio_Pago extends Model
         return $mediospagoData;
     }
 
-    public function getIsOnline($payment_id)
+    public static function getIsOnline($payment_id)
     {
         $data =  Medio_Pago::select('pago_online')
         ->where('estado',1)->where('oculto',0)->where('medio_pago_id',$payment_id)->first();
@@ -58,7 +58,7 @@ class Medio_Pago extends Model
         return $data;
     }
     
-    public function getDataValue($medio_pago_id)
+    public static function getDataValue($medio_pago_id)
     {
         $data =  Medio_Pago::select('data_value')
         ->where('estado',1)->where('oculto',0)->where('medio_pago_id',$medio_pago_id)->first();

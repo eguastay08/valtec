@@ -17,6 +17,7 @@ use App\Services\Admin\{
     ProductoService
 };
 
+use App\Models\Configuracion;
 
 class OrdenController extends Controller
 {
@@ -29,19 +30,21 @@ class OrdenController extends Controller
     public function __construct()  
     {
         $this->middleware('auth');
-        // $this->middleware('can:admin.moneda.index');
+        $this->middleware('can:admin.ordenes.index');
     }
 
     public function index(Request $request)
     {
         //
         $ordenes = Ordens::getOrdenes();
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
+
 
         if($request->ajax()):
             return view('admin.data.load_ordenes_data', compact('ordenes'));
         endif;
 
-        return view('admin.modules.ordenes', compact('ordenes'));
+        return view('admin.modules.ordenes', compact('ordenes','desarrollador'));
     }
 
     /**

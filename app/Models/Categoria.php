@@ -22,6 +22,7 @@ class Categoria extends Model
         return $this->HasMany(Producto_m_Categoria::class);
     }
 
+    // Obtener Precio Máxico 
     public static function getCategoriesWithParents()
     {
         $categorias = DB::table('categorias')
@@ -32,6 +33,7 @@ class Categoria extends Model
         return $categorias;
     }
 
+    //Obtener Listado de Categorías Padres
     public static function getListParents()
     {
         $data = Categoria::select('categoria_id','categoria')
@@ -41,6 +43,7 @@ class Categoria extends Model
         return $data;
     }
     
+      // Verificar si la categoría padre existe
     public static function getParentsExits($parent, $slug)
     {
         $categoria = Categoria::where('parent_id',$parent)
@@ -49,6 +52,7 @@ class Categoria extends Model
         return $categoria;
     }
 
+    // Verificar si la categoría existe
     public static function getCategoryExits($slug)
     {
         $categoria =  Categoria::where('url',$slug)->where('oculto',0)->count();
@@ -56,6 +60,7 @@ class Categoria extends Model
         return $categoria;
     }
 
+      // Verificar si la categoría existe
     public static function get_tree_select($parent = NULL)
     {
         $categoria = self::get_tree($parent);
@@ -98,7 +103,7 @@ class Categoria extends Model
     }
 
     
-    private function multi_loop($categoria, $parentName = NULL)
+    private static function multi_loop($categoria, $parentName = NULL)
     {
         $options = array();
         foreach ($categoria as $u) {
@@ -123,6 +128,7 @@ class Categoria extends Model
         return $categorias;
     }
 
+    // Obtener la url de la categoría por ID de la categoría
     public static function getUrlxCategoria($categoria_id)
     {
         $categorias = Categoria::select('url')
@@ -140,6 +146,7 @@ class Categoria extends Model
         return $data;
     }
 
+    // Obtener titulo de la categoría padre por URL como parámetro
     public static function getCategoriaTitleFront($url)
     {
         $data = Categoria::select('categoria_id','categoria','url')
@@ -147,6 +154,8 @@ class Categoria extends Model
 
         return $data;
     }
+
+     // Obtener titulo de la subcategoría por URL e ID de cateogría padre como parámetro
 
     public static function subCategoriaTitleFront($id, $url)
     {

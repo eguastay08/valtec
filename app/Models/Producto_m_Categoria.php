@@ -17,15 +17,15 @@ class Producto_m_Categoria extends Model
 
     protected $fillable = ['producto_id','categoria_id','oculto','usuario_registra','fecha_registro', 'usuario_modifica', 'fecha_modifica'];
 
-    public function ProductoCategoria_Producto(){
+    public static function ProductoCategoria_Producto(){
         return $this->belongsTo(Producto::class);
     }
 
-    public function ProductoCategoria_Categoria(){
+    public static function ProductoCategoria_Categoria(){
         return $this->belongsTo(Categoria::class);
     }
 
-    public function getProductoCategoriasById($producto_id)
+    public static function getProductoCategoriasById($producto_id)
     {
 
     }

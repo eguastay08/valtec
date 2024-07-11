@@ -8,6 +8,7 @@ use DB, Validator;
 use Vinkla\Hashids\Facades\Hashids;
 use App\Models\Pregunta_Frecuente;
 use App\Services\Admin\Pregunta_FrecuenteService;
+use App\Models\Configuracion;
 
 class PreguntaFrecuenteController extends Controller
 {
@@ -28,12 +29,13 @@ class PreguntaFrecuenteController extends Controller
         $estado = isset($request->estado) ? $request->estado : '_all_';
 
         $preguntas_frecuentes = Pregunta_Frecuente::getPreguntasFrecuentes($estado);
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
 
         if ($request->ajax()):
             return view('admin.data.load_preguntas_frecuentes_data', compact('preguntas_frecuentes'));
         endif;
 
-        return view('admin.modules.preguntas_frecuentes', compact('preguntas_frecuentes'));
+        return view('admin.modules.preguntas_frecuentes', compact('preguntas_frecuentes','desarrollador'));
     }
 
     /**

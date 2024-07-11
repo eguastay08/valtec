@@ -9,7 +9,7 @@ use App\Services\Admin\ImageService;
 
 class BannerService
 {
-    public function addArrayDataBanner($request, $posicion)
+    public static function addArrayDataBanner($request, $posicion)
     {
         $estado = $request->chkEstadoBanner == "on" ? "1":"0";
         $oculto =0;
@@ -63,7 +63,7 @@ class BannerService
 
     }
 
-    public function updateArrayDataBanner($request,$banner_id)
+    public static function updateArrayDataBanner($request,$banner_id)
     {
         $estado = $request->chkEstadoBanner == "on" ? "1":"0";
         $oculto =0;
@@ -133,20 +133,20 @@ class BannerService
 
     }
 
-    public function moveBanner($filename)
+    public static function moveBanner($filename)
     {
         // $destino =  public_path('admin/images/banners/');
         $destino =  public_path('assets/images/banners/');
         echo ImageService::moveimage($filename ,$destino);
     }
 
-    public function existImageBanner($filename)
+    public static function existImageBanner($filename)
     {
         $url = public_path($filename);
         echo ImageService::eliminarImg($url);
     }
 
-    public function eliminarBannerImg($banner_id, $filename, $superpuesto)
+    public static function eliminarBannerImg($banner_id, $filename, $superpuesto)
     {
         // $url = public_path('admin/images/banners/'.$filename);
         $url = public_path('assets/images/banners/'.$filename);

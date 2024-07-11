@@ -9,7 +9,7 @@
                 <div class="as-footer_description">
 
                     <a href="{{ url('/') }}" class="as-footer_logo" title="Ir al Inicio">
-                        <img class="img-fluid" src="{{asset('assets/images/logo-ecommerce.png')}}" alt="E-Shop" title="E-Shop" />
+                        <img class="img-fluid" src="{{asset('assets/images/logo.png')}}" alt="E-Shop" title="E-Shop" />
                     </a>
 
                     <div class="as-footer_social">

@@ -10,7 +10,7 @@ use App\Services\Admin\ImageService;
 
 class NoticiaService
 {
-    public function ArrayNoticiaAdd($request)
+    public static function ArrayNoticiaAdd($request)
     {
         $urlNoticia = Str::slug($request->tituloNoticia);
         $estado = $request->chkEstadoNoticia == "on" ? "1":"0";
@@ -33,7 +33,7 @@ class NoticiaService
 
     }
 
-    public function ArrayNoticiaUpdate($request)
+    public static function ArrayNoticiaUpdate($request)
     {
         $urlNoticia = Str::slug($request->tituloNoticia);
         $estado = $request->chkEstadoNoticia == "on" ? "1":"0";
@@ -56,7 +56,7 @@ class NoticiaService
 
     }
 
-    public function existImageNoticiaPrincipal($noticia_id, $idImgNoticia)
+    public static function existImageNoticiaPrincipal($noticia_id, $idImgNoticia)
     {
         $countImage = Noticia_Imagens::existNoticiaImage($idImgNoticia);
         if($countImage>0):
@@ -69,7 +69,7 @@ class NoticiaService
         endif;
     }
 
-    public function moveNoticiaImage($filename, $noticia_id)
+    public static function moveNoticiaImage($filename, $noticia_id)
     {
         // $destino =  public_path('admin/images/productos/'.$producto_id);
         $destino =  public_path('assets/images/noticias/'.$noticia_id);

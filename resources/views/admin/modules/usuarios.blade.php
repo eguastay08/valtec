@@ -40,11 +40,11 @@
 
             <div class="col-xl-6 col-md-6 col-sm-12">
                 <div class="form-group">
-                    <label for="estadoUsuarioBuscar" style="font-size:14px;">Estado:</label>
+                    <label for="estadoUsuarioBuscar" style="font-size:14px;">Rol:</label>
                     <select name="estadoUsuarioBuscar" id="estadoUsuarioBuscar" class="form-control">
                         <option value="_all_">--Seleccione--</option>
-                        <option value="1">Activo</option>
-                        <option value="0">Inactivo</option>
+                        <option value="1">Rol 1</option>
+                        <option value="0">Rol 2</option>
                     </select>
                 </div>
             </div>

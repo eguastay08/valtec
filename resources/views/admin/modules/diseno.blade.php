@@ -141,6 +141,7 @@
                                             <select name="tipobloque" id="tipobloque" class="form-control selectpicker" data-live-search="true">
                                                 <option value="">--Seleccione--</option>
                                                 @isset($tipoBloques)
+                                              
                                                     @foreach ($tipoBloques as $tb)
                                                         <option value="{{$tb->bloque_tipo_id}}">{{$tb->nombre}}</option>
                                                     @endforeach

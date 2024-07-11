@@ -38,16 +38,16 @@
                                 <img src="{{ url('admin_assets/images/edit.png') }}" onclick="mostrarNoticiaCategoria(<?php echo "'".$parameter."'"; ?>)" title="Editar Noticia Categoría" style="cursor: pointer; height:24px; width:24px;">
                                 @endcan
                                 
-                                @can('admin.noticias_categorias.Eliminar')
+                                @can('admin.noticias_categorias.eliminar')
                                 <img src="{{ url('admin_assets/images/delete3.png') }}" onclick="eliminarNoticiaCategoría(<?php echo "'".$parameter."'"; ?>)" title="Eliminar Noticia Categoría" style="cursor: pointer; height:24px; width:24px;">
                                 @endcan
                                 
                                 @if($ncat->estado!=0)
-                                    @can('admin.noticias_categorias.Desactivar')
+                                    @can('admin.noticias_categorias.desactivar')
                                     <img src="{{ url('admin_assets/images/off.png') }}" onclick="desactivarNoticiaCategoría(<?php echo "'".$parameter."'"; ?>)" title="Desactivar Noticia Categoría" style="cursor: pointer; height:24px; width:24px;">&nbsp;
                                     @endcan
                                 @else 
-                                    @can('admin.noticias_categorias.Activar')
+                                    @can('admin.noticias_categorias.activar')
                                     <img src="{{ url('admin_assets/images/on.png') }}" onclick="activarNoticiaCategoria(<?php echo "'".$parameter."'"; ?>)" title="Activar Noticia Categoría" style="cursor: pointer; height:24px; width:24px;">&nbsp;
                                     @endcan
                                 @endif

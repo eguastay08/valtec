@@ -9,6 +9,11 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="routeName" content="{{ Route::currentRouteName() }}">
   <meta name="app-url" content="{{ url('/') }}">
+  
+  <meta http-equiv='cache-control' content='no-cache'>
+  <meta http-equiv='expires' content='0'>
+  <meta http-equiv='pragma' content='no-cache'>
+  
   <title>@yield('title')</title>
   <!-- plugins:css -->
   
@@ -16,7 +21,7 @@
   <link href="{{ asset('admin_assets/vendors/css/vendor.bundle.base.css') }}" rel="stylesheet">
   <link href="{{ asset('admin_assets/vendors/css/vendor.bundle.addons.css') }}" rel="stylesheet">
   
-  <link rel="shortcut icon" href="{{ asset('assets/images/faviconfinal.png') }}" />
+  <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" />
   <!-- endinject -->
   <!-- plugin css for this page -->
   <!-- End plugin css for this page -->
@@ -34,7 +39,7 @@
   <link href="{{ asset('admin_assets/vendors/bootstrap-select2/css/bootstrap-select.min.css') }}" rel="stylesheet" type="text/css">
   
   <!-- endinject -->
-  <link rel="shortcut icon" href="http://www.urbanui.com/" />
+  <!-- <link rel="shortcut icon" href="http://www.urbanui.com/" /> -->
 </head>
 
 <body class="sidebar-dark">
@@ -86,6 +91,9 @@
 
   <script src="{{ asset('admin_assets/vendors/bootstrap-select2/js/bootstrap-select.min.js') }}"></script>
   <script src="{{ asset('admin_assets/vendors/bootstrap-select2/js/i18n/defaults-es_ES.min.js') }}"></script>
+
+    <!-- Custom js for this page-->
+    <script src="{{ asset('admin_assets/js/xdomainajax.js') }}"></script>
 
   <script src="{{ asset('admin_assets/js/scripts.js') }}"></script>
 

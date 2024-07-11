@@ -9,10 +9,15 @@
     <meta name="autor" content="LolStore">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="Somos una empresa dedicada a la comercialización de productos de entretinimiento">
+    
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Last-Modified" content="0">
+    <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+    <meta http-equiv="Pragma" content="no-cache">
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&amp;display=swap" rel="stylesheet">
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset('assets/images/faviconfinal.png') }}" />
+    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" />
     <link rel="stylesheet" href="{{ asset('assets/iconfonts/fontawesome-free/css/all.min.css') }}">
     <!-- Bootstap CSS -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}">
@@ -149,11 +154,40 @@
     <script src="{{ asset('assets/js/scripts.js?v=1.0') }}"></script>
     <script src="{{ asset('assets/js/cart.js?v=1.0') }}"></script>
 
-    <script type="text/javascript">
+    <?php
+   #Iniciando la variable de control que permitirá mostrar o no el modal
+   $exibirModal = false;
+   #Verificando si existe o no la cookie
+ if(!isset($_COOKIE["mostrarModal"])){
+   # Caso no exista la cookie entra aqui
+   # Creamos la cookie con la duración que queramos
+ 
+    //$expirar = 3600; // muestra cada 1 hora
+    //$expirar = 10800; // muestra cada 3 horas
+    //$expirar = 21600; //muestra cada 6 horas
+    $expirar = 43200; //muestra cada 12 horas
+    //$expirar = 86400;  // muestra cada 24 horas
+    setcookie('mostrarModal', 'SI', (time() + $expirar)); // mostrará cada 12 horas.
+    # Ahora nuestra variable de control pasará a tener el valor TRUE (Verdadero)
+    $exibirModal = true;
+ }
+?>
+
+    <?php if($exibirModal === true): ?>
+   <script>
+      $(window).load(function() {
+     
+     // id de nuestro modal
+     $("#PopupSlider").modal("show");
+     });
+   </script>
+   <?php endif; ?>
+
+    <!-- <script type="text/javascript">
         $(window).load(function() {
             $('#PopupSlider').modal('show');
         });
-    </script>
+    </script> -->
   
     @section('scripts')
     @show

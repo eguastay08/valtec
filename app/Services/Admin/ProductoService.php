@@ -12,7 +12,7 @@ use App\Services\Admin\ImageService;
 
 class ProductoService
 {
-    public function ArrayProductoAdd($request)
+    public static function ArrayProductoAdd($request)
     {
         $urlproducto = Str::slug($request->nombreProducto);
         $precioCompra = $request->txtPrecioCompraProducto != '' ? $request->txtPrecioCompraProducto : "0.00";
@@ -76,7 +76,7 @@ class ProductoService
         return $data;
     }
 
-    public function ArrayProductoUpdate($request, $producto_id)
+    public static function ArrayProductoUpdate($request, $producto_id)
     {
         $urlproducto = Str::slug($request->nombreProducto);
         $precioCompra = $request->txtPrecioCompraProducto != '' ? $request->txtPrecioCompraProducto : "0.00";
@@ -146,7 +146,7 @@ class ProductoService
         return $data;
     }
 
-    public function verificarStock($producto_id)
+    public static function verificarStock($producto_id)
     {
         $is_stock = Producto::select('con_stock')->where('producto_id', $producto_id)->first();
 
@@ -167,7 +167,7 @@ class ProductoService
         endif;
     }
 
-    public function actualizarStock($producto_id, $cantidad)
+    public static function actualizarStock($producto_id, $cantidad)
     {
         $constock = Producto::select('con_stock')->where('producto_id', $producto_id)->first();
         // var_dump($constock);
@@ -223,13 +223,13 @@ class ProductoService
         endif;
     }
 
-    public function withStock($producto_id)
+    public static function withStock($producto_id)
     {
         $constock = Producto::select('con_stock')->where('producto_id', $producto_id)->first();
         return $constock;
     }
 
-    public function getCodigoDisponible($producto_id, $cantidad)
+    public static function getCodigoDisponible($producto_id, $cantidad)
     {
         $codigosProductos = array();
 
@@ -238,7 +238,7 @@ class ProductoService
         endfor;
     }
 
-    public function existImageprincipal($producto_id, $idImgProducto)
+    public static function existImageprincipal($producto_id, $idImgProducto)
     {
         $countImage = Producto_Imagen::existImage($idImgProducto);
         if($countImage>0):
@@ -253,7 +253,7 @@ class ProductoService
         endif;
     }
 
-    public function moveImage($filename, $producto_id)
+    public static function moveImage($filename, $producto_id)
     {
         // $destino =  public_path('admin/images/productos/'.$producto_id);
         $destino =  public_path('assets/images/productos/'.$producto_id);

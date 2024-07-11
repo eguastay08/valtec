@@ -17,7 +17,7 @@ class Moneda extends Model
 
     protected $fillable = ['nombre','codigo','prefijo','sufijo','tipo_cambio','estado','oculto','usuario_registro','fecha_registro','usuario_modifica','fecha_modifica'];
 
-    public function getMonedas()
+    public static function getMonedas()
     {
         $monedas = Moneda::select('moneda_id', 'nombre', 'codigo','prefijo','sufijo','tipo_cambio','estado')
                             ->where('oculto',0)->orderBy('moneda_id', 'asc')->paginate(10);
@@ -31,7 +31,7 @@ class Moneda extends Model
         return $monedas;
     }
 
-    public function getTipoCambio()
+    public static function getTipoCambio()
     {
         $data = Moneda::select('tipo_cambio')
                 ->where('estado',1)->where('oculto',0)->get();

@@ -10,7 +10,7 @@
 
             @if(count($sliders)>0)
 
-                <div class="slider-main">
+                <div class="slider-main mb-4">
 
                     @foreach($sliders as $sl)
                         <div class="slider-item">
@@ -29,6 +29,24 @@
             @if(count($bloques)>0)
 
                 @foreach($bloques as $bloque) 
+
+                    
+                    <!-- Bloque para Oferta -->
+                    @if($bloque['codigo'] == "OFERTAS")
+                        @if(count($bloque['data']['productos'])>0)
+                            <div class="title-bloque d-flex justify-content-center align-items-center">
+                                <img src="{{ asset('assets/images/grid.jpg') }}" style="height: 34px; margin-right: 10px;"> 
+                                OFERTAS
+                                <div class="line-style"></div>
+                                <div class="button-row">
+                                    <a href="{{asset('collections/ofertas')}}" class="btn btn-ver-todo border-button"><i class="fas fa-eye"></i> Ver Todo</a>
+                                </div>
+                            </div>
+
+                            @include('front-partials.products_oferta-front',  ['productos' => $bloque['data']['productos']])
+                        @endif
+                    @endif
+
 
                     <!-- Bloque para Banners -->
                     @if($bloque['codigo'] == "BANNERS")
@@ -50,7 +68,7 @@
                                 <div class="title-bloque d-flex justify-content-center align-items-center">
 
                                     @if($bloque['icono']!="")
-    
+
                                         <img src="{{asset($bloque['icono'])}}" style="height: 34px; margin-right: 10px;">
 
                                     @endif

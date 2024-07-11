@@ -23,6 +23,7 @@ class Menu extends Model
 
         $result = Menu::select('menu_id','nombre','link','padre','icono','posicion','estado')
                             ->where('padre',$padre)
+                            // ->where('estado',1)
                             ->where('oculto',0)
                             ->orderBy('posicion','asc')
                             ->get()->toArray();
@@ -43,32 +44,59 @@ class Menu extends Model
         return $array_menu;
     }
 
-    public function getMenusxParent($parent_id) 
+    public static function getMenusFront($padre = 0)
+    {
+        $array_menu = array();
+
+        $result = Menu::select('menu_id','nombre','link','padre','icono','posicion','estado')
+                            ->where('padre',$padre)
+                            ->where('estado',1)
+                            ->where('oculto',0)
+                            ->orderBy('posicion','asc')
+                            ->get()->toArray();
+
+        foreach ($result as $m) {
+            $menu = array();
+            $menu['menu_id'] = $m['menu_id'];
+            $menu['nombre'] = $m['nombre'];
+            $menu['link'] = $m['link'];
+            $menu['padre'] = $m['padre'];
+            $menu['icono'] = $m['icono'];
+            $menu['sub_menu'] = self::getMenus($m['menu_id']);
+            $menu['posicion'] = $m['posicion'];
+            $menu['estado'] = $m['estado'];
+            $array_menu[] = $menu;
+        }
+
+        return $array_menu;
+    }
+
+    public static function getMenusxParent($parent_id) 
     {
         $menu = Menu::select('menu_id','nombre','link')->where('padre',$parent_id)->where('estado',1)->where('oculto',0)->orderBy('posicion','asc')->get();
         return $menu;
     }
 
 
-    public function countMenuxPadre($padre)
+    public static function countMenuxPadre($padre)
     {
         $menu = Menu::where('padre',$padre)->where('oculto',0)->count();
         return $menu;
     }
 
-    public function latestPositionxPadre($padre)
+    public static function latestPositionxPadre($padre)
     {
         $menu = Menu::select('posicion')->where('padre',$padre)->where('oculto',0)->max('posicion');
         return $menu;
     }
 
-    public function getPadresMenu()
+    public static function getPadresMenu()
     {
         $menu = Menu::select('menu_id','nombre')->where('padre',0)->where('oculto',0)->get();
         return $menu;
     }
 
-    public function getMenuByPosition($posicion, $padre)
+    public static function getMenuByPosition($posicion, $padre)
     {
         $bloque = Menu::select('menu_id')->where('padre',$padre)->where('posicion',$posicion)->where('oculto',0)->first();
         return $bloque;

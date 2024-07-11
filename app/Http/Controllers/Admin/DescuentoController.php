@@ -8,11 +8,13 @@ use Illuminate\Http\Request;
 use Validator;
 use Vinkla\Hashids\Facades\Hashids;
 use App\Models\Descuento;
+use App\Models\Configuracion;
 
 use App\Services\Admin\{
 	DescuentoService
 };
 
+//juhyhyhsssss
 class DescuentoController extends Controller
 {
     /**
@@ -30,12 +32,13 @@ class DescuentoController extends Controller
     {
         //
         $descuentos = Descuento::getDescuento();
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
 
         if ($request->ajax()):
             return view('admin.data.load_descuentos_data', compact('descuentos'));
         endif;
 
-        return view('admin.modules.descuentos', compact('descuentos'));
+        return view('admin.modules.descuentos', compact('descuentos', 'desarrollador'));
     }
 
     /**

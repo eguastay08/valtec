@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 use Vinkla\Hashids\Facades\Hashids;
 
 use App\Models\Slider;
-
+use App\Models\Configuracion;
 
 use App\Services\Admin\{
 	SliderService,
@@ -39,11 +39,13 @@ class SliderController extends Controller
 
         $sliders = Slider::getSlider($popup,$estado);
 
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
+
         if ($request->ajax()):
             return view('admin.data.load_sliders_data', compact('sliders'));
         endif;
 
-        return view('admin.modules.sliders', compact('sliders'));
+        return view('admin.modules.sliders', compact('sliders','desarrollador'));
     }
 
     /**

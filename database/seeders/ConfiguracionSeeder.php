@@ -200,7 +200,38 @@ class ConfiguracionSeeder extends Seeder
                 "usuario_registro"=>"admin",
                 "fecha_registro"=>now()
             ],
-
+            [
+                "nombre"=>"Mensaje Ok Carrito",
+                "variable"=>"mensaje_ok_carrito",
+                "valor"=>"Hemos recibido su pedido correctamente y se ha enviado el detalle de compra a su correo. Si usted pagó fuera del horario de atención, el pedido se atenderá durante la siguiente jornada laboral. Debido a la alta demanda por fiestas puede que algunos pedidos sufran algún retraso, no se preocupe, su compra está 100% asegurada y será enviada en orden de llegada.",
+                "system"=>"0",
+                "usuario_registro"=>"admin",
+                "fecha_registro"=>now()
+            ],
+            [
+                "nombre"=>"Mensaje Fail Carrito",
+                "variable"=>"mensaje_fail_carrito",
+                "valor"=>"Ocurrió un error al momento de validar su pedido, si el problema persiste, contactar de inmediato para verificar el origen del problema",
+                "system"=>"0",
+                "usuario_registro"=>"admin",
+                "fecha_registro"=>now()
+            ],
+            [
+                "nombre"=>"Mensaje Pending Carrito",
+                "variable"=>"mensaje_pending_carrito",
+                "valor"=>"Se está procesando tú pago, en unas horas cuando se valide tu pedido correctamente, nos pondremos en contacto por el Email de Mercado Pago.",
+                "system"=>"0",
+                "usuario_registro"=>"admin",
+                "fecha_registro"=>now()
+            ],
+            [
+                "nombre"=>"Desarrollador",
+                "variable"=>"desarrollador",
+                "valor"=>"Martin Avila Yarlequé",
+                "system"=>"0",
+                "usuario_registro"=>"admin",
+                "fecha_registro"=>now()
+            ],
         ];
 
         Configuracion::insert($configuraciones);

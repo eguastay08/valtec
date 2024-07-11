@@ -17,7 +17,7 @@ class Banner_Estilo extends Model
 
     protected $fillable = ['nombre','oculto','usuario_registra','fecha_registro','usuario_modifica','fecha_modifica'];
 
-    public function getBannerEstilo()
+    public static function getBannerEstilo()
     {
         $data = Banner_Estilo::select('banner__estilo_id','nombre')->where('oculto',0)->get();
 

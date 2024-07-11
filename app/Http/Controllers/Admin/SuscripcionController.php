@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Suscripcion;
 use Vinkla\Hashids\Facades\Hashids;
+use App\Models\Configuracion;
 
 class SuscripcionController extends Controller
 {
@@ -28,12 +29,13 @@ class SuscripcionController extends Controller
         $estadocategoria = $request->get('estado');
 
         $suscripciones = Suscripcion::where('oculto',0)->orderBy('email','ASC')->paginate(20);
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
 
         if ($request->ajax()):
             return view('admin.data.load_suscritos_data', compact('suscripciones'));
         endif;
         
-        return view('admin.modules.suscripciones',compact('suscripciones'));
+        return view('admin.modules.suscripciones',compact('suscripciones','desarrollador'));
     }
 
     /**

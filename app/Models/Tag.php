@@ -17,11 +17,11 @@ class Tag extends Model
 
     protected $fillable = ['tag','url','nombre_img','size_img','img','estado','oculto','usuario_registra','fecha_registro','usuario_modifica','fecha_modifica'];
 
-    public function ProductoTag_Tag(){
+    public static function ProductoTag_Tag(){
         return $this->HasMany(Producto_m_Tag::class);
     }
 
-    public function getTagsFront()
+    public static function getTagsFront()
     {
         $data = Tag::select('tag_id','tag','url')
                     ->where('estado',1)->where('oculto',0)
@@ -31,7 +31,7 @@ class Tag extends Model
         return $data;
     }
 
-    public function getTagTitle($url)
+    public static function getTagTitle($url)
     {
         $data = Tag::select('tag','url')
         ->where('estado',1)->where('oculto',0)->where('url',$url)
@@ -40,7 +40,7 @@ class Tag extends Model
         return $data;
     }
 
-    public function getTagxUrl($url)
+    public static function getTagxUrl($url)
     {
         $data   = Tag::select('tag_id')
             ->where('url',$url)->where('estado',1)->where('oculto',0)->first();

@@ -13,6 +13,8 @@ use App\Services\Admin\{
 	CategoriaService
 };
 
+use App\Models\Configuracion;
+
 class NoticiaCategoriaController extends Controller
 {
     /**
@@ -46,11 +48,13 @@ class NoticiaCategoriaController extends Controller
 
         $noticias_categoria = $noticias_categoria->where('oculto',0)->orderBy('noticia_categoria','ASC')->paginate(5);
 
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
+
         if ($request->ajax()):
             return view('admin.data.load_noticias_categorias_data', compact('noticias_categoria','padres_nc'));
         endif;
 
-        return view('admin.modules.noticias_categorias', compact('noticias_categoria','padres_nc'));
+        return view('admin.modules.noticias_categorias', compact('noticias_categoria','padres_nc', 'desarrollador'));
     }
 
     /**

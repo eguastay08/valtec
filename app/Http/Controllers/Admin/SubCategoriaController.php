@@ -8,6 +8,7 @@ use Vinkla\Hashids\Facades\Hashids;
 use App\Models\Categoria;
 use DB, Validator;
 use Illuminate\Support\Str;
+use App\Models\Configuracion;
 
 class SubCategoriaController extends Controller
 {
@@ -164,7 +165,7 @@ class SubCategoriaController extends Controller
             $slugcategoria = Str::slug($request->categoria);
             $activo = $request->activo == "true" ? "1":"0";
             $oculto =0;
-            $url_parent = Categoria::select('categoria','url')->where('categoria_id',$decrypt_id[0])->where('oculto',0)->first();
+            $url_parent = Categoria::select('categoria','url')->where('categoria_id',$decrypt_parentid[0])->where('oculto',0)->first();
             $url_lista = $url_parent['url'].'/'.$slugcategoria;
 
             if($request->slug_actual!=$slugcategoria):
@@ -251,13 +252,14 @@ class SubCategoriaController extends Controller
         endif;
         
         $subcategorias = $subcategorias->orderBy('categoria')->paginate(5);
-        
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
+
         if ($request->ajax()) {
             return view('admin.data.load_subcategorias_data', compact('subcategorias', 'categoria', 'padres'));
         }
 
         // return view('admin.almacen.subcategorias',$data);
-        return view('admin.modules.subcategorias', compact('subcategorias', 'categoria', 'padres'));
+        return view('admin.modules.subcategorias', compact('subcategorias', 'categoria', 'padres','desarrollador'));
     }
 
     public function activar(Request $request, $categoria_id)

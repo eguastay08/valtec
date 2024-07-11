@@ -37,10 +37,12 @@ Route::get('etiquetas', function(){
 
 Route::get('categorias/{url}', 'FrontController@getCategoriaFront');
 
-Route::get('categorias/{url}/{sub}', 'FrontController@getCategoriaFront');
+Route::get('categorias/{url}/{sub}', 'FrontController@getCategoriaFront2');
 
 Route::get('etiquetas/{url}', 'FrontController@getEtiquetaFront');
 Route::post('suscripcion', 'SuscripcionFrontController@sendSuscripcion');
+
+Route::get('collections/ofertas', 'FrontController@getProductosOfertas');
 
 Route::get('nosotros', 'FrontController@getNosotros');
 Route::get('terminos_condiciones', 'FrontController@getTerminos_Condiciones');
@@ -53,6 +55,7 @@ Route::get('libro-de-reclamaciones','FrontController@getLibro_Reclamaciones');
 
 Route::get('noticias/{url}', 'FrontController@getNoticiaFront');
 Route::get('noticias', 'FrontController@getNoticiasFront');
+
 Route::get('noticia_categorias/{url}', 'FrontController@getNoticiaByCategoriesFront');
 Route::get('noticia_categorias/{url}/{sub}', 'FrontController@getNoticiaByCategoriesFront');
 
@@ -130,6 +133,10 @@ Route::prefix('admin')->group(function () {
     Route::post('categorias/eliminarImagen', 'Admin\CategoriaController@eliminarImagen');
     Route::post('categorias/eliminarImagen/{key}', 'Admin\CategoriaController@deleteImagen');
 
+    Route::get('pdf/ReporteCategoriaPdf', 'Admin\CategoriaController@generarPdf');
+
+    Route::get('Excel/ReporteCategoriaExcel', 'Admin\CategoriaController@generarExcel');
+
     Route::get('categorias/subcategoria', function(){
         // return redirect('admin/categorias');
         echo 'ga';
@@ -143,13 +150,21 @@ Route::prefix('admin')->group(function () {
 
     // - -Fin Módulo Categorías -- 
 
-    Route::resource('tags', 'Admin\Tagcontroller');
-    Route::post('tags/activar/{id}', 'Admin\Tagcontroller@activar');
-    Route::post('tags/desactivar/{id}', 'Admin\Tagcontroller@desactivar');
-    Route::post('tags/subirImagenTmp', 'Admin\Tagcontroller@subirImagenTmp');
-    Route::post('tags/eliminarImagenTmp', 'Admin\Tagcontroller@eliminarImagenTmp');
-    Route::post('tags/eliminarImagen', 'Admin\Tagcontroller@eliminarImagen');
-    Route::post('tags/eliminarImagen/{key}', 'Admin\Tagcontroller@deleteImagen');
+    
+    // --  Módulo TAGS -- 
+
+    Route::resource('tags', 'Admin\TagController');
+    Route::post('tags/activar/{id}', 'Admin\TagController@activar');
+    Route::post('tags/desactivar/{id}', 'Admin\TagController@desactivar');
+    Route::post('tags/subirImagenTmp', 'Admin\TagController@subirImagenTmp');
+    Route::post('tags/eliminarImagenTmp', 'Admin\TagController@eliminarImagenTmp');
+    Route::post('tags/eliminarImagen', 'Admin\TagController@eliminarImagen');
+    Route::post('tags/eliminarImagen/{key}', 'Admin\TagController@deleteImagen');
+    
+    Route::get('pdf/ReporteTagPdf', 'Admin\TagController@generarPdf');
+
+    Route::get('Excel/ReporteTagExcel', 'Admin\TagController@generarExcel');
+    // - -Fin Módulo TAGS -- 
 
     // --  Módulo Productos -- 
 
@@ -331,6 +346,19 @@ Route::prefix('admin')->group(function () {
     Route::resource('roles', 'Admin\RolController',[ 'as' => 'admin' ]);
     Route::post('roles/activar/{id}', 'Admin\RolController@activar');
     Route::post('roles/desactivar/{id}', 'Admin\RolController@desactivar');
+
+    Route::get('reportes', 'Admin\ReporteController@getReportes');
+    Route::post('reportes', 'Admin\ReporteController@postReportes');
+
+    
+    Route::get('reportes/excel1', 'Admin\ReporteController@generarExcel1');
+    Route::get('reportes/excel2', 'Admin\ReporteController@generarExcel2');
+    Route::get('reportes/excel3', 'Admin\ReporteController@generarExcel3');
+    Route::get('reportes/excel4', 'Admin\ReporteController@generarExcel4');
+    Route::get('reportes/excel5', 'Admin\ReporteController@generarExcel5');
+    Route::get('reportes/excel6', 'Admin\ReporteController@generarExcel6');
+    Route::get('reportes/excel7', 'Admin\ReporteController@generarExcel7');
+    Route::get('reportes/excel8', 'Admin\ReporteController@generarExcel8');
 
     Route::any('/{catchall}', 'Admin\HomeController@get404AdminNotFound')->where('catchall', '.*');
      // - -Fin Roles --

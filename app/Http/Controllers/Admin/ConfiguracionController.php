@@ -25,8 +25,9 @@ class ConfiguracionController extends Controller
     {
         //
         $configuraciones = Configuracion::get_Configuraciones();
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
 
-        return view('admin.modules.configuraciones', compact('configuraciones'));
+        return view('admin.modules.configuraciones', compact('configuraciones', 'desarrollador'));
     }
 
     /**

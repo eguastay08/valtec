@@ -10,7 +10,7 @@ use Spatie\Permission\Models\Role;
 
 class RoleService
 {
-    public function getRoles($rol, $estado)
+    public static function getRoles($rol, $estado)
     {
         $roles = Role::select('id','name', 'estado', 'oculto');
 
@@ -29,7 +29,7 @@ class RoleService
         return $roles;
     }
 
-    public function addArrayRole($request)
+    public static function addArrayRole($request)
     {
         $estado = $request->chkEstadoRol == "on" ? "1":"0";
 
@@ -42,19 +42,19 @@ class RoleService
         return $data;
     }
 
-    public function getPermisosByrol($id)
+    public static function getPermisosByrol($id)
     {
         $data = DB::table('role_has_permissions')->where('role_id', $id)->pluck('permission_id')->toArray();
 
         return $data;
     }
 
-    public function DeletePermissionsByRol($id)
+    public static function DeletePermissionsByRol($id)
     {
         $deleted = DB::table('role_has_permissions')->where('role_id', $id)->delete();
     }
      
-    public function deleteRol($id)
+    public static function deleteRol($id)
     {
         $delete_rol = DB::table('roles')->where('id',$id)->delete();
     }

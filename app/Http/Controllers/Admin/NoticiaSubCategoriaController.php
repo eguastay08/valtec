@@ -9,6 +9,8 @@ use Vinkla\Hashids\Facades\Hashids;
 use DB, Validator;
 use App\Models\Noticia_Categoria;
 
+use App\Models\Configuracion;
+
 class NoticiaSubCategoriaController extends Controller
 {
     /**
@@ -291,6 +293,8 @@ class NoticiaSubCategoriaController extends Controller
         endif;
         
         $subcategoriasNoticias = $subcategoriasNoticias->orderBy('noticia_categoria')->paginate(10);
+
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
         
         if ($request->ajax()) {
             return view('admin.data.load_noticias_subcategorias_data', compact('subcategoriasNoticias', 'Noticiacategoria', 'padresNoticias'));

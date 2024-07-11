@@ -8,7 +8,7 @@ use App\Services\Admin\ImageService;
 
 class MedioPagoService
 {
-    public function addArrayDataMedioPago($request)
+    public static function addArrayDataMedioPago($request)
     {   
         
         $estado = $request->chkEstadoMedioPago  == "on" ? "1":"0";
@@ -50,7 +50,7 @@ class MedioPagoService
 
     }
 
-    public function updateArrayDataMedioPaga($request)
+    public static function updateArrayDataMedioPaga($request)
     {
         $estado = $request->chkEstadoMedioPago  == "on" ? "1":"0";
         $oculto =0;
@@ -93,13 +93,13 @@ class MedioPagoService
         return $data;
     }
 
-    public function moveMedioPagoImg($filename)
+    public static function moveMedioPagoImg($filename)
     {
         $destino =  public_path('assets/images/medios_pago/');
         echo ImageService::moveimage($filename ,$destino);
     }
 
-    public function existImgMedioPago($slider_id,$filename)
+    public static function existImgMedioPago($slider_id,$filename)
     {
         $url = public_path('assets/images/medios_pago/'.$filename);
         echo ImageService::eliminarImg($url);

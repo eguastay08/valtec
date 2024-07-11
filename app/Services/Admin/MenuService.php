@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\File;
 
 class MenuService
 {
-    public function addArrayDataMenu($request)
+    public static function addArrayDataMenu($request)
     {
         $estado = $request->chkEstadoMenu == "on" ? "1":"0";
         $oculto =0;
@@ -56,7 +56,7 @@ class MenuService
         return $data;
     }
 
-    public function updateArrayDataMenu($request)
+    public static function updateArrayDataMenu($request)
     {
         $estado = $request->chkEstadoMenu == "on" ? "1":"0";
         $oculto =0;
@@ -115,14 +115,14 @@ class MenuService
         return $data;
     }
 
-    public function eliminarIcon($icono)
+    public static function eliminarIcon($icono)
     {   
         // $url = public_path('admin/images/iconos/'.$icono);
         $url = public_path('assets/images/menu_iconos/'.$icono);
         echo ImageService::eliminarImg($url);
     }
 
-    public function moveImage($filename)
+    public static function moveImage($filename)
     {
         // $destino =  public_path('admin/images/iconos/');
         $destino =  public_path('assets/images/menu_iconos/');

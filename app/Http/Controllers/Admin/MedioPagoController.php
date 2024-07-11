@@ -14,6 +14,7 @@ use App\Services\Admin\{
 	ImageService
 };
 
+use App\Models\Configuracion;
 
 class MedioPagoController extends Controller
 {
@@ -35,12 +36,13 @@ class MedioPagoController extends Controller
         $estado = isset($request->estado) ? $request->estado : '_all_';
 
         $mediospago = Medio_Pago::getMedioPagos($mediopago,$estado);
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
 
         if ($request->ajax()):
             return view('admin.data.load_medios_pago_data', compact('mediospago'));
         endif;
 
-        return view('admin.modules.medios_pago', compact('mediospago'));
+        return view('admin.modules.medios_pago', compact('mediospago', 'desarrollador'));
     }
 
     /**

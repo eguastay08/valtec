@@ -17,7 +17,7 @@ class Slider extends Model
 
     protected $fillable = ['url','link','popup','posicion','nombre_img','size_img','estado','oculto','usuario_registra','fecha_registro','usuario_modifica','fecha_modifica'];
 
-    public function getSlider($popup, $estado)
+    public static function getSlider($popup, $estado)
     {
         $slider = Slider::select('slider_id', 'url', 'link','popup','posicion','nombre_img','size_img','estado','oculto');
         
@@ -34,31 +34,31 @@ class Slider extends Model
         return $slider;
     }
 
-    public function countSlider()
+    public static function countSlider()
     {
         $slider = Slider::where('oculto',0)->count();
         return $slider;
     }
 
-    public function latestPosition()
+    public static function latestPosition()
     {
         $slider = Slider::select('posicion')->where('oculto',0)->max('posicion');
         return $slider;
     }
 
-    public function getSliderPositionCount($posicion)
+    public static function getSliderPositionCount($posicion)
     {
         $slider = Slider::where('posicion',$posicion)->where('oculto',0)->count();
         return $slider;
     }
 
-    public function getSliderForPosition($posicion)
+    public static function getSliderForPosition($posicion)
     {
         $slider = Slider::select('slider_id')->where('posicion',$posicion)->first();
         return $slider;
     }
 
-    public function existImageSlider($slider_id, $filename)
+    public static function existImageSlider($slider_id, $filename)
     {
         $slider = Slider::where('nombre_img', $filename)->where('slider_id',$slider_id)->count();
         return $slider;

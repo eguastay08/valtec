@@ -16,7 +16,7 @@
         <div class="as-grid-header d-grid align-items-center p-relative style-header-bg">
             <!-- Logo -->
             <a class="navbar-brand as-grid-header__logo me-0" href="{{ url('/') }}" title="E-Shop">
-                <img class="img-fluid" src="{{asset('assets/images/logo-ecommerce.png')}}" alt="E-Shop" title="E-Shop" style="width: 168px; height: auto; transition: all 0.25s ease 0s;" />
+                <img class="img-fluid" src="{{asset('assets/images/logo.png')}}" alt="E-Shop" title="E-Shop" style="width: 168px; height: auto; transition: all 0.25s ease 0s;" />
             </a>
             <!-- Button -->
            

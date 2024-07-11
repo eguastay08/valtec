@@ -178,7 +178,7 @@
                                         </div>
                                         
                                         <div class="form-group">
-                                            <label for="chkEstadoSubCategoria"><b>Estado:<b></label>
+                                            <label for="chkEstadoSubCategoria"><b>Estado:</b></label>
                                             <div class="custom-control custom-checkbox ml-2">
                                                 <input type="checkbox" class="custom-control-input" name="chkEstadoSubCategoria" id="chkEstadoSubCategoria" checked>  
                                                 <label class="custom-control-label" for="chkEstadoSubCategoria">Activo</label>

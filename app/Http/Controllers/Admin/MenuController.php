@@ -13,6 +13,7 @@ use App\Services\Admin\{
     ImageService
 };
 
+use App\Models\Configuracion;
 
 class MenuController extends Controller
 {
@@ -34,12 +35,13 @@ class MenuController extends Controller
         $menupadres = Menu::getPadresMenu();
 
         $menus = Menu::getMenus();
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
 
         if ($request->ajax()):
             return view('admin.data.load_menus_data', compact('menus', 'menupadres'));
         endif;
 
-        return view('admin.modules.menus', compact('menus','menupadres'));
+        return view('admin.modules.menus', compact('menus','menupadres', 'desarrollador'));
     }
 
     public function listarMenuPadres(Request $request)

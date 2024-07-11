@@ -728,6 +728,10 @@ font-size:1.25rem;
 {
     border-radius: 32px;
     cursor: pointer;
+    /* medidas originales */
+    width: 200px;
+    height: 400px;
+    /* medidas */
 }
 
 
@@ -2609,8 +2613,6 @@ input.box_error:focus, input.box_error:active {
 } */
 
 
-
-
 /* animation */
 @keyframes collapse{
     0%
@@ -2714,7 +2716,6 @@ input.box_error:focus, input.box_error:active {
     }
   }
   
-
 
 /* Fin KeyFrames */
 
@@ -2835,6 +2836,16 @@ input.box_error:focus, input.box_error:active {
 
 @media screen and (max-width:767px)
 {
+    .drift-zoom-pane.drift-open, .drift-zoom-pane {
+        display: none;
+      }
+
+      
+    .breadcrumb-item
+    {
+        font-size: 12px !important;
+    }
+
     .banners-container .banner-item:first-child
     {
         margin-top: 0;
@@ -2849,6 +2860,26 @@ input.box_error:focus, input.box_error:active {
     {
         margin-top: 15px;
     }
+
+    .image-sect 
+    {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+
+    }
+
+     /*
+    .image-sect picture img 
+    {
+        object-fit: fill;
+    } */
+
+    /* .image-front-responsive
+    {
+       
+        margin: 0 20px !important;
+        width: 90% !important;
+    } */
 
     .pay-way:first-child
     {
@@ -2872,6 +2903,11 @@ input.box_error:focus, input.box_error:active {
     .button-row a 
     {
         font-size: 12px; 
+    }
+
+    .slider-main .slider-item img 
+    {
+        height: 200px;
     }
 
 }

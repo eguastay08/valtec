@@ -17,7 +17,7 @@ class Descuento extends Model
 
     protected $fillable = ['cupon','porcentaje','usado','uso','nro_productos','estado','oculto','usuario_registra','fecha_registro','usuario_modifica','fecha_modifica'];
 
-    public function getDescuento()
+    public static function getDescuento()
     {
         $data = Descuento::select('descuento_id','cupon','porcentaje','uso','nro_productos','estado')
                             ->where('oculto',0)->orderBy('cupon','ASC')->paginate(10);
@@ -25,7 +25,7 @@ class Descuento extends Model
         return $data;
     }
 
-    public function getCuponxValue($value)
+    public static function getCuponxValue($value)
     {
         $data = Descuento::select('descuento_id','cupon','porcentaje','nro_productos')
                             ->where('cupon',$value)->where('estado',1)->where('oculto',0)->get()->toArray();

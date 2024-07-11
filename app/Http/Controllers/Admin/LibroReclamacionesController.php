@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\LibroReclamaciones;
 use Vinkla\Hashids\Facades\Hashids;
+use App\Models\Configuracion;
 
 class LibroReclamacionesController extends Controller
 {
@@ -25,12 +26,13 @@ class LibroReclamacionesController extends Controller
     {
         //
         $libro_reclamaciones = LibroReclamaciones::where('oculto',0)->orderBy('libro_reclamacion_id','ASC')->paginate(20);
+        $desarrollador = Configuracion::get_valorxvariable('desarrollador');
 
         if ($request->ajax()):
             return view('admin.data.load_libro_reclamaciones_data', compact('libro_reclamaciones'));
         endif;
         
-        return view('admin.modules.libro_reclamaciones',compact('libro_reclamaciones'));
+        return view('admin.modules.libro_reclamaciones',compact('libro_reclamaciones', 'desarrollador'));
     }
 
     /**

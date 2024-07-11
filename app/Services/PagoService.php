@@ -10,7 +10,13 @@ use App\Models\Ordens_Detalle;
 
 class PagoService
 {
-    public function mailSuccessPago($orden_id)
+   /**
+    * The function `mailSuccessPago` sends an email to the customer with details about a successful
+    * payment for an order.
+    * 
+    * @param orden_id The order ID of the payment success.
+    */
+    public static function mailSuccessPago($orden_id)
     {
         $ordenData = Ordens::getOrdendata($orden_id);
         $ordenProductos = Ordens_Detalle::getProductosOrdenEmail($orden_id);
