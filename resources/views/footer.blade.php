@@ -93,11 +93,11 @@
                 <h5 class="as-footer_title">Contáctanos</h5>
                 <div class="as-footer_link">
                     <i class="as-footer_link_icon fas fa-phone"></i>
-                    <a href="#" title="Número de Contacto">+51987787672</a>
+                    <a href="#" title="Número de Contacto">+5939999</a>
                 </div>
                 <div class="as-footer_link">
                     <i class="as-footer_link_icon fas fa-envelope"></i>
-                    <a href="mailto:eshop@gmail.com" title="Enviar Email">eshop@gmail.com</a>
+                    <a href="mailto:soporte@valtecgda.com" title="Enviar Email">soporte@valtecgda.com</a>
                 </div>
                 <div class="as-footer_link">
                     <i class="as-footer_link_icon fas fa-map-marker-alt"></i>
@@ -112,7 +112,7 @@
                     </span>
                 </div>
             </addres>
-
+<!--
             <div class="col-12 order-md-2 mb-2">
                 <section class="row align-items-center justify-content-center">
                     <picture class="col-3 col-sm-3 col-lg-2 col-xl-2">
@@ -130,13 +130,13 @@
                     </picture>
                 </section>
             </div>
-
+-->
         </div>
 
     </div>
 
     <aside class="as-copyright as-copyright-style">
-        <strong class="d-block d-md-inline">E - Shop © 2023 - Todos los derechos reservados</strong>
+        <strong class="d-block d-md-inline">VALTEC © 2024 - Todos los derechos reservados</strong>
     </aside>
 
 </footer>

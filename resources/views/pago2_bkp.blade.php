@@ -410,7 +410,7 @@
                             <div class="form-group">
                                 <p>
                                     <input type="checkbox" name="aceptochk">
-                                    Acepto Términos y Condciones de uso
+                                    Acepto Términos y Condiciones de uso
                                 </p>
                             </div>
                         </div>

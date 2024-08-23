@@ -45,7 +45,7 @@ class UserController extends Controller
             return view('admin.data.load_usuarios_data', compact('usuarios'));
         endif;
 
-        return view('admin.modules.usuarios', compact('usuarios'.'desarrollador'));
+        return view('admin.modules.usuarios', compact('usuarios','desarrollador'));
     }
 
     /**

@@ -68,7 +68,13 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="nombresOrden"><b>Información adicional:</b></label>
-                                    <textarea name="" id="" class="form-control ml-2" readonly cols="30" rows="5">{{ isset($orden) ? $orden->informacion_adicional : '' }}</textarea>
+                                    <textarea name="" id="" class="form-control ml-2" readonly cols="30" rows="5">
+                                        Telefono: {{$orden->informacion_adicional}}
+                                        Provincia: {{$orden->provincia}}
+                                        Ciudad: {{$orden->ciudad}}
+                                        Dirección: {{$orden->direccion}} {{$orden->direccion2}}
+                                        Comentario: {{$orden->comentario}}
+                                    </textarea>
                                 </div>
                             </div>
 

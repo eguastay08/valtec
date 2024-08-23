@@ -47,7 +47,13 @@
                         <td>{{$or->nombres}}</td>
                         <td class="text-muted">{{ $or->email }}</td>
                         <td>{!! \Carbon\Carbon::parse($or->fecha_pago)->format('d/m/Y') !!}</td>
-                        <td>{{$or->informacion_adicional}}</td>
+                        <td>
+                            <span>Telefono: {{$or->informacion_adicional}}</span><br>
+                            <span>Provincia: {{$or->provincia}}</span><br>
+                            <span>Ciudad: {{$or->ciudad}}</span><br>
+                            <span>Dirección: {{$or->direccion}} {{$or->direccion2}}</span><br>
+                            <span>Comentario: {{$or->comentario}}</span><br>
+                        </td>
                         <td>{{$or->ip}}</td>
                         @if($or->mediopago != "")
                         <td>{{$or->mediopago}}</td>

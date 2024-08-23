@@ -96,9 +96,66 @@
                                         <label>Validar Correo Electrónico</label>
                                         <input type="text" class="form-control boder-default" id="pagoemailverificar" name="pagoemailverificar">
                                         <span id="error-validateEmail" style="color:#FF0000;font-size:14px;"></span>
-                                    </div>
+                                    </div>      
                                 </div>
-
+                                <div class="col-lg-12 col-sm-12 mt-3">
+                                    <div class="form-group">
+                                        <label>Provincia</label>
+                                        <select name="billing_state" id="billing_state" class="form-select" aria-label="Default select example" autocomplete="address-level1" data-placeholder="Elige una opción…" data-input-classes="" data-label="Provincia" tabindex="-1" aria-hidden="true">
+    <option value="">Elige una opción…</option>
+    <option value="Azuay">Azuay</option>
+    <option value="Bolívar">Bolívar</option>
+    <option value="Cañar">Cañar</option>
+    <option value="Carchi">Carchi</option>
+    <option value="Chimborazo">Chimborazo</option>
+    <option value="Cotopaxi">Cotopaxi</option>
+    <option value="El Oro">El Oro</option>
+    <option value="Esmeraldas">Esmeraldas</option>
+    <option value="Galápagos">Galápagos</option>
+    <option value="Guayas">Guayas</option>
+    <option value="Imbabura">Imbabura</option>
+    <option value="Loja">Loja</option>
+    <option value="Los Ríos">Los Ríos</option>
+    <option value="Manabí">Manabí</option>
+    <option value="Morona-Santiago">Morona-Santiago</option>
+    <option value="Napo">Napo</option>
+    <option value="Orellana">Orellana</option>
+    <option value="Pastaza">Pastaza</option>
+    <option value="Pichincha">Pichincha</option>
+    <option value="Santa Elena">Santa Elena</option>
+    <option value="Santo Domingo de los Tsáchilas">Santo Domingo de los Tsáchilas</option>
+    <option value="Sucumbíos">Sucumbíos</option>
+    <option value="Tungurahua">Tungurahua</option>
+    <option value="Zamora-Chinchipe">Zamora-Chinchipe</option>
+</select>
+                                        <span id="error-billing_state" style="color:#FF0000;font-size:14px;"></span>
+                                    </div>
+                                </div> 
+                                <div class="col-lg-12 col-sm-12 mt-3">
+                                    <div class="form-group">
+                                        <label>Ciudad</label>
+                                        <input type="text" class="form-control boder-default" id="city" name="city" placeholder="Nombre de la Ciudad">
+                                        <span id="error-city" style="color:#FF0000;font-size:14px;"></span>
+                                    </div>      
+                                </div>   
+                                <div class="col-lg-12 col-sm-12 mt-3">
+                                    <div class="form-group">
+                                        <label>Dirección de la calle</label>
+                                        <input type="text" class="form-control boder-default" id="address" name="address" placeholder="Nombre de la calle y número de la casa">
+                                        <span id="error-address" style="color:#FF0000;font-size:14px;"></span>
+                                    </div>      
+                                </div>
+                                <div class="col-lg-12 col-sm-12 mt-3">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control boder-default" id="address2" name="address2" placeholder="Apartamento, habitación, etc. (opcional)">
+                                    </div>      
+                                </div>
+                                <div class="col-lg-12 col-sm-12 mt-3">
+                                    <div class="form-group">
+                                        <label>Notas del pedido (opcional)</label>
+                                        <textarea name="order_comments" class="form-control boder-default" id="order_comments" placeholder="Notas sobre tu pedido, por ejemplo, notas especiales para la entrega." rows="2" cols="5"></textarea>
+                                    </div>      
+                                </div>
                                 <div class="col-12 d-flex justify-content-end mt-4">
                                     <button type="button" class="btn btn-form-step btn-next btn-next-first btn-dark" style="border-radius:24px;"><i class="fas fa-chevron-right"></i> Continuar</a>
                                 </div>
@@ -344,6 +401,26 @@
                                                 <label for="lblemail"><strong>Correo Electrónico:</strong></label>
                                                 <p id="lblemail"></p>
                                             </div>
+                                            <div class="input-group mt-4">
+                                                <label for="lblProvincia"><strong>Provincia:</strong></label>
+                                                <p id="lblProvincia"></p>
+                                            </div>
+                                            <div class="input-group mt-4">
+                                                <label for="lblCiudad"><strong>Ciudad:</strong></label>
+                                                <p id="lblCiudad"></p>
+                                            </div>
+                                            <div class="input-group mt-4">
+                                                <label for="lblAddress"><strong>Dirección de la calle:</strong></label>
+                                                <p id="lblAddress"></p>
+                                            </div>
+                                            <div class="input-group mt-4">
+                                                <label for="lblAddress2"><strong>Apartamento, habitación, etc.:</strong></label>
+                                                <p id="lblAddress2"></p>
+                                            </div>
+                                            <div class="input-group mt-4">
+                                                <label for="lblOrderComents"><strong>Notas del pedido (opcional):</strong></label>
+                                                <p id="lblOrderComents"></p>
+                                            </div>
 
                                             <div class="input-group mt-4">
                                                 <label for="lblPayment"><strong>Medio Pago:</strong></label>
@@ -366,7 +443,7 @@
                                     <div class="form-group">
                                         <p>
                                             <input type="checkbox" name="aceptochk">
-                                            Acepto Términos y Condciones de uso
+                                            Acepto Términos y Condiciones de uso
                                         </p>
                                     </div>
                                 </div>

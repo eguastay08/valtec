@@ -15,7 +15,7 @@
                        
                         <tr>
                             <td style="padding:12px 10px;text-align:center;background:#1b1b1b" align="center" valign="top">
-                                <a href="{{ url('/') }}"><img class="logo-img" src="{{asset('admin_assets/images/logo-lolstore.png')}}" style="display:block;margin:0 auto" alt="logo" height="auto" border="0" width="350"/></a>
+                                <a href="{{ url('/') }}"><img class="logo-img" src="{{asset('assets/images/logo.png')}}" style="display:block;margin:0 auto" alt="logo" height="auto" border="0" width="350"/></a>
                             </td>
                         </tr>
     

@@ -75,15 +75,6 @@
           </li>   
           @endcan 
 
-          @can('admin.disenio.index')
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url('admin/disenio') }}">
-              <i class="fas fa-palette menu-icon"></i>
-              <span class="menu-title">Diseño</span>
-            </a>
-          </li>   
-          @endcan 
-
           @can('admin.preguntas.index')
           <li class="nav-item">
             <a class="nav-link" href="{{ url('admin/preguntas_frecuentes') }}">
@@ -101,33 +92,7 @@
             </a>
           </li> 
           @endcan
-
-          @can('admin.medios_pago.index')
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url('admin/medios_pagos') }}">
-              <i class="fas fa-hand-holding-usd menu-icon"></i>
-              <span class="menu-title">Medios de pago</span>
-            </a>
-          </li> 
-          @endcan
-          
-          @can('admin.moneda.index')
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url('admin/monedas') }}">
-              <i class="fas fa-coins menu-icon"></i>
-              <span class="menu-title">Monedas</span>
-            </a>
-          </li> 
-          @endcan
-
-          @can('admin.menu.index')
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url('admin/menus') }}">
-              <i class="fas fa-ellipsis-h menu-icon"></i>
-              <span class="menu-title">Menu</span>
-            </a>
-          </li> 
-          @endcan
+        
 
           @can('admin.descuentos.index')
           <li class="nav-item">
@@ -137,43 +102,6 @@
             </a>
           </li> 
           @endcan
-
-          @can('admin.noticias_categorias.index')
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url('admin/noticia_categoria') }}">
-              <i class="fab fa-hacker-news-square menu-icon"></i>
-              <span class="menu-title">Noticias Categorías</span>
-            </a>
-          </li> 
-          @endcan
-
-          @can('admin.noticias_etiquetas.index')
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url('admin/noticia_tag') }}">
-              <i class="fas fa-hashtag menu-icon"></i>
-              <span class="menu-title">Noticias Etiquetas</span>
-            </a>
-          </li> 
-          @endcan
-
-          @can('admin.noticias.index')
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url('admin/noticias') }}">
-              <i class="fas fa-newspaper menu-icon"></i>
-              <span class="menu-title">Noticias</span>
-            </a>
-          </li> 
-          @endcan
-
-          @can('admin.suscripciones.index')
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url('admin/suscripciones') }}">
-              <i class="far fa-paper-plane menu-icon"></i>
-              <span class="menu-title">Suscripciones</span>
-            </a>
-          </li> 
-          @endcan
-
           @can('admin.libro_reclamaciones.index')
           <li class="nav-item">
             <a class="nav-link" href="{{ url('admin/libro_reclamaciones') }}">
@@ -192,23 +120,6 @@
           </li> 
           @endcan
 
-          @can('admin.estilos.index')
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url('admin/estilos') }}">
-            <i class="fas fa-paint-roller menu-icon"></i>
-              <span class="menu-title">Estilos</span>
-            </a>
-          </li> 
-          @endcan
-
-          @can('admin.configuracion.index')
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url('admin/configuraciones') }}">
-              <i class="fas fa-cog menu-icon"></i>
-              <span class="menu-title">Cofiguraciones</span>
-            </a>
-          </li> 
-          @endcan
 
           @can('admin.roles.index')
           <li class="nav-item">

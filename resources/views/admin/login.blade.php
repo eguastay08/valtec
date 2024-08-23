@@ -10,7 +10,7 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="routeName" content="{{ Route::currentRouteName() }}">
   <meta name="app-url" content="{{ url('/') }}">
-  <title>E-Shop Ecommerce - Inicio de Sesión</title>
+  <title>VALTEC - Inicio de Sesión</title>
   <!-- plugins:css -->
   
   <link href="{{ asset('admin_assets/vendors/iconfonts/font-awesome/css/all.min.css') }}" rel="stylesheet">
@@ -34,7 +34,7 @@
               
             <div class="auth-form-light text-left">
              
-              <div class="p-3 d-flex justify-content-center" style="background-color:#3a3f51;">
+              <div class="p-3 d-flex justify-content-center">
                 <img src="{{asset('admin_assets/images/logo-ecommerce.png')}}" alt="logo" width="350px"/>
               </div>
 
@@ -70,7 +70,7 @@
                   </div>
                   
                   <div class="mt-3 d-flex justify-content-center pb-4">
-                      <div class="text-center g-recaptcha" data-sitekey="{{$captchakey->valor}}"></div>
+                      <div class="text-center g-recaptcha" data-sitekey="6LeQZQ0qAAAAAGofMbS-m-Na--FmeDFkblBBwhu9"></div>
                   </div>
 
                   <div class="mt-3 pl-4 pr-4 pb-2">

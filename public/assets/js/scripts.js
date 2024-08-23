@@ -318,6 +318,12 @@ nextBtns.forEach((btn) => {
             $('#lblnomapepago').html('&nbsp;&nbsp;'+$('#pagonombresapellidos').val());
             $('#lblinfo').html('&nbsp;&nbsp;'+$('#pagoinformacionadicional').val());
             $('#lblemail').html('&nbsp;&nbsp;'+$('#pagoemail').val());
+            $('#lblvalidateEmail').html('&nbsp;&nbsp;'+$('#pagoemailverificar').val());
+            $('#lblProvincia').html('&nbsp;&nbsp;'+$('#billing_state option:selected').text());
+            $('#lblCiudad').html('&nbsp;&nbsp;'+$('#city').val());
+            $('#lblAddress').html('&nbsp;&nbsp;'+$('#address').val());
+            $('#lblAddress2').html('&nbsp;&nbsp;'+$('#address2').val());
+            $('#lblOrderComents').html('&nbsp;&nbsp;'+$('#order_comments').val());
             updateFormSteps();
             updateProgressbar();
             }
@@ -355,13 +361,55 @@ function isFormValid()
         $("#error-nomapellido").text('Este Campo es Obligatorio');
         $("#pagonombresapellidos").removeClass("box_succes");
         $("#pagonombresapellidos").addClass("box_error");
-
         }
         else 
         {
             $("#error-nomapellido").text('');
             $("#pagonombresapellidos").removeClass("box_error");
             $("#pagonombresapellidos").addClass("box_succes");
+     
+        }
+
+        if($('#address').val() == '')
+        {  
+        $("#error-address").text('Este Campo es Obligatorio');
+        $("#address").removeClass("box_succes");
+        $("#address").addClass("box_error");
+        }
+        else 
+        {
+            $("#error-nomapellido").text('');
+            $("#address").removeClass("box_error");
+            $("#address").addClass("box_succes");
+     
+        }
+
+        if($('#city').val() == '')
+        {  
+        $("#error-city").text('Este Campo es Obligatorio');
+        $("#city").removeClass("box_succes");
+        $("#city").addClass("box_error");
+        }
+        else 
+        {
+            $("#error-nomapellido").text('');
+            $("#city").removeClass("box_error");
+            $("#city").addClass("box_succes");
+     
+        }
+
+
+        if($('#billing_state').val() == '')
+        {  
+        $("#error-billing_state").text('Este Campo es Obligatorio');
+        $("#billing_state").removeClass("box_succes");
+        $("#billing_state").addClass("box_error");
+        }
+        else 
+        {
+            $("#error-billing_state").text('');
+            $("#billing_state").removeClass("box_error");
+            $("#billing_state").addClass("box_succes");
      
         }
 

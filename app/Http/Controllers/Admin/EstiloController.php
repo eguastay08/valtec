@@ -8,9 +8,7 @@ use Validator;
 use Vinkla\Hashids\Facades\Hashids;
 use App\Models\Estilo;
 use App\Models\Configuracion;
-use App\Services\Admin\{
-	Cssparser
-};
+use App\Services\Admin\Cssparser;
 
 class EstiloController extends Controller
 {

@@ -28,6 +28,11 @@ class CreateOrdensTable extends Migration
             $table->string('nombres',200);
             $table->mediumText('informacion_adicional');
             $table->string('email');
+            $table->string('provincia',100);
+            $table->string('ciudad',100);
+            $table->string('direccion',200);
+            $table->string('direccion2',200);
+            $table->mediumText('comentario');
             $table->dateTime('fecha_pago',0);
             $table->char('n_operacion',30);
             $table->unsignedBigInteger('descuento_id')->nullable()->constrained();

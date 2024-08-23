@@ -15,7 +15,7 @@ class Ordens extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['medio_pago_id','nombres','informacion_adicional','email','fecha_pago','n_operacion','descuento_id','comprobante','subtotal','descuento','total','ip','fecha_registro'];
+    protected $fillable = ['medio_pago_id','nombres','informacion_adicional','email','provincia','ciudad','direccion','direccion2','comentario','fecha_pago','n_operacion','descuento_id','comprobante','subtotal','descuento','total','ip','fecha_registro'];
 
     public static function countOrdens()
     {
@@ -32,7 +32,7 @@ class Ordens extends Model
 
     public static function getOrdenes()
     {
-        $ordenes =  Ordens::select('ordens.orden_id','ordens.nombres','ordens.informacion_adicional','ordens.email', 'ordens.comprobante',
+        $ordenes =  Ordens::select('ordens.orden_id','ordens.nombres','ordens.informacion_adicional','ordens.email','ordens.provincia','ordens.direccion','ordens.direccion2','ordens.comentario','ordens.ciudad', 'ordens.comprobante',
                             'ordens.fecha_pago','ordens.subtotal','ordens.descuento','ordens.total','ordens.ip', 'ordens.n_operacion',
                             'ordens.fecha_registro','oee.orden_estado_id','oest.estado','des.cupon', 'mp.nombre as mediopago')
                             ->leftJoin('descuentos as des', function($join)
@@ -64,7 +64,7 @@ class Ordens extends Model
 
     public static function getOrdendata($orden_id)
     {
-        $ordendata = Ordens::select('ordens.nombres', 'ordens.email', 'ordens.fecha_pago', 'ordens.informacion_adicional', 'ordens.subtotal',
+        $ordendata = Ordens::select('ordens.nombres', 'ordens.email', 'ordens.fecha_pago', 'ordens.informacion_adicional', 'ordens.subtotal','ordens.provincia','ordens.direccion','ordens.direccion2','ordens.comentario','ordens.ciudad',
                                     'ordens.descuento', 'ordens.total', 'desc.cupon', 'ordens.n_operacion', 'desc.porcentaje')
                             ->leftJoin('descuentos as desc', function($join)
                             {

@@ -97,6 +97,7 @@ Route::post('webhooks', 'WebHooksController');
 
 
 Route::get('/payment/{order}', 'PagoController@paymentorder')->name('order.paymentorder');
+Route::get('/payment/payphone/{order}', 'PagoController@paymentorderpayphone')->name('order.paymentorderpayphone');
 Route::get('/payment/fail/{order}', 'PagoController@failOrder')->name('order.failureorder');
 Route::get('/payment/pending/{order}', 'PagoController@pendindOrder')->name('order.pendingorder');
 // Route::post('/forms/pago_online', 'PagoController@pago_online');

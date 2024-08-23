@@ -49,8 +49,8 @@ class PagoController extends Controller
 
         // Datos Paypal
         $this->gateway = Omnipay::create('PayPal_Rest');
-        $this->gateway->setClientId(env('PAYPAL_CLIENT_ID'));
-        $this->gateway->setSecret(env('PAYPAL_CLIENT_SECRET'));
+        $this->gateway->setClientId("ASVZ0-vziXOVycPZhMMQe0RHmcCmrGDwDN1QZK4y4jejTJRnxQfybsRWc79rL5QUXrElvhDlsCZhQ4US");
+        $this->gateway->setSecret("EOYg8SBs-r-ypOWYdGDu15Q4CAWqMSlWhmbAoBs6ZQI8TtxXdPalxSWI3q2Ene4rH05WHKOJ4F0KOPh0");
         $this->gateway->setTestMode(true);
     }  
 
@@ -84,7 +84,9 @@ class PagoController extends Controller
             'pagoemailverificar' => 'required|email|same:pagoemail',
             'aceptochk' =>'accepted',
             'payment' => 'required',
-            'g-recaptcha-response'=>'required'
+            'billing_state'=>'required',
+            'city'=>'required',
+            'address'=>'required',
         ];
 
         if($request->opayment != 1):
@@ -102,7 +104,10 @@ class PagoController extends Controller
             'pagoemailverificar.same' => 'Los correos Electrónicos no coinciden.',
             'aceptochk.accepted' => 'Debe Aceptar los Términos y Condiciones de uso',
             'payment.required' => 'Debe Seleccionar un medio de Pago',
-            'g-recaptcha-response.required' => 'El captcha es requerido'
+            'g-recaptcha-response.required' => 'El captcha es requerido',
+            'billing_state.required' => 'El Campo Provincia es requerido',
+            'city.required' => 'El Campo Ciudad es requerido',
+            'address.required' => 'El Campo Dirección es requerido',
         ];
 
         if($request->opayment != 1):
@@ -125,7 +130,7 @@ class PagoController extends Controller
             $decript_medio_pago_id = Hashids::decode($request->payment);
             $is_online = Medio_Pago::getIsOnline($decript_medio_pago_id[0]); //para saber si el método es pago online o no
 
-            if(!$valiCaptcha['success']):
+            if(false):
                 return response()->json(['errors'=>$validator->errors(), 'code' => '425']);
             else:
 
@@ -172,6 +177,11 @@ class PagoController extends Controller
                         "nombres" =>$request->pagonombresapellidos,
                         "informacion_adicional"=>$request->pagoinformacionadicional,
                         "email" => $request->pagoemail,
+                        "provincia"=>$request->billing_state,
+                        "ciudad"=>$request->city,
+                        "direccion"=>$request->address,
+                        "direccion2"=>$request->address2,
+                        "comentario"=>$request->order_comments,
                         "descuento_id" => $descuento_id,
                         "comprobante"=>$imgComprobante[0],
                         "subtotal"=>$cart_subtotal,
@@ -249,11 +259,15 @@ class PagoController extends Controller
 
                     
                         Ordens_m_Orden_Estado::create($dataEstado);
-
+                        
                         if($is_online['pago_online'] == 1):
                             $cart_total = Cart::getTotal();
                             $tipo_cambio = Moneda::getTipoCambio();
-                            $valorConvertido = $cart_total / $tipo_cambio[0]["tipo_cambio"];
+                            if($tipo_cambio[0]["tipo_cambio"]!=='0.00'){
+                                $valorConvertido = $cart_total / $tipo_cambio[0]["tipo_cambio"];
+                            }else{
+                                $valorConvertido = $cart_total;
+                            }
                             $valor_Dolares = number_format($valorConvertido, 2, '.', '' );
                             $medioPago = Medio_Pago::getDataValue($decript_medio_pago_id[0]);
                             
@@ -264,13 +278,13 @@ class PagoController extends Controller
                                         'amount'=>$valor_Dolares,
                                         'items' => array(
                                             array(
-                                                'name'=>'Pago Online - E-Shop Ecommerce',
+                                                'name'=>'Pago Online - VALEC',
                                                 'price' => $valor_Dolares,
-                                                'description'=>'E-shop Ecommerce',
+                                                'description'=>'VALTEC',
                                                 'quantity'=>1,
                                             )
                                         ),
-                                        'currency'=>env('PAYPAL_CURRENCY'),
+                                        'currency'=>"USD",
                                         'returnUrl'=> route('order.paymentorder', $lastorden_id),
                                         'cancelUrl'=> route('order.failureorder', $lastorden_id)
                                     ))->send();
@@ -282,13 +296,54 @@ class PagoController extends Controller
                                     
                                     else: 
                                     
-                                        return $response->getMessage();
+                                        return "Error en paypal : ". $response->getMessage();
 
                                     endif;
 
                                 } catch (\Throwable $th) {
-                                    return $th->getMessage();
+                                    return "Error en paypal : ".$th->getMessage();
                                 }
+                            elseif($medioPago->data_value == 'payphone'):
+                                try{
+                                    $parametros = [
+                                        "amount" => str_replace('.', '', $valor_Dolares),
+                                        "amountWithoutTax" => str_replace('.', '', $valor_Dolares),
+                                        "clientTransactionID" => $lastorden_id,
+                                        "responseUrl" => route('order.paymentorderpayphone', $lastorden_id),
+                                        "cancellationUrl" => route('order.failureorder', $lastorden_id)
+                                    ];
+
+                                    $ch = curl_init('https://pay.payphonetodoesposible.com/api/button/Prepare');
+
+                                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                                    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                                        'Authorization: Bearer Q8lavPcjqVIg_B-k19fLlS9kFHEGwzfQqQ287tqt4vNSkTx7ivhZdmCfUOo5wpYWkg5Xh76Vgqh4RnnppyrafelREuEUnfVCrBEm066gb6VwXAfs6KCDUzuvpRlWqF8TJNAbronwzEbrcjF-T2qUtJFU3We6Zuq0j9kqCcRthacRA47jn0X1NKhjkOIV8TPKP_aMaI2yj2j7Bt-PCaKwSFmUk50IkDhFaP30dyJ9MKENPWQpRo3d2OpUacXrzVudXu73t6ZTdx7J564DH0UxTuGXL0Hiz6gZpaRvurTZ4A3I8RObwCgx-nJs95eRm5jM5YHRFkbcG-WKyfU_Ja0X2IWLa9Q',
+                                        'Content-Type: application/json'
+                                    ]);
+                                    curl_setopt($ch, CURLOPT_POST, true);
+                                    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($parametros));
+
+                                    $response = curl_exec($ch);
+
+                                    if (curl_errno($ch)) {
+                                        return "Error en payphone curl : ". $response->getMessage();
+                                    } else {
+                                        $respuesta = json_decode($response, true);
+                                        if (isset($respuesta['payWithCard'])) {
+                                            \Cart::clear();
+                                            $url =  $respuesta['payWithCard'];
+                                            return response()->json(['msg'=>'sucess', 'code' => '201', 'url'=>$url]);
+                                            exit;
+                                        } else {
+                                            return "Error en payphone : ". $response->getMessage();
+                                        }
+                                    }
+                                    curl_close($ch);
+                                } catch (\Throwable $th) {
+                                    return "Error en payphone global : ".$th->getMessage();
+                                }
+
+
                             elseif($medioPago->data_value == 'mercado-pago'):
                             
                                  // SDK de Mercado Pago
@@ -528,6 +583,76 @@ class PagoController extends Controller
                     "fecha_pago"=>$arr_body['transactions'][0]['related_resources'][0]['sale']['create_time'],
                     // "n_operacion"=>$arr['id']
                     "n_operacion"=>$arr_body['id']
+                ];
+                $order = Ordens::find($lastorden_id);
+
+                if($order->update($data)):
+                    
+                    $type = "type=s";
+
+                   $ordenpendiente = Ordens_m_Orden_Estado::PendienteVerificacion($lastorden_id);
+
+                    Ordens_m_Orden_Estado::create($ordenpendiente);
+
+                    PagoService::mailSuccessPago($lastorden_id);
+
+                    return \Redirect::route('pago.confirmacion', $type);
+                else:
+                    $type = "type=f";
+                    
+                    echo self::failOrder($lastorden_id);
+
+                    return \Redirect::route('pago.confirmacion', $type);
+                endif;
+
+            else:
+                
+                echo self::failOrder($lastorden_id);
+
+                return $response->getMessage();
+
+            endif;
+
+        endif;
+
+    }   
+
+    public function paymentorderpayphone($lastorden_id, Request $request)
+    {
+        
+        if($request->input('id') && $request->input('clientTransactionId')):
+            $transaccion = $request->input('id');
+            $client = $request->input('clientTransactionId');
+
+            $data_array = array(
+                "id"=> (int)$transaccion,
+                "clientTxId"=>$client 
+            );
+            $data = json_encode($data_array);
+
+            //Iniciar Llamada
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_URL, "https://pay.payphonetodoesposible.com/api/button/V2/Confirm");
+            curl_setopt($curl, CURLOPT_POST, 1);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+            curl_setopt_array($curl, array(
+            CURLOPT_HTTPHEADER => array(
+            "Authorization: Bearer urzG0xF9B_NSQjT_eHDg7obrIaMGFuec0P0dyfheKbkc2SY__5LjPVpf6FkMTuZcaqMzNL4hL-WZ9Ul-CsJS8cY9EHodCZNyBDW4nmVRe6TaellbWATsn9aYEkH9KXh2lA9361DTJ9kLg_EpnsPiA2U_UMlETLaCmzGQnMbGpne_YvXga3ly-OGRA2z7DCGbHBRbNLrawa1PKoZXP7PdRl8dRKP9QpbuFvlcA5II9aoUj8y91iewuHAX_xFNG2Vz0xHAUTgU_iiIvKrghc8nb3VE2UmVq5vx6f_kM08jIMJIYw7G4ll3BhQ1LWKraWydjGQf1Q", "Content-Type:application/json"),
+            ));
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            $result = curl_exec($curl);
+            curl_close($curl);
+            $result = json_decode($result);
+
+            //En la variable result obtienes todos los parámetros de respuesta
+
+            if($result->transactionStatus=='Approved'):
+                // var_dump($arr['transactions'][0]['related_resources'][0]['sale']['create_time']);exit;
+                $data = [
+                    "email"=>$result->email,
+                    "fecha_pago"=>$result->date,
+                    // "n_operacion"=>$arr['id']
+                    "n_operacion"=>$result->clientTransactionId
                 ];
                 $order = Ordens::find($lastorden_id);
 

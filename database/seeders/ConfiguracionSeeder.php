@@ -131,7 +131,7 @@ class ConfiguracionSeeder extends Seeder
             [
                 "nombre"=>"Recaptcha Secret Key",
                 "variable"=>"go_secret_key",
-                "valor"=>"6Lcds3MUAAAAAHNfl-Bf6IGeYcPpRyKXNFTt1Vn0",
+                "valor"=>"6LeQZQ0qAAAAADVmQ6CgR9adpAvjgRHvfvVelbfz",
                 "system"=>"0",
                 "usuario_registro"=>"admin",
                 "fecha_registro"=>now()
@@ -139,7 +139,7 @@ class ConfiguracionSeeder extends Seeder
             [
                 "nombre"=>"Recaptcha Site Key",
                 "variable"=>"go_site_key",
-                "valor"=>"6Lcds3MUAAAAAAxmH3xtEsw9Sz9YSQzknABZFg6N",
+                "valor"=>"6LeQZQ0qAAAAAGofMbS-m-Na--FmeDFkblBBwhu9",
                 "system"=>"0",
                 "usuario_registro"=>"admin",
                 "fecha_registro"=>now()
