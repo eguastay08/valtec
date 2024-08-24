@@ -13,6 +13,9 @@ use App\Http\Middleware\Cors;
 |
 */
 
+Auth::routes(['verify' => true]);
+
+
 Route::get('/', 'FrontController@getIndex');
 
 Route::get('/getMenus', 'FrontController@getAsNavMenus');
@@ -75,7 +78,6 @@ Route::post('/clear', 'CartController@clear')->name('cart.clear');
 Route::post('/cupones', 'CartController@cupones')->name('cart.cupones');
 Route::get('load-table-pago', 'CartController@loadTablePago');
 
-Route::get('pago', 'FrontController@getPagoFront')->name('pago');
 
 Route::get('payment_description/{url}', 'FrontController@getPaymentDescription');
 
@@ -111,6 +113,18 @@ Route::get('/order/pending/{order}','PagoController@MercadoPagoPending')->name('
   
 // });
 
+    //rutas Register
+    Route::get('/register', 'Client\ConnectController@getRegister')->name('register');
+    Route::Post('/register', 'Client\ConnectController@postRegister')->name('register');
+    //rutas Login
+    Route::get('/login', 'Client\ConnectController@getLogin')->name('login');
+    Route::Post('/login', 'Client\ConnectController@postLogin')->name('login');
+    Route::get('/logout', 'Client\ConnectController@getLogout')->name('logout');
+
+
+Route::group(['middleware' => ['role:client']], function () {
+    Route::get('pago', 'FrontController@getPagoFront')->name('pago');
+});
 
 //rutas para los módulos de Administración
 
@@ -372,3 +386,6 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::any('{catchall}', 'FrontController@get404NotFound')->where('catchall', '.*');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
