@@ -25,7 +25,7 @@ class CreateOpinionsTable extends Migration
             $table->char('estado',1)->default(1);
             $table->char('oculto',1)->default(0);
             // $table->id();
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 

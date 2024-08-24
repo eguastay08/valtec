@@ -25,8 +25,9 @@ class CreateMonedasTable extends Migration
             $table->dateTime('fecha_registro',0);
             $table->string('usuario_modifica',12)->nullable();
             $table->dateTime('fecha_modifica',0)->nullable();
+            $table->string('tipo_cambio')->nullable();
             // $table->id();
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 

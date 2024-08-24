@@ -28,7 +28,7 @@ class CreateProductoCodigosTable extends Migration
             $table->dateTime('fecha_registro',0);
             $table->string('usuario_modifica',12)->nullable();
             $table->dateTime('fecha_modifica',0)->nullable();
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 

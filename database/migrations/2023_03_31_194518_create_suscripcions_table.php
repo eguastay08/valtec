@@ -18,7 +18,7 @@ class CreateSuscripcionsTable extends Migration
             $table->text('email');
             $table->char('oculto',1)->default(0); 
             $table->dateTime('fecha_registro',0);
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 

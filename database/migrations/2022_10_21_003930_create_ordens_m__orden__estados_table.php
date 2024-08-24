@@ -30,7 +30,7 @@ class CreateOrdensMOrdenEstadosTable extends Migration
             $table->string('usuario_registro',12);
             $table->dateTime('fecha_registro',0);
             // $table->id();
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 

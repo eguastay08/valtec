@@ -17,7 +17,7 @@ class CreateMedioPagoOnlinesTable extends Migration
             $table->bigIncrements('medio_pago_online_id');
             $table->string('codigo',200);
             $table->string('nombre',200);
-            $table->text('imagen')->nullabe();
+            $table->text('imagen')->nullable();
             $table->string('nombre_img',200)->nullable();
             $table->string('size_img',200)->nullable();   
             $table->char('estado',1)->default(1);
@@ -27,7 +27,7 @@ class CreateMedioPagoOnlinesTable extends Migration
             $table->string('usuario_modifica',12)->nullable();
             $table->dateTime('fecha_modifica',0)->nullable();
             // $table->id();
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 

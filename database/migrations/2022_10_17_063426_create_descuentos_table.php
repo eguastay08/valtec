@@ -27,7 +27,7 @@ class CreateDescuentosTable extends Migration
             $table->string('usuario_modifica',12)->nullable();
             $table->dateTime('fecha_modifica',0)->nullable();
             // $table->id();
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 

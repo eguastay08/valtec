@@ -31,8 +31,11 @@ class CreateOrdensDetallesTable extends Migration
             $table->char('oculto',1)->default(0);
             $table->string('usuario_registro',12);
             $table->dateTime('fecha_registro',0);
+            $table->string('codigo_producto')->nullable();
+            
+
             // $table->id();
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 

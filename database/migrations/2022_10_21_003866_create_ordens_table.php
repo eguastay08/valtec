@@ -46,7 +46,7 @@ class CreateOrdensTable extends Migration
             $table->decimal('total',12,2);
             $table->string('ip',45);
             $table->dateTime('fecha_registro',0);
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 

@@ -27,7 +27,7 @@ class CreateLibroReclamacionesTable extends Migration
             $table->text('detalle_cliente');
             $table->char('oculto',1)->default(0);
             $table->dateTime('fecha_registro',0);
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 
