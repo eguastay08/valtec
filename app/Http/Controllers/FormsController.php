@@ -47,7 +47,7 @@ class FormsController extends Controller
                 return response()->json(['errors'=>$validator->errors(), 'code' => '425']);
             else:
                  //  Send mail to admin
-                 $subject = "Lolstore - Contacto";
+                 $subject = "VALTECGDA - Contacto";
 
                  $datacontacto = [
                     'name' => $request->namecontacto,

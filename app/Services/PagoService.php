@@ -21,7 +21,7 @@ class PagoService
         $ordenData = Ordens::getOrdendata($orden_id);
         $ordenProductos = Ordens_Detalle::getProductosOrdenEmail($orden_id);
 
-        $subject = "LolStore - Aviso de Pago Compra Rápida #".$ordenData->n_operacion;
+        $subject = "VALTECGDA - Aviso de Pago Compra Rápida #".$ordenData->n_operacion;
         
         $datamail = [
             "nombre"=>$ordenData->nombres,

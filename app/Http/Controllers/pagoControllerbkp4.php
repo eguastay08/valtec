@@ -311,7 +311,7 @@ class PagoController extends Controller
 
                                 self::moveComprobante($imgComprobante[0]);
     
-                                $subject = "LolStore - Aviso de Pago Compra Rápida #".$lastnro_orden;
+                                $subject = "VALTECGDA - Aviso de Pago Compra Rápida #".$lastnro_orden;
         
                                 $orden = new OrdenMailable($datamail, $subject);
                                 Mail::to($request->pagoemail)->send($orden);
@@ -328,7 +328,7 @@ class PagoController extends Controller
     
                             // self::moveComprobante($imgComprobante[0]);
     
-                            // $subject = "LolStore - Aviso de Pago Compra Rápida #".$lastnro_orden;
+                            // $subject = "VALTECGDA - Aviso de Pago Compra Rápida #".$lastnro_orden;
     
                             // $orden = new OrdenMailable($datamail, $subject);
                             // Mail::to($request->pagoemail)->send($orden);

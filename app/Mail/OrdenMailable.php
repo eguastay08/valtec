@@ -30,7 +30,7 @@ class OrdenMailable extends Mailable
         
     }
 
-    // public $subject = "LolStore - Aviso de pago compra rápida #";
+    // public $subject = "VALTECGDA - Aviso de pago compra rápida #";
 
     /**
      * Build the message.
