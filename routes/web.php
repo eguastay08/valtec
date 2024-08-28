@@ -114,12 +114,12 @@ Route::get('/order/pending/{order}','PagoController@MercadoPagoPending')->name('
 // });
 
     //rutas Register
-    Route::get('/register', 'Client\ConnectController@getRegister')->name('register');
-    Route::Post('/register', 'Client\ConnectController@postRegister')->name('register');
+    Route::get('/register', 'Client\ConnectController@getRegister')->name('register.getRegister');
+    Route::Post('/register', 'Client\ConnectController@postRegister')->name('register.postRegister');
     //rutas Login
-    Route::get('/login', 'Client\ConnectController@getLogin')->name('login');
-    Route::Post('/login', 'Client\ConnectController@postLogin')->name('login');
-    Route::get('/logout', 'Client\ConnectController@getLogout')->name('logout');
+    Route::get('/login', 'Client\ConnectController@getLogin')->name('login.getLogin');
+    Route::Post('/login', 'Client\ConnectController@postLogin')->name('login.postLogin');
+    Route::get('/logout', 'Client\ConnectController@getLogout')->name('logout.getLogout');
 
 
 Route::group(['middleware' => ['role:client']], function () {
@@ -386,6 +386,5 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::any('{catchall}', 'FrontController@get404NotFound')->where('catchall', '.*');
-Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
