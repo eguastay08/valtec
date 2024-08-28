@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{$web_title->valor}}</title>
     <meta name="app-url" content="{{ url('/') }}">
-    <meta name="autor" content="LolStore">
+    <meta name="autor" content="VALTECGDA">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="Somos una empresa dedicada a la comercialización de productos de entretinimiento">
     

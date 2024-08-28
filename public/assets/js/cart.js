@@ -43,9 +43,9 @@ $(document).ready(function () {
             }
     
             $.ajax({
-                // headers: {
-                //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                // },
+                 headers: {
+                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                 },
                 url: url,
                 type: "POST",
                 data: data,
@@ -77,9 +77,9 @@ $(document).ready(function () {
             quantity: quantity
         }
         $.ajax({
-            // headers: {
-            //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            // },
+             headers: {
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+             },
             url: url,
             type: "POST",
             data: data,
@@ -108,9 +108,9 @@ $(document).ready(function () {
             quantity: quantity
         }
         $.ajax({
-            // headers: {
-            //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            // },
+             headers: {
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+             },
             url: url,
             type: "POST",
             data: data,
@@ -139,9 +139,9 @@ $(document).ready(function () {
             coupon : coupon
         }
         $.ajax({
-            // headers: {
-            //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            // },
+             headers: {
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+             },
             url: url,
             type: "POST",
             data: data,
@@ -177,9 +177,9 @@ $(document).ready(function () {
             coupon: coupon
         }
         $.ajax({
-            // headers: {
-            //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            // },
+             headers: {
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+             },
             url: url,
             type: "POST",
             data: data,

@@ -2,6 +2,43 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\Cors;
+use App\Http\Controllers\FrontController;
+use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\NoticiaSubCategoriaController; 
+use App\Http\Controllers\Admin\RolController;
+use App\Http\Controllers\Admin\BloqueController;         
+use App\Http\Controllers\Admin\LibroReclamacionesController;  
+use App\Http\Controllers\Admin\NoticiaTagController;           
+use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\CategoriaController;     
+use App\Http\Controllers\Admin\MedioPagoController;           
+use App\Http\Controllers\Admin\OrdenController;                
+use App\Http\Controllers\Admin\SubCategoriaController;
+use App\Http\Controllers\Admin\ConfiguracionController;
+use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\PdfController;
+use App\Http\Controllers\Admin\SuscripcionController;
+use App\Http\Controllers\Admin\ConnectController;        
+use App\Http\Controllers\Admin\MonedaController;              
+use App\Http\Controllers\Admin\PreguntaFrecuenteController;    
+use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\DescuentoController;      
+use App\Http\Controllers\Admin\NoticiaCategoriaController;    
+use App\Http\Controllers\Admin\ProductoController;             
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\EstiloController;         
+use App\Http\Controllers\Admin\NoticiaController;             
+use App\Http\Controllers\Admin\ReporteController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\PagoController;
+use App\Http\Controllers\SuscripcionFrontController;
+use App\Http\Controllers\FormsController;
+use App\Http\Controllers\WebHooksController;
+use App\Http\Controllers\opinionesFrontController;
+use App\Http\Controllers\pagoControllerbkp4;
+use App\Http\Controllers\LibroReclamacionesFrontController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,22 +50,20 @@ use App\Http\Middleware\Cors;
 |
 */
 
-Auth::routes(['verify' => true]);
+// Rutas principales del frontend
+Route::get('/', [FrontController::class, 'getIndex']);
 
+Route::get('/getMenus', [FrontController::class, 'getAsNavMenus']);
 
-Route::get('/', 'FrontController@getIndex');
+Route::get('producto/detalle/{id}', [FrontController::class, 'getProductoDetalle']);
 
-Route::get('/getMenus', 'FrontController@getAsNavMenus');
+Route::post('producto/precio_oferta', [FrontController::class, 'postPrecioOfertaProducto']);
 
-Route::get('producto/detalle/{id}', 'FrontController@getProductoDetalle');
+Route::get('producto/{url}', [FrontController::class, 'getProductFront']);
 
-Route::post('producto/precio_oferta', 'FrontController@postPrecioOfertaProducto');
+Route::get('productos', [FrontController::class, 'getProductsFront']);
 
-Route::get('producto/{url}', 'FrontController@getProductFront');
-
-Route::get('productos', 'FrontController@getProductsFront');
-
-Route::get('productos/search', 'FrontController@getProductsSearch');
+Route::get('productos/search', [FrontController::class, 'getProductsSearch']);
 
 Route::get('categorias', function(){
     return redirect('/');
@@ -38,353 +73,311 @@ Route::get('etiquetas', function(){
     return redirect('/');
 });
 
-Route::get('categorias/{url}', 'FrontController@getCategoriaFront');
+Route::get('categorias/{url}', [FrontController::class, 'getCategoriaFront']);
 
-Route::get('categorias/{url}/{sub}', 'FrontController@getCategoriaFront2');
+Route::get('categorias/{url}/{sub}', [FrontController::class, 'getCategoriaFront2']);
 
-Route::get('etiquetas/{url}', 'FrontController@getEtiquetaFront');
-Route::post('suscripcion', 'SuscripcionFrontController@sendSuscripcion');
+Route::get('etiquetas/{url}', [FrontController::class, 'getEtiquetaFront']);
 
-Route::get('collections/ofertas', 'FrontController@getProductosOfertas');
+Route::post('suscripcion', [SuscripcionFrontController::class, 'sendSuscripcion']);
 
-Route::get('nosotros', 'FrontController@getNosotros');
-Route::get('terminos_condiciones', 'FrontController@getTerminos_Condiciones');
-Route::get('preguntas_frecuentes', 'FrontController@getPreguntasFrecuentes');
-Route::get('pasos_compra', 'FrontController@getPasosCompra');
-Route::get('formas-y-costos-de-entrega', 'FrontController@getFormasCostosEntrega');
-Route::get('medios_pago', 'FrontController@medioPagosFront');
-Route::get('politica_privacidad', 'FrontController@getPoliticasPrivacidad');
-Route::get('libro-de-reclamaciones','FrontController@getLibro_Reclamaciones');
+Route::get('collections/ofertas', [FrontController::class, 'getProductosOfertas']);
 
-Route::get('noticias/{url}', 'FrontController@getNoticiaFront');
-Route::get('noticias', 'FrontController@getNoticiasFront');
+Route::get('nosotros', [FrontController::class, 'getNosotros']);
+Route::get('terminos_condiciones', [FrontController::class, 'getTerminos_Condiciones']);
+Route::get('preguntas_frecuentes', [FrontController::class, 'getPreguntasFrecuentes']);
+Route::get('pasos_compra', [FrontController::class, 'getPasosCompra']);
+Route::get('formas-y-costos-de-entrega', [FrontController::class, 'getFormasCostosEntrega']);
+Route::get('medios_pago', [FrontController::class, 'medioPagosFront']);
+Route::get('politica_privacidad', [FrontController::class, 'getPoliticasPrivacidad']);
+Route::get('libro-de-reclamaciones', [FrontController::class, 'getLibro_Reclamaciones']);
 
-Route::get('noticia_categorias/{url}', 'FrontController@getNoticiaByCategoriesFront');
-Route::get('noticia_categorias/{url}/{sub}', 'FrontController@getNoticiaByCategoriesFront');
+Route::get('noticias/{url}', [FrontController::class, 'getNoticiaFront']);
+Route::get('noticias', [FrontController::class, 'getNoticiasFront']);
 
-Route::get('noticia_etiquetas/{url}', 'FrontController@getNoticiaByEtiquetaFront');
+Route::get('noticia_categorias/{url}', [FrontController::class, 'getNoticiaByCategoriesFront']);
+Route::get('noticia_categorias/{url}/{sub}', [FrontController::class, 'getNoticiaByCategoriesFront']);
 
-Route::get('contacto', 'FrontController@contactForm');
+Route::get('noticia_etiquetas/{url}', [FrontController::class, 'getNoticiaByEtiquetaFront']);
 
-Route::get('opiniones', 'FrontController@getOpiniones');
+Route::get('contacto', [FrontController::class, 'contactForm']);
 
+Route::get('opiniones', [FrontController::class, 'getOpiniones']);
 
-Route::get('load-cart', 'CartController@loadCart');
-Route::post('add-cart', 'CartController@add_to_cart');
-Route::post('/update-cart', 'CartController@update')->name('cart.update');
-// Route::post('/remove', 'CartController@remove')->name('cart.remove');
-Route::post('remove-cart', 'CartController@remove')->name('cart.remove');
-Route::post('/clear', 'CartController@clear')->name('cart.clear');
-Route::post('/cupones', 'CartController@cupones')->name('cart.cupones');
-Route::get('load-table-pago', 'CartController@loadTablePago');
+// Rutas del carrito de compras
+Route::get('load-cart', [CartController::class, 'loadCart']);
+Route::post('add-cart', [CartController::class, 'add_to_cart']);
+Route::post('/update-cart', [CartController::class, 'update'])->name('cart.update');
+Route::post('remove-cart', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/clear', [CartController::class, 'clear'])->name('cart.clear');
+Route::post('/cupones', [CartController::class, 'cupones'])->name('cart.cupones');
+Route::get('load-table-pago', [CartController::class, 'loadTablePago']);
 
+// Rutas de pago
+Route::get('payment_description/{url}', [FrontController::class, 'getPaymentDescription']);
 
-Route::get('payment_description/{url}', 'FrontController@getPaymentDescription');
+Route::post('/comprobante/imgTmp', [PagoController::class, 'imgTmp']);
 
-Route::post('/comprobante/imgTmp', 'PagoController@imgTmp');
+Route::post('/forms/pago', [PagoController::class, 'store']);
+Route::post('forms/contacto', [FormsController::class, 'ContactoForm']);
 
-Route::post('/forms/pago', 'PagoController@store');
-Route::post('forms/contacto', 'FormsController@ContactoForm');
+Route::post('/forms/libro_reclamaciones', [LibroReclamacionesFrontController::class, 'storeLibro']);
 
-Route::post('/forms/libro_reclamaciones', 'LibroReclamacionesFrontController@storeLibro');
+Route::get('confirmacion_pago', [FrontController::class, 'getConfirmacion_pago'])->name('pago.confirmacion');
 
+Route::get('confirmacion_correo', [FrontController::class, 'getConfirmacion_Correo'])->name('email.confirmacion');
 
-Route::get('confirmacion_pago', 'FrontController@getConfirmacion_pago')->name('pago.confirmacion');
+Route::post('webhooks', [WebHooksController::class, '__invoke']); // Usualmente, un controlador de webhook se define como un método __invoke
 
-Route::get('confirmacion_correo', 'FrontController@getConfirmacion_Correo')->name('email.confirmacion');
+// Rutas de pagos con MercadoPago
+Route::get('/payment/{order}', [PagoController::class, 'paymentorder'])->name('order.paymentorder');
+Route::get('/payment/payphone/{order}', [PagoController::class, 'paymentorderpayphone'])->name('order.paymentorderpayphone');
+Route::get('/payment/fail/{order}', [PagoController::class, 'failOrder'])->name('order.failureorder');
+Route::get('/payment/pending/{order}', [PagoController::class, 'pendindOrder'])->name('order.pendingorder');
+Route::get('/order/pay/{order}', [PagoController::class, 'MercadoPagoSuccess'])->name('mercadopago.success');
+Route::get('/order/fail/{order}', [PagoController::class, 'MercadoPagoFail'])->name('mercadopago.fail');
+Route::get('/order/pending/{order}', [PagoController::class, 'MercadoPagoPending'])->name('mercadopago.pending');
 
-Route::post('webhooks', 'WebHooksController');
-
-// Route::post('/oder/pay', 'PagoController@pay')->name('orders.pay');
-
-
-Route::get('/payment/{order}', 'PagoController@paymentorder')->name('order.paymentorder');
-Route::get('/payment/payphone/{order}', 'PagoController@paymentorderpayphone')->name('order.paymentorderpayphone');
-Route::get('/payment/fail/{order}', 'PagoController@failOrder')->name('order.failureorder');
-Route::get('/payment/pending/{order}', 'PagoController@pendindOrder')->name('order.pendingorder');
-// Route::post('/forms/pago_online', 'PagoController@pago_online');
-Route::get('/order/pay/{order}','PagoController@MercadoPagoSuccess')->name('mercadopago.success');
-Route::get('/order/fail/{order}','PagoController@MercadoPagoFail')->name('mercadopago.fail');
-Route::get('/order/pending/{order}','PagoController@MercadoPagoPending')->name('mercadopago.pending');
-
-
-// Route::get('/', function () {
-//     // return view('welcome');
-  
-// });
-
-    //rutas Register
-    Route::get('/register', 'Client\ConnectController@getRegister')->name('register.getRegister');
-    Route::Post('/register', 'Client\ConnectController@postRegister')->name('register.postRegister');
-    //rutas Login
-    Route::get('/login', 'Client\ConnectController@getLogin')->name('login.getLogin');
-    Route::Post('/login', 'Client\ConnectController@postLogin')->name('login.postLogin');
-    Route::get('/logout', 'Client\ConnectController@getLogout')->name('logout.getLogout');
+// Rutas de autenticación y registro
+Route::get('/register', [ConnectController::class, 'getRegister'])->name('register.getRegister');
+Route::post('/register', [ConnectController::class, 'postRegister'])->name('register.postRegister');
+Route::get('/login', [ConnectController::class, 'getLogin'])->name('login.getLogin');
+Route::post('/login', [ConnectController::class, 'postLogin'])->name('login.postLogin');
+Route::get('/logout', [ConnectController::class, 'getLogout'])->name('logout.getLogout');
 
 
-Route::group(['middleware' => ['role:client']], function () {
-    Route::get('pago', 'FrontController@getPagoFront')->name('pago');
+// CartController Routes
+Route::controller(CartController::class)->group(function () {
+    Route::get('load-cart', 'loadCart');
+    Route::post('add-cart', 'add_to_cart');
+    Route::post('/update-cart', 'update')->name('cart.update');
+    Route::post('remove-cart', 'remove')->name('cart.remove');
+    Route::post('/clear', 'clear')->name('cart.clear');
+    Route::post('/cupones', 'cupones')->name('cart.cupones');
+    Route::get('load-table-pago', 'loadTablePago');
 });
 
-//rutas para los módulos de Administración
+// Suscripción Routes
+Route::post('suscripcion', [SuscripcionFrontController::class, 'sendSuscripcion']);
+
+// FormsController Routes
+Route::post('forms/contacto', [FormsController::class, 'ContactoForm']);
+Route::post('/forms/libro_reclamaciones', [LibroReclamacionesFrontController::class, 'storeLibro']);
+
+// PagoController Routes
+Route::controller(PagoController::class)->group(function () {
+    Route::post('/comprobante/imgTmp', 'imgTmp');
+    Route::post('/forms/pago', 'store');
+});
+
+// Redirecciones simples
+Route::get('categorias', fn() => redirect('/'));
+Route::get('etiquetas', fn() => redirect('/'));
+
+// Rutas de registro y login
+Route::controller(ConnectController::class)->group(function () {
+    Route::get('/register', 'getRegister')->name('register.getRegister');
+    Route::post('/register', 'postRegister')->name('register.postRegister');
+    Route::get('/login', 'getLogin')->name('login.getLogin');
+    Route::post('/login', 'postLogin')->name('login.postLogin');
+    Route::get('/logout', 'getLogout')->name('logout.getLogout');
+});
+
+// Rutas protegidas por middleware
+Route::middleware(['role:client'])->group(function () {
+});
+Route::get('pago', [FrontController::class, 'getPagoFront'])->name('pago');
 
 Route::prefix('admin')->group(function () {
 
-    //rutas Login
-    Route::get('/login', 'Admin\ConnectController@getLogin')->name('login');
-    Route::Post('/login', 'Admin\ConnectController@postLogin')->name('admin.login');
-    Route::get('/logout', 'Admin\ConnectController@getLogout')->name('logout');
+    // Rutas de Login
+    Route::get('/login', [ConnectController::class, 'getLogin'])->name('login');
+    Route::post('/login', [ConnectController::class, 'postLogin'])->name('admin.login');
+    Route::get('/logout', [ConnectController::class, 'getLogout'])->name('logout');
 
-    Route::get('/', 'Admin\HomeController@getDashboard')->name('admin.dashboard');
+    Route::get('/', [HomeController::class, 'getDashboard'])->name('admin.dashboard');
 
-    // --  Módulo Categorías  -- 
+    // Módulo Categorías
+    Route::resource('categorias', CategoriaController::class);
+    Route::post('categorias/activar/{id}', [CategoriaController::class, 'activar']);
+    Route::post('categorias/desactivar/{id}', [CategoriaController::class, 'desactivar']);
+    Route::post('categorias/subirImagenTmp', [CategoriaController::class, 'subirImagenTmp']);
+    Route::post('categorias/eliminarImagenTmp', [CategoriaController::class, 'eliminarImagenTmp']);
+    Route::post('categorias/eliminarImagen', [CategoriaController::class, 'eliminarImagen']);
+    Route::post('categorias/eliminarImagen/{key}', [CategoriaController::class, 'deleteImagen']);
+    Route::get('pdf/ReporteCategoriaPdf', [CategoriaController::class, 'generarPdf']);
+    Route::get('Excel/ReporteCategoriaExcel', [CategoriaController::class, 'generarExcel']);
+    Route::get('categorias/subcategoria/{id}', [SubCategoriaController::class, 'listarSubCategorias']);
+    Route::resource('subcategoria', SubCategoriaController::class);
+    Route::post('subcategoria/activar/{id}', [SubCategoriaController::class, 'activar']);
+    Route::post('subcategoria/desactivar/{id}', [SubCategoriaController::class, 'desactivar']);
 
-    Route::resource('categorias', 'Admin\CategoriaController');
-    // Route::get('categorias/get_categorias_ajax_data', 'Admin\CategoriaController@get_ajax_categoria_data');
-    Route::post('categorias/activar/{id}', 'Admin\CategoriaController@activar');
-    Route::post('categorias/desactivar/{id}', 'Admin\CategoriaController@desactivar');
-    Route::post('categorias/subirImagenTmp', 'Admin\CategoriaController@subirImagenTmp');
-    Route::post('categorias/eliminarImagenTmp', 'Admin\CategoriaController@eliminarImagenTmp');
-    Route::post('categorias/eliminarImagen', 'Admin\CategoriaController@eliminarImagen');
-    Route::post('categorias/eliminarImagen/{key}', 'Admin\CategoriaController@deleteImagen');
+    // Módulo TAGS
+    Route::resource('tags', TagController::class);
+    Route::post('tags/activar/{id}', [TagController::class, 'activar']);
+    Route::post('tags/desactivar/{id}', [TagController::class, 'desactivar']);
+    Route::post('tags/subirImagenTmp', [TagController::class, 'subirImagenTmp']);
+    Route::post('tags/eliminarImagenTmp', [TagController::class, 'eliminarImagenTmp']);
+    Route::post('tags/eliminarImagen', [TagController::class, 'eliminarImagen']);
+    Route::post('tags/eliminarImagen/{key}', [TagController::class, 'deleteImagen']);
+    Route::get('pdf/ReporteTagPdf', [TagController::class, 'generarPdf']);
+    Route::get('Excel/ReporteTagExcel', [TagController::class, 'generarExcel']);
 
-    Route::get('pdf/ReporteCategoriaPdf', 'Admin\CategoriaController@generarPdf');
+    // Módulo Productos
+    Route::resource('productos', ProductoController::class, ['as' => 'admin']);
+    Route::post('productos/activar/{id}', [ProductoController::class, 'activar']);
+    Route::post('productos/desactivar/{id}', [ProductoController::class, 'desactivar']);
+    Route::post('productos/agotado/{id}', [ProductoController::class, 'agotado']);
+    Route::post('productos/carrousel/{id}', [ProductoController::class, 'carrousel']);
+    Route::post('productos/oferta/{id}', [ProductoController::class, 'oferta']);
+    Route::post('productos/estreno/{id}', [ProductoController::class, 'estreno']);
+    Route::post('productos/promo_dia/{id}', [ProductoController::class, 'promo_dia']);
+    Route::get('productos/codigos_producto/{id}', [ProductoController::class, 'getCodigosProducto']);
+    Route::post('productos/codigos_producto/store', [ProductoController::class, 'storeCodigoProducto']);
+    Route::get('productos/codigos_producto/show/{id}', [ProductoController::class, 'showCodigoProducto']);
+    Route::put('productos/codigos_producto/update/{id}', [ProductoController::class, 'editCodigoProducto']);
+    Route::delete('productos/codigos_producto/delete/{id}', [ProductoController::class, 'deleteCodigoProducto']);
+    Route::post('productos/subirImagenTmp', [ProductoController::class, 'subirImagenTmp']);
+    Route::post('productos/eliminarImagenTmp', [ProductoController::class, 'eliminarImagenTmp']);
+    Route::post('productos/eliminarImagen', [ProductoController::class, 'eliminarImagen']);
+    Route::post('productos/eliminarImagen/{key}', [ProductoController::class, 'deleteImagen']);
 
-    Route::get('Excel/ReporteCategoriaExcel', 'Admin\CategoriaController@generarExcel');
+    // Módulo Sliders
+    Route::resource('sliders', SliderController::class);
+    Route::post('sliders/activar/{id}', [SliderController::class, 'activar']);
+    Route::post('sliders/desactivar/{id}', [SliderController::class, 'desactivar']);
+    Route::post('sliders/popup/{id}', [SliderController::class, 'sliderPopup']);
+    Route::post('sliders/subirImagenTmp', [SliderController::class, 'subirImagenTmp']);
+    Route::post('sliders/eliminarImagenTmp', [SliderController::class, 'eliminarImagenTmp']);
+    Route::post('sliders/eliminarimg', [SliderController::class, 'eliminarImg']);
 
-    Route::get('categorias/subcategoria', function(){
-        // return redirect('admin/categorias');
-        echo 'ga';
-    });
+    // Módulo Banners
+    Route::resource('banners', BannerController::class);
+    Route::post('banners/activar/{id}', [BannerController::class, 'activar']);
+    Route::post('banners/desactivar/{id}', [BannerController::class, 'desactivar']);
+    Route::post('banners/subirImagenTmp', [BannerController::class, 'subirImagenTmp']);
+    Route::post('banners/eliminarImagenTmp', [BannerController::class, 'eliminarImagenTmp']);
+    Route::post('banners/eliminarimg', [BannerController::class, 'eliminarImg']);
 
-    Route::get('categorias/subcategoria/{id}', 'Admin\SubCategoriaController@listarSubCategorias');
-    Route::resource('subcategoria', 'Admin\SubCategoriaController');
-    
-    Route::post('subcategoria/activar/{id}', 'Admin\SubCategoriaController@activar');
-    Route::post('subcategoria/desactivar/{id}', 'Admin\SubCategoriaController@desactivar');
+    // Módulo Diseño
+    Route::resource('disenio', BloqueController::class);
+    Route::post('disenio/activar/{id}', [BloqueController::class, 'activar']);
+    Route::post('disenio/desactivar/{id}', [BloqueController::class, 'desactivar']);
+    Route::post('disenio/up/{id}', [BloqueController::class, 'up']);
+    Route::post('disenio/down/{id}', [BloqueController::class, 'down']);
+    Route::post('disenio/subirImagenTmp', [BloqueController::class, 'subirImagenTmp']);
+    Route::post('disenio/eliminarImagenTmp', [BloqueController::class, 'eliminarImagenTmp']);
+    Route::post('disenio/eliminarimg', [BloqueController::class, 'eliminarImg']);
 
-    // - -Fin Módulo Categorías -- 
+    // Módulo Preguntas Frecuentes
+    Route::resource('preguntas_frecuentes', PreguntaFrecuenteController::class);
+    Route::post('preguntas_frecuentes/activar/{id}', [PreguntaFrecuenteController::class, 'activar']);
+    Route::post('preguntas_frecuentes/desactivar/{id}', [PreguntaFrecuenteController::class, 'desactivar']);
 
-    
-    // --  Módulo TAGS -- 
+    // Módulo Órdenes
+    Route::resource('ordenes', OrdenController::class, ['as' => 'admin']);
+    Route::post('ordenes/aprobar/{id}', [OrdenController::class, 'aprobar']);
+    Route::post('ordenes/rechazar/{id}', [OrdenController::class, 'rechazar']);
+    Route::post('ordenes/atender/{id}', [OrdenController::class, 'atender']);
+    Route::get('ordenes/detalle/{codigos}', [OrdenController::class, 'getCodigos']);
 
-    Route::resource('tags', 'Admin\TagController');
-    Route::post('tags/activar/{id}', 'Admin\TagController@activar');
-    Route::post('tags/desactivar/{id}', 'Admin\TagController@desactivar');
-    Route::post('tags/subirImagenTmp', 'Admin\TagController@subirImagenTmp');
-    Route::post('tags/eliminarImagenTmp', 'Admin\TagController@eliminarImagenTmp');
-    Route::post('tags/eliminarImagen', 'Admin\TagController@eliminarImagen');
-    Route::post('tags/eliminarImagen/{key}', 'Admin\TagController@deleteImagen');
-    
-    Route::get('pdf/ReporteTagPdf', 'Admin\TagController@generarPdf');
+    // Módulo Medios de Pago
+    Route::resource('medios_pagos', MedioPagoController::class, ['as' => 'admin']);
+    Route::post('medios_pagos/activar/{id}', [MedioPagoController::class, 'activar']);
+    Route::post('medios_pagos/desactivar/{id}', [MedioPagoController::class, 'desactivar']);
+    Route::post('medios_pagos/subirImagenTmp', [MedioPagoController::class, 'subirImagenTmp']);
+    Route::post('medios_pagos/eliminarImagenTmp', [MedioPagoController::class, 'eliminarImagenTmp']);
+    Route::post('medios_pagos/eliminarimg', [MedioPagoController::class, 'eliminarImg']);
+    Route::post('ckeditor/upload', [MedioPagoController::class, 'upload'])->name('ckeditor.upload');
+    Route::post('tiny/upload', [MedioPagoController::class, 'upload_tiny'])->name('tiny.uploadtiny');
 
-    Route::get('Excel/ReporteTagExcel', 'Admin\TagController@generarExcel');
-    // - -Fin Módulo TAGS -- 
+    // Módulo Moneda
+    Route::resource('monedas', MonedaController::class);
+    Route::post('monedas/activar/{id}', [MonedaController::class, 'activar']);
+    Route::post('monedas/desactivar/{id}', [MonedaController::class, 'desactivar']);
 
-    // --  Módulo Productos -- 
+    // Módulo Menú
+    Route::resource('menus', MenuController::class);
+    Route::post('menus/listarMenuPadres', [MenuController::class, 'listarMenuPadres']);
+    Route::post('menus/decrypt', [MenuController::class, 'decryptMenu']);
+    Route::post('menus/activar/{id}', [MenuController::class, 'activar']);
+    Route::post('menus/desactivar/{id}', [MenuController::class, 'desactivar']);
+    Route::post('menus/up/{id}', [MenuController::class, 'up']);
+    Route::post('menus/down/{id}', [MenuController::class, 'down']);
+    Route::post('menus/subirImagenTmp', [MenuController::class, 'subirImagenTmp']);
+    Route::post('menus/eliminarImagenTmp', [MenuController::class, 'eliminarImagenTmp']);
+    Route::post('menus/eliminarimg', [MenuController::class, 'eliminarImg']);
 
-    Route::resource('productos', 'Admin\ProductoController', [ 'as' => 'admin' ]);
-    Route::post('productos/activar/{id}', 'Admin\ProductoController@activar');
-    Route::post('productos/desactivar/{id}', 'Admin\ProductoController@desactivar');
-    Route::post('productos/agotado/{id}', 'Admin\ProductoController@agotado');
-    Route::post('productos/carrousel/{id}', 'Admin\ProductoController@carrousel');
-    Route::post('productos/oferta/{id}', 'Admin\ProductoController@oferta');
-    Route::post('productos/estreno/{id}', 'Admin\ProductoController@estreno');
-    Route::post('productos/promo_dia/{id}', 'Admin\ProductoController@promo_dia');
-    Route::get('productos/codigos_producto/{id}', 'Admin\ProductoController@getCodigosProducto');
-    Route::post('productos/codigos_producto/store', 'Admin\ProductoController@storeCodigoProducto');
-    Route::get('productos/codigos_producto/show/{id}','Admin\ProductoController@showCodigoProducto');
-    Route::put('productos/codigos_producto/update/{id}','Admin\ProductoController@editCodigoProducto');
-    Route::delete('productos/codigos_producto/delete/{id}','Admin\ProductoController@deleteCodigoProducto');
-    Route::post('productos/subirImagenTmp', 'Admin\ProductoController@subirImagenTmp');
-    Route::post('productos/eliminarImagenTmp', 'Admin\ProductoController@eliminarImagenTmp');
-    Route::post('productos/eliminarImagen', 'Admin\ProductoController@eliminarImagen');
-    Route::post('productos/eliminarImagen/{key}', 'Admin\ProductoController@deleteImagen');
+    // Módulo Estilos
+    Route::resource('estilos', EstiloController::class)->only('index', 'store');
 
-    // - -Fin Módulo Productos -- 
+    // Módulo Configuraciones
+    Route::resource('configuraciones', ConfiguracionController::class)->only('index', 'store');
 
-    // --  Módulo Sliders -- 
+    // Módulo Descuentos
+    Route::resource('descuentos', DescuentoController::class);
+    Route::post('descuentos/activar/{id}', [DescuentoController::class, 'activar']);
+    Route::post('descuentos/desactivar/{id}', [DescuentoController::class, 'desactivar']);
 
-    Route::resource('sliders', 'Admin\SliderController');
-    Route::post('sliders/activar/{id}', 'Admin\SliderController@activar');
-    Route::post('sliders/desactivar/{id}', 'Admin\SliderController@desactivar');
-    Route::post('sliders/popup/{id}', 'Admin\SliderController@sliderPopup');
-    Route::post('sliders/subirImagenTmp', 'Admin\SliderController@subirImagenTmp');
-    Route::post('sliders/eliminarImagenTmp', 'Admin\SliderController@eliminarImagenTmp');
-    Route::post('sliders/eliminarimg', 'Admin\SliderController@eliminarImg');
-   
-    // - -Fin Módulo Sliders -- 
+    // Módulo Noticias Categorías
+    Route::resource('noticia_categoria', NoticiaCategoriaController::class);
+    Route::post('noticia_categoria/activar/{id}', [NoticiaCategoriaController::class, 'activar']);
+    Route::post('noticia_categoria/desactivar/{id}', [NoticiaCategoriaController::class, 'desactivar']);
+    Route::get('noticia_categoria/subcategorias_noticias/{id}', [NoticiaSubCategoriaController::class, 'listarSubCategoriasNoticias']);
+    Route::resource('noticia_categoria/subcategorias_noticia', NoticiaSubCategoriaController::class);
+    Route::post('noticia_categoria/subcategorias_noticia/activar/{id}', [NoticiaSubCategoriaController::class, 'activar']);
+    Route::post('noticia_categoria/subcategorias_noticia/desactivar/{id}', [NoticiaSubCategoriaController::class, 'desactivar']);
 
-    // --  Módulo Baners -- 
+    // Módulo Noticias Tags
+    Route::resource('noticia_tag', NoticiaTagController::class);
+    Route::post('noticia_tag/activar/{id}', [NoticiaTagController::class, 'activar']);
+    Route::post('noticia_tag/desactivar/{id}', [NoticiaTagController::class, 'desactivar']);
 
-    Route::resource('banners', 'Admin\BannerController');
-    Route::post('banners/activar/{id}', 'Admin\BannerController@activar');
-    Route::post('banners/desactivar/{id}', 'Admin\BannerController@desactivar');
-    Route::post('banners/subirImagenTmp', 'Admin\BannerController@subirImagenTmp');
-    Route::post('banners/eliminarImagenTmp', 'Admin\BannerController@eliminarImagenTmp');
-    Route::post('banners/eliminarimg', 'Admin\BannerController@eliminarImg');
-            
-    // - -Fin Módulo Baners -- 
+    // Módulo Noticias
+    Route::resource('noticias', NoticiaController::class, ['as' => 'admin']);
+    Route::post('noticias/activar/{id}', [NoticiaController::class, 'activar']);
+    Route::post('noticias/desactivar/{id}', [NoticiaController::class, 'desactivar']);
+    Route::post('noticias/subirImagenTmp', [NoticiaController::class, 'subirImagenTmp']);
+    Route::post('noticias/eliminarImagenTmp', [NoticiaController::class, 'eliminarImagenTmp']);
+    Route::post('noticias/eliminarImagen', [NoticiaController::class, 'eliminarImagen']);
+    Route::post('noticias/eliminarImagen/{key}', [NoticiaController::class, 'deleteImagen']);
+    Route::post('noticias/upload_img_desc', [NoticiaController::class, 'upload_img_desc'])->name('noticias.upload_img_desc');
 
-    //Módulo Diseño
-
-    Route::resource('disenio', 'Admin\BloqueController');
-    Route::post('disenio/activar/{id}', 'Admin\BloqueController@activar');
-    Route::post('disenio/desactivar/{id}', 'Admin\BloqueController@desactivar');
-    Route::post('disenio/up/{id}', 'Admin\BloqueController@up');
-    Route::post('disenio/down/{id}', 'Admin\BloqueController@down');
-    Route::post('disenio/subirImagenTmp', 'Admin\BloqueController@subirImagenTmp');
-    Route::post('disenio/eliminarImagenTmp', 'Admin\BloqueController@eliminarImagenTmp');
-    Route::post('disenio/eliminarimg', 'Admin\BloqueController@eliminarImg');
-    
-    // - -Fin Módulo Diseño --
-
-
-    //Módulo Preguntas Frecuentes
-
-    Route::resource('preguntas_frecuentes', 'Admin\PreguntaFrecuenteController');
-    Route::post('preguntas_frecuentes/activar/{id}', 'Admin\PreguntaFrecuenteController@activar');
-    Route::post('preguntas_frecuentes/desactivar/{id}', 'Admin\PreguntaFrecuenteController@desactivar');
-
-    // - -Fin Módulo Preguntas Frecuentes --
-
-
-    //Módulo de Órdenes
-    Route::resource('ordenes', 'Admin\OrdenController',  [ 'as' => 'admin' ]);
-    Route::post('ordenes/aprobar/{id}', 'Admin\OrdenController@aprobar');
-    Route::post('ordenes/rechazar/{id}', 'Admin\OrdenController@rechazar');
-    Route::post('ordenes/atender/{id}', 'Admin\OrdenController@atender');
-    Route::get('ordenes/detalle/{codigos}', 'Admin\OrdenController@getCodigos');
-    //Fin Módulo de Órdenes
-
-    //Módulo Preguntas Frecuentes
-    Route::resource('medios_pagos', 'Admin\MedioPagoController', [ 'as' => 'admin' ]);
-    Route::post('medios_pagos/activar/{id}', 'Admin\MedioPagoController@activar');
-    Route::post('medios_pagos/desactivar/{id}', 'Admin\MedioPagoController@desactivar');
-    Route::post('medios_pagos/subirImagenTmp', 'Admin\MedioPagoController@subirImagenTmp');
-    Route::post('medios_pagos/eliminarImagenTmp', 'Admin\MedioPagoController@eliminarImagenTmp');
-    Route::post('medios_pagos/eliminarimg', 'Admin\MedioPagoController@eliminarImg');
-
-
-    Route::post('ckeditor/upload', 'Admin\MedioPagoController@upload')->name('ckeditor.upload');
-    Route::post('tiny/upload', 'Admin\MedioPagoController@upload_tiny')->name('tiny.uploadtiny');
-    
-    // - -Fin Módulo Preguntas Frecuentes --
-
-    //Módulo Moneda
-
-    Route::resource('monedas', 'Admin\MonedaController');
-    Route::post('monedas/activar/{id}', 'Admin\MonedaController@activar');
-    Route::post('monedas/desactivar/{id}', 'Admin\MonedaController@desactivar');
-
-    // - -Fin Módulo Moneda --
-
-    //Módulo Menu
-    Route::resource('menus', 'Admin\MenuController');
-    Route::post('menus/listarMenuPadres', 'Admin\MenuController@listarMenuPadres');
-    Route::post('menus/decrypt','Admin\MenuController@decryptMenu');
-    Route::post('menus/activar/{id}', 'Admin\MenuController@activar');
-    Route::post('menus/desactivar/{id}', 'Admin\MenuController@desactivar');
-    Route::post('menus/up/{id}', 'Admin\MenuController@up');
-    Route::post('menus/down/{id}', 'Admin\MenuController@down');
-    Route::post('menus/subirImagenTmp', 'Admin\MenuController@subirImagenTmp');
-    Route::post('menus/eliminarImagenTmp', 'Admin\MenuController@eliminarImagenTmp');
-    Route::post('menus/eliminarimg', 'Admin\MenuController@eliminarImg');
-    //Fin Módulo Menu
-
-
-    //Módulo Estilos
-    Route::resource('estilos', 'Admin\EstiloController')->only('index','store');
-    //Fin Estilos
-
-
-    //Módulo Configuraciones
-    Route::resource('configuraciones', 'Admin\ConfiguracionController')->only('index','store');
-    //fin configuraciones
-
-
-    //Módulo Descuentos
-    Route::resource('descuentos', 'Admin\DescuentoController');
-    Route::post('descuentos/activar/{id}', 'Admin\DescuentoController@activar');
-    Route::post('descuentos/desactivar/{id}', 'Admin\DescuentoController@desactivar');
-    //fin Descuento
-
-
-    //Módulo Noticias Categorias
-    Route::resource('noticia_categoria', 'Admin\NoticiaCategoriaController');
-    Route::post('noticia_categoria/activar/{id}', 'Admin\NoticiaCategoriaController@activar');
-    Route::post('noticia_categoria/desactivar/{id}', 'Admin\NoticiaCategoriaController@desactivar');
-
-    Route::get('noticia_categoria/subcategorias_noticias/{id}', 'Admin\NoticiaSubCategoriaController@listarSubCategoriasNoticias');
-    Route::resource('noticia_categoria/subcategorias_noticia', 'Admin\NoticiaSubCategoriaController');
-    Route::post('noticia_categoria/subcategorias_noticia/activar/{id}', 'Admin\NoticiaSubCategoriaController@activar');
-    Route::post('noticia_categoria/subcategorias_noticia/desactivar/{id}', 'Admin\NoticiaSubCategoriaController@desactivar');
-
-    //fin Noticias Categorias
-
-
-    //Módulo Noticias Tags
-    Route::resource('noticia_tag', 'Admin\NoticiaTagController');
-    Route::post('noticia_tag/activar/{id}', 'Admin\NoticiaTagController@activar');
-    Route::post('noticia_tag/desactivar/{id}', 'Admin\NoticiaTagController@desactivar');
-    //fin Noticias Tags
-
-
-    //Módulo Noticias Noticias
-    Route::resource('noticias', 'Admin\NoticiaController', [ 'as' => 'admin' ]);
-    Route::post('noticias/activar/{id}', 'Admin\NoticiaController@activar');
-    Route::post('noticias/desactivar/{id}', 'Admin\NoticiaController@desactivar');
-    Route::post('noticias/subirImagenTmp', 'Admin\NoticiaController@subirImagenTmp');
-    Route::post('noticias/eliminarImagenTmp', 'Admin\NoticiaController@eliminarImagenTmp');
-    Route::post('noticias/eliminarImagen', 'Admin\NoticiaController@eliminarImagen');
-    Route::post('noticias/eliminarImagen/{key}', 'Admin\NoticiaController@deleteImagen');
-    Route::post('noticias/upload_img_desc', 'Admin\NoticiaController@upload_img_desc')->name('noticias.upload_img_desc');
-    //fin Noticias Noticias
-
-    // Modulo suscripciones
-    Route::resource('suscripciones', 'Admin\SuscripcionController', [ 'as' => 'admin' ]);
+    // Módulo Suscripciones
+    Route::resource('suscripciones', SuscripcionController::class, ['as' => 'admin']);
 
     // Módulo Libro de Reclamaciones
-    Route::resource('libro_reclamaciones', 'Admin\LibroReclamacionesController', [ 'as' => 'admin' ]);
+    Route::resource('libro_reclamaciones', LibroReclamacionesController::class, ['as' => 'admin']);
 
-    //Módulo Usuarios
-    Route::resource('usuarios', 'Admin\UserController',[ 'as' => 'admin' ]);
-    Route::post('usuarios/activar/{id}', 'Admin\UserController@activar');
-    Route::post('usuarios/desactivar/{id}', 'Admin\UserController@desactivar');
-    Route::post('usuarios/subirImagenTmp', 'Admin\UserController@subirImagenTmp');
-    Route::post('usuarios/eliminarImagenTmp', 'Admin\UserController@eliminarImagenTmp');
-    Route::post('usuarios/eliminarFoto', 'Admin\UserController@eliminarFoto');
-    // - -Fin Módulo Usuarios --
+    // Módulo Usuarios
+    Route::resource('usuarios', UserController::class, ['as' => 'admin']);
+    Route::post('usuarios/activar/{id}', [UserController::class, 'activar']);
+    Route::post('usuarios/desactivar/{id}', [UserController::class, 'desactivar']);
+    Route::post('usuarios/subirImagenTmp', [UserController::class, 'subirImagenTmp']);
+    Route::post('usuarios/eliminarImagenTmp', [UserController::class, 'eliminarImagenTmp']);
+    Route::post('usuarios/eliminarFoto', [UserController::class, 'eliminarFoto']);
 
+    // Módulo Roles
+    Route::resource('roles', RolController::class, ['as' => 'admin']);
+    Route::post('roles/activar/{id}', [RolController::class, 'activar']);
+    Route::post('roles/desactivar/{id}', [RolController::class, 'desactivar']);
 
-    //Módulo Roles
-    Route::resource('roles', 'Admin\RolController',[ 'as' => 'admin' ]);
-    Route::post('roles/activar/{id}', 'Admin\RolController@activar');
-    Route::post('roles/desactivar/{id}', 'Admin\RolController@desactivar');
+    Route::get('reportes', [ReporteController::class, 'getReportes']);
+    Route::post('reportes', [ReporteController::class, 'postReportes']);
+    Route::get('reportes/excel1', [ReporteController::class, 'generarExcel1']);
+    Route::get('reportes/excel2', [ReporteController::class, 'generarExcel2']);
+    Route::get('reportes/excel3', [ReporteController::class, 'generarExcel3']);
+    Route::get('reportes/excel4', [ReporteController::class, 'generarExcel4']);
+    Route::get('reportes/excel5', [ReporteController::class, 'generarExcel5']);
+    Route::get('reportes/excel6', [ReporteController::class, 'generarExcel6']);
+    Route::get('reportes/excel7', [ReporteController::class, 'generarExcel7']);
+    Route::get('reportes/excel8', [ReporteController::class, 'generarExcel8']);
 
-    Route::get('reportes', 'Admin\ReporteController@getReportes');
-    Route::post('reportes', 'Admin\ReporteController@postReportes');
-
-    
-    Route::get('reportes/excel1', 'Admin\ReporteController@generarExcel1');
-    Route::get('reportes/excel2', 'Admin\ReporteController@generarExcel2');
-    Route::get('reportes/excel3', 'Admin\ReporteController@generarExcel3');
-    Route::get('reportes/excel4', 'Admin\ReporteController@generarExcel4');
-    Route::get('reportes/excel5', 'Admin\ReporteController@generarExcel5');
-    Route::get('reportes/excel6', 'Admin\ReporteController@generarExcel6');
-    Route::get('reportes/excel7', 'Admin\ReporteController@generarExcel7');
-    Route::get('reportes/excel8', 'Admin\ReporteController@generarExcel8');
-
-    Route::any('/{catchall}', 'Admin\HomeController@get404AdminNotFound')->where('catchall', '.*');
-     // - -Fin Roles --
-
-    // Route::get('/roles', 'Admin\RolesController@getRoles')->name('admin.roles');
-    // Route::post('/roles', 'Admin\RolesController@store');
-    // Route::get('/roles/{id}', 'Admin\RolesController@show');
-    // Route::post('/roles/{id}', 'Admin\RolesController@update');
-
+    Route::any('/{catchall}', [HomeController::class, 'get404AdminNotFound'])->where('catchall', '.*');
 });
 
-Route::any('{catchall}', 'FrontController@get404NotFound')->where('catchall', '.*');
+// Ruta para manejar errores 404 en el frontend
+Route::any('{catchall}', [FrontController::class, 'get404NotFound'])->where('catchall', '.*');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Ruta de inicio
+Route::get('/home', [HomeController::class, 'index'])->name('home');

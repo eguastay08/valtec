@@ -19,7 +19,7 @@ class ConfiguracionSeeder extends Seeder
             [
                 "nombre"=>"Nombre de la web",
                 "variable"=>"website_title",
-                "valor"=>"LolStore | Venta de juegos digitales PS3 PS4 PS5",
+                "valor"=>"VALTECGDA | Venta de juegos digitales PS3 PS4 PS5",
                 "system"=>"0",
                 "usuario_registro"=>"admin",
                 "fecha_registro"=>now()

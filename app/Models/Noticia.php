@@ -61,16 +61,17 @@ class Noticia extends Model
 
     public static function getNoticiasFront()
     {
-        $noticias =  DB::table('noticias as n')
-        ->select('n.noticia_id','n.noticia','n.url as link','ni.url as imgnoticia')
-        ->leftJoin('noticia_imagens as ni', function($join)
-        {
+        $noticias = DB::table('noticias as n')
+        ->select('n.noticia_id', 'n.noticia', 'n.url as link', 'ni.url as imgnoticia')
+        ->leftJoin('noticia_imagens as ni', function($join) {
             $join->on('n.noticia_id', '=', 'ni.noticia_id');
-            $join->where('ni.principal',1);
-        });
-        $noticias= $noticias->where('n.oculto',0)
-        ->groupBy('n.noticia_id')
-        ->orderBy('n.noticia_id','DESC')->take(3)->get();
+            $join->where('ni.principal', 1);
+        })
+        ->where('n.oculto', 0)
+        ->groupBy('n.noticia_id', 'n.noticia', 'n.url', 'ni.url')
+        ->orderBy('n.noticia_id', 'DESC')
+        ->take(3)
+        ->get();
 
         return $noticias;
 

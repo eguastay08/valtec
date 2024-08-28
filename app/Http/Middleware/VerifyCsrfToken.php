@@ -13,25 +13,5 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
-        '/webhooks',
-        //rutas del menu 
-        '/getMenus',
-        //rutas del carrito
-        '/load-car',
-        '/add-cart',
-        '/update-cart',
-        '/remove-cart',
-        '/clear',
-        '/cupones',
-        //realizar pago
-        '/forms/pago',
-        //guardar libro de reclamacion
-        '/forms/libro_reclamaciones',
-        //suscripcion
-        '/suscripcion',
-        //productos
-        'productos/',
-        //search produtos
-        'productos/search',
     ];
 }
