@@ -23,7 +23,7 @@ class reporteController extends Controller
     //
     public function __construct()  
     {
-        $this->middleware('auth');
+        $this->middleware('check.auth.admin');
     }
     
     public function getReportes(Request $Request)

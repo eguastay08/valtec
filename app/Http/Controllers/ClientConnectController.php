@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -12,7 +12,7 @@ use Validator,Hash;
 use App\Models\User;
 use App\Models\Configuracion;
 
-class ConnectController extends Controller
+class ClientConnectController extends Controller
 {
     //  
     public function __construct()
@@ -125,7 +125,7 @@ class ConnectController extends Controller
             $user->sendEmailVerificationNotification();
 
             // Redirigir al usuario a la página de login con un mensaje de éxito
-            return redirect()->route('login')
+            return redirect()->route('client.login')
                              ->with('message', 'Su cuenta ha sido creada exitosamente. Revise su correo para verificar su cuenta.')
                              ->with('typealert', 'success');
         } else {

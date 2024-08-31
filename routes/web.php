@@ -38,6 +38,7 @@ use App\Http\Controllers\WebHooksController;
 use App\Http\Controllers\opinionesFrontController;
 use App\Http\Controllers\pagoControllerbkp4;
 use App\Http\Controllers\LibroReclamacionesFrontController;
+use App\Http\Controllers\ClientConnectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,8 +51,9 @@ use App\Http\Controllers\LibroReclamacionesFrontController;
 |
 */
 
+Auth::routes(['verify' => true]);
 // Rutas principales del frontend
-Route::get('/', [FrontController::class, 'getIndex']);
+Route::get('/', [FrontController::class, 'getIndex'])->name('/');;
 
 Route::get('/getMenus', [FrontController::class, 'getAsNavMenus']);
 
@@ -138,14 +140,6 @@ Route::get('/order/pay/{order}', [PagoController::class, 'MercadoPagoSuccess'])-
 Route::get('/order/fail/{order}', [PagoController::class, 'MercadoPagoFail'])->name('mercadopago.fail');
 Route::get('/order/pending/{order}', [PagoController::class, 'MercadoPagoPending'])->name('mercadopago.pending');
 
-// Rutas de autenticación y registro
-Route::get('/register', [ConnectController::class, 'getRegister'])->name('register.getRegister');
-Route::post('/register', [ConnectController::class, 'postRegister'])->name('register.postRegister');
-Route::get('/login', [ConnectController::class, 'getLogin'])->name('login.getLogin');
-Route::post('/login', [ConnectController::class, 'postLogin'])->name('login.postLogin');
-Route::get('/logout', [ConnectController::class, 'getLogout'])->name('logout.getLogout');
-
-
 // CartController Routes
 Route::controller(CartController::class)->group(function () {
     Route::get('load-cart', 'loadCart');
@@ -175,25 +169,30 @@ Route::get('categorias', fn() => redirect('/'));
 Route::get('etiquetas', fn() => redirect('/'));
 
 // Rutas de registro y login
-Route::controller(ConnectController::class)->group(function () {
+Route::controller(ClientConnectController::class)->group(function () {
     Route::get('/register', 'getRegister')->name('register.getRegister');
     Route::post('/register', 'postRegister')->name('register.postRegister');
-    Route::get('/login', 'getLogin')->name('login.getLogin');
-    Route::post('/login', 'postLogin')->name('login.postLogin');
-    Route::get('/logout', 'getLogout')->name('logout.getLogout');
+    Route::get('/login', 'getLogin')->name('client.login');
+    Route::post('/login', 'postLogin')->name('client.postLogin');
+    Route::get('/logout', 'getLogout')->name('client.getLogout');
 });
 
 // Rutas protegidas por middleware
-Route::middleware(['role:client'])->group(function () {
+Route::middleware(['check.auth.client'])->group(function () {
+    Route::get('pago', [FrontController::class, 'getPagoFront'])->name('pago');
+    Route::get('orders', [FrontController::class, 'getOrdersFront'])->name('orders');
+    Route::get('orders/{orden_id}', [FrontController::class, 'getOrderFront'])->name('orders.show');
+    Route::get('profile', [FrontController::class, 'getFormProfile'])->name('profile.show');
+    Route::put('profile/upd', [FrontController::class, 'postFormProfile'])->name('profile.update');
 });
-Route::get('pago', [FrontController::class, 'getPagoFront'])->name('pago');
+
 
 Route::prefix('admin')->group(function () {
 
     // Rutas de Login
-    Route::get('/login', [ConnectController::class, 'getLogin'])->name('login');
-    Route::post('/login', [ConnectController::class, 'postLogin'])->name('admin.login');
-    Route::get('/logout', [ConnectController::class, 'getLogout'])->name('logout');
+    Route::get('/login', [ConnectController::class, 'getLogin'])->name('admin.login');
+    Route::post('/login', [ConnectController::class, 'postLogin'])->name('admin.postLogin');
+    Route::get('/logout', [ConnectController::class, 'getLogout'])->name('admin.getLogout');
 
     Route::get('/', [HomeController::class, 'getDashboard'])->name('admin.dashboard');
 
@@ -381,3 +380,5 @@ Route::any('{catchall}', [FrontController::class, 'get404NotFound'])->where('cat
 
 // Ruta de inicio
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -24,7 +24,7 @@ class DescuentoController extends Controller
      */
     public function __construct()  
     {
-        $this->middleware('auth');
+        $this->middleware('check.auth.admin');
         $this->middleware('can:admin.descuentos.index');
     }
 

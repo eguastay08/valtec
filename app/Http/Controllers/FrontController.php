@@ -12,6 +12,16 @@ use App\Models\Noticia;
 use App\Models\Noticia_Categoria;
 use App\Models\Noticia_Tag;
 use Vinkla\Hashids\Facades\Hashids;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Ordens;
+use App\Models\User;
+use App\Models\Ordens_Detalle;
+use Validator;
+use App\Services\Admin\{
+	ImageService,
+    UserService
+};
+
 use Cart;
 
 // use App\Services\Admin\{
@@ -44,10 +54,12 @@ class FrontController extends Controller
 
         $cart_content = Cart::getContent();
         $cart_total = Cart::getTotal();
+
+        $user = Auth::user();
         
         $nroproductosofertas =  FrontService::getCountProductosDescuentos();
 
-        return view('index', compact('sliders', 'popups', 'bloques', 'moneda','nroproductosofertas', 'menus', 'web_title','descripcion_tienda','horario_atencion','treecategoria', 'cart_content','cart_total'));
+        return view('index', compact('sliders', 'popups', 'bloques', 'moneda','nroproductosofertas', 'menus', 'web_title','descripcion_tienda','horario_atencion','treecategoria', 'cart_content','cart_total','user'));
     }
 
     public function getAsNavMenus(Request $request)
@@ -102,8 +114,9 @@ class FrontController extends Controller
         $cart_content = Cart::getContent();
         // $cart_content = $cart_content->sort();
         $cart_total = Cart::getTotal();
+        $user = Auth::user();
 
-        return view('producto', compact('moneda', 'menus', 'producto', 'mediosPago', 'productos_relacionados','web_title','descripcion_tienda','horario_atencion','treecategoria', 'cart_content','cart_total'));
+        return view('producto', compact('moneda', 'menus', 'producto', 'mediosPago', 'productos_relacionados','web_title','descripcion_tienda','horario_atencion','treecategoria', 'cart_content','cart_total','user'));
     }
 
     public function getCategoriaFront($url, Request $request)
@@ -140,7 +153,7 @@ class FrontController extends Controller
         $cart_content = Cart::getContent();
         $cart_content = $cart_content->sort();
         $cart_total = Cart::getTotal();
-  
+        $user = Auth::user();
         // if(!$request->input('btnReset')):
 
             if($request->input('preciod')):
@@ -187,7 +200,7 @@ class FrontController extends Controller
             $bannercat = FrontService::getImgCat($categoriaTitle['categoria_id']);
         endif;
 
-        return view('categorias', compact('moneda', 'sub','categoriaTitle', 'subtitleCategoria','titulo_catFront','bannercat','menus','categorias', 'etiquetas', 'productosxcategorias', 'url_actual', 'sub_actual', 'url_lista', 'precioD', 'precioH', 'productobuscar', 'order', 'web_title','descripcion_tienda','horario_atencion','treecategoria', 'cart_content', 'cart_total', 'precioMaxCat'));
+        return view('categorias', compact('moneda', 'sub','categoriaTitle', 'subtitleCategoria','titulo_catFront','bannercat','menus','categorias', 'etiquetas', 'productosxcategorias', 'url_actual', 'sub_actual', 'url_lista', 'precioD', 'precioH', 'productobuscar', 'order', 'web_title','descripcion_tienda','horario_atencion','treecategoria', 'cart_content', 'cart_total', 'precioMaxCat','user'));
     }
 
     public function getCategoriaFront2($url, $sub, Request $request)
@@ -329,10 +342,10 @@ class FrontController extends Controller
         $cart_content = Cart::getContent();
         $cart_content = $cart_content->sort();
         $cart_total = Cart::getTotal();
-
+        $user = Auth::user();
         $url_lista = $url;
 
-        return view('etiquetas', compact('moneda', 'precioMaxTag','titleTag','menus', 'categorias', 'etiquetas', 'productosxtag', 'url', 'url_lista', 'precioD', 'precioH','productobuscar', 'order', 'page', 'web_title','descripcion_tienda','horario_atencion','treecategoria', 'cart_content', 'cart_total'));
+        return view('etiquetas', compact('moneda', 'precioMaxTag','titleTag','menus', 'categorias', 'etiquetas', 'productosxtag', 'url', 'url_lista', 'precioD', 'precioH','productobuscar', 'order', 'page', 'web_title','descripcion_tienda','horario_atencion','treecategoria', 'cart_content', 'cart_total','user'));
     }
 
     public function getProductosOfertas(Request $request)
@@ -383,8 +396,8 @@ class FrontController extends Controller
         $cart_content = Cart::getContent();
         $cart_content = $cart_content->sort();
         $cart_total = Cart::getTotal();
-
-        return view('productosOfertas', compact('moneda', 'precioMaxOfertas','menus', 'categorias', 'etiquetas', 'productosxOfertas','precioD', 'precioH','productobuscar', 'order', 'page', 'web_title','descripcion_tienda','horario_atencion','treecategoria', 'cart_content', 'cart_total'));
+        $user = Auth::user();
+        return view('productosOfertas', compact('moneda', 'precioMaxOfertas','menus', 'categorias', 'etiquetas', 'productosxOfertas','precioD', 'precioH','productobuscar', 'order', 'page', 'web_title','descripcion_tienda','horario_atencion','treecategoria', 'cart_content', 'cart_total','user'));
     }
     
 
@@ -446,7 +459,7 @@ class FrontController extends Controller
         $cart_content = Cart::getContent();
         $cart_content = $cart_content->sort();
         $cart_total = Cart::getTotal();
-
+        $user = Auth::user();
         if($request->input('q')):
             $productobuscar = $request->input('q');
         else:
@@ -471,7 +484,7 @@ class FrontController extends Controller
 
         $productosdata = FrontService::getProductosGlobal($precioD, $precioH, $productobuscar, $order);
   
-        return view('products', compact('moneda', 'menus', 'precioMaxPro','categorias', 'etiquetas', 'productosdata', 'precioD', 'precioH', 'productobuscar','order', 'web_title','descripcion_tienda','horario_atencion','treecategoria', 'cart_content', 'cart_total'));
+        return view('products', compact('moneda', 'menus', 'precioMaxPro','categorias', 'etiquetas', 'productosdata', 'precioD', 'precioH', 'productobuscar','order', 'web_title','descripcion_tienda','horario_atencion','treecategoria', 'cart_content', 'cart_total','user'));
     }
 
     public function getPagoFront(Request $request)
@@ -491,7 +504,7 @@ class FrontController extends Controller
         $captchakey = Configuracion::get_valorxvariable('go_site_key');
         $bannerPago = FrontService::getBannerPago();
         $cadena64 = base64_encode('38198949:testpassword_dWEVUFGw7WYRfWFxEGJQKgjwfQzKrVnFdQQzjJ55kFlV5');
-        
+        $user = Auth::user();
         $descuento = Cart::getConditions();
         $discount_array = array();
         foreach($descuento as $desc):
@@ -505,8 +518,149 @@ class FrontController extends Controller
    
 
         return view('pago', compact('moneda','menus','web_title','descripcion_tienda','horario_atencion','bannerPago',
-        'treecategoria','cart_content','cart_subtotal','cart_total', 'mediosPago', 'captchakey', 'discount_array', 'cadena64'));
+        'treecategoria','cart_content','cart_subtotal','cart_total', 'mediosPago', 'captchakey', 'discount_array', 'cadena64','user'));
         
+    }
+
+    public function getOrdersFront(Request $request){
+        $web_title = Configuracion::get_valorxvariable('website_title');
+        $descripcion_tienda = Configuracion::get_valorxvariable('descripcion_tienda');
+        $horario_atencion = Configuracion::get_valorxvariable('horario_atencion');
+        $treecategoria = Categoria::get_frontCategoria();
+        $moneda = FrontService::getMonedaFront();
+        $menus = FrontService::getMenusFront();
+        $cart_content = Cart::getContent();
+        $cart_content = $cart_content->sort();
+        // echo count(Cart::getContent());
+        $cart_subtotal = Cart::getSubTotal();
+        $cart_total = Cart::getTotal();
+        $mediosPago = FrontService::getMediosPagoFront();
+        $captchakey = Configuracion::get_valorxvariable('go_site_key');
+        $bannerPago = FrontService::getBannerPago();
+        $cadena64 = base64_encode('38198949:testpassword_dWEVUFGw7WYRfWFxEGJQKgjwfQzKrVnFdQQzjJ55kFlV5');
+        $user = Auth::user();
+        $descuento = Cart::getConditions();
+        $discount_array = array();
+        foreach($descuento as $desc):
+            $discount_array['cupon'] = $desc->getName();
+            $discount_array['valor'] = $desc->getValue();
+            $discount_array['atributos'] = $desc->getAttributes();
+            $valor_descuento = ($cart_subtotal * $discount_array['atributos']['discount'])/100;
+            $discount_array['value_descuento'] = $valor_descuento;
+        endforeach;
+        $email = Auth::user()->email;
+        $ordenes = Ordens::getOrdenesByUser($email);
+ 
+
+        return view('orders', compact('ordenes','moneda','menus','web_title','descripcion_tienda','horario_atencion','bannerPago',
+        'treecategoria','cart_content','cart_subtotal','cart_total', 'mediosPago', 'captchakey', 'discount_array', 'cadena64','user'));
+    }
+    
+    public function getOrderFront($orden_id){
+        $web_title = Configuracion::get_valorxvariable('website_title');
+        $cart_content = Cart::getContent();
+        $cart_content = $cart_content->sort();
+        $user = Auth::user();
+        $menus = FrontService::getMenusFront();
+        $moneda = FrontService::getMonedaFront();
+        $cart_total = Cart::getTotal();
+        $decrypt_id = Hashids::decode($orden_id); //-->desencripto el id
+        if(count($decrypt_id) == 0):
+            return redirect('/');
+        endif;
+
+        $orden = Ordens::getOrdendata($decrypt_id[0]);  
+        $orden_detalle = Ordens_Detalle::getOrdenDetalle($decrypt_id[0]);
+
+        return view('orders-detail', compact('orden', 'orden_detalle','web_title','cart_content','user','menus','moneda','cart_total'));
+    }
+
+    public function getFormProfile(){
+                //
+                $web_title = Configuracion::get_valorxvariable('website_title');
+                $cart_content = Cart::getContent();
+                $cart_content = $cart_content->sort();
+                $menus = FrontService::getMenusFront();
+                $moneda = FrontService::getMonedaFront();
+                $cart_total = Cart::getTotal();
+                $user= Auth::user();
+                $decrypt_id =$user->user_id;        
+                $usuario = User::where('user_id','=',$decrypt_id)->first();        
+                return view('edit-user', compact('usuario','web_title','cart_content','menus','moneda','cart_total','user'));
+    }
+    public function postFormProfile(Request $request){
+        $user= Auth::user();
+        $user_id=$user->user_id;    
+        $rules = [
+            'nombreUsuario' => 'required',
+            'apellidoUsuario' => 'required',
+        ];
+        
+        $messages = [
+            'nombreUsuario.required' => 'El Nombre del Usuario es requerido',
+            'apellidoUsuario.required' => 'El Apellido del Usuario es requerido',
+            'emailUsuario.required' => 'El Email del Usuario es requerido',
+            'emailUsuario.email' => 'El Email del Usuario debe ser una dirección Válida',
+            'txtUsuario.required' => 'El campo Usuario es requerido',
+            'txtUsuario.unique' => 'Ya existe el Usuario',
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if($validator->fails()):
+            return response()->json(['errors'=>$validator->errors(), 'code' => '422']);
+        else:
+            $passwordEditar = '';
+            if($request->contraseniaUsuario != "" || $request->confirmarContraseniaUsuario != ""):
+                if(strlen($request->contraseniaUsuario) >=6 || strlen($request->confirmarContraseniaUsuario) >=6):
+                    if(trim($request->contraseniaUsuario) === trim($request->confirmarContraseniaUsuario)):
+                        $passwordEditar = Hash::make($request->input('contraseniaUsuario'));
+                    else:
+                        return response()->json(['errors'=>$validator->errors(), 'code' => '424']);
+                        exit;
+                    endif;
+                else:
+                    return response()->json(['errors'=>$validator->errors(), 'code' => '423']);
+                    exit;
+                endif;
+               
+            else:
+                $passwordEditar = $request->contaseniaUsuarioActual;
+            endif;
+
+            $data = UserService::updateArrayUsuario($request, $passwordEditar);
+
+            $usuario = User::find($user_id);
+
+            if($usuario->update($data)):
+
+                $countData = UserService::CountRolesByUser($user_id);
+
+                if($countData>0):
+                    echo UserService::DeleteRolesByUser($user_id);
+                endif;
+
+                $usuario->roles()->sync($request->cborolusuario);
+
+                if($data['temporalfoto'] != 0):
+
+                    if($data['fotoactual']!=""):
+                        echo UserService::exitsFotoUsuario($data['fotoactual']);
+                    endif;
+
+                    echo UserService::moveFoto($data['foto_name']);
+
+                endif;
+
+                return response()->json(['msg'=>'sucess', 'code' => '200', 'url'=>url('/profile')]);
+            else:
+                return response()->json(['errors'=>$validator->errors(), 'code' => '425']);
+            endif;
+
+            // if($producto->update($data)):
+                
+            // endif;
+
+        endif;
     }
 
     public function getTerminos_Condiciones()
@@ -523,9 +677,9 @@ class FrontController extends Controller
         $cart_content = Cart::getContent();
         $cart_content = $cart_content->sort();
         $cart_total = Cart::getTotal();
-
+        $user = Auth::user();
         return view('terminos_condiciones', compact('web_title', 'descripcion_tienda', 'horario_atencion', 'treecategoria', 'moneda',
-                                                    'menus', 'cart_content','cart_total'));
+                                                    'menus', 'cart_content','cart_total','user'));
     }
 
     public function getConfirmacion_pago(Request $request)
@@ -544,10 +698,10 @@ class FrontController extends Controller
         $moneda = FrontService::getMonedaFront();
 
         $type=$request->input('type');
-
+        $user = Auth::user();
         $treecategoria = Categoria::get_frontCategoria();
 
-        return view('confirmacion_pago', compact('web_title','cart_content','cart_total','moneda','descripcion_tienda','horario_atencion','menus','treecategoria', 'type', 'mensaje_ok', 'mensaje_fail', 'mensaje_pending'));
+        return view('confirmacion_pago', compact('web_title','cart_content','cart_total','moneda','descripcion_tienda','horario_atencion','menus','treecategoria', 'type', 'mensaje_ok', 'mensaje_fail', 'mensaje_pending','user'));
     }
 
     public function getOpiniones()
@@ -562,8 +716,8 @@ class FrontController extends Controller
         $cart_total = Cart::getTotal();
         $treecategoria = Categoria::get_frontCategoria();
         $captchakey = Configuracion::get_valorxvariable('go_site_key');
-
-        return view('opiniones', compact('web_title','descripcion_tienda','horario_atencion','menus','moneda','cart','cart_total','treecategoria','captchakey'));
+        $user = Auth::user();
+        return view('opiniones', compact('web_title','descripcion_tienda','horario_atencion','menus','moneda','cart','cart_total','treecategoria','captchakey','user'));
     }
 
     public function getNosotros()
@@ -577,7 +731,8 @@ class FrontController extends Controller
         $cart = $cart_content->sort();
         $cart_total = Cart::getTotal();
         // $treecategoria = Categoria::get_frontCategoria();
-        return view('nosotros', compact('web_title','descripcion_tienda','horario_atencion','menus','moneda','cart','cart_total','cart_content')); 
+        $user = Auth::user();
+        return view('nosotros', compact('web_title','descripcion_tienda','horario_atencion','menus','moneda','cart','cart_total','cart_content','user')); 
     }
 
     public function getFormasCostosEntrega()
@@ -590,8 +745,9 @@ class FrontController extends Controller
         $cart_content = Cart::getContent();
         $cart = $cart_content->sort();
         $cart_total = Cart::getTotal();
+        $user = Auth::user();
         // $treecategoria = Categoria::get_frontCategoria();
-        return view('formas_costos_entrega', compact('web_title','descripcion_tienda','horario_atencion','menus','moneda','cart','cart_total','cart_content')); 
+        return view('formas_costos_entrega', compact('web_title','descripcion_tienda','horario_atencion','menus','moneda','cart','cart_total','cart_content','user')); 
     }
 
     public function getPreguntasFrecuentes()
@@ -606,8 +762,8 @@ class FrontController extends Controller
         $cart_total = Cart::getTotal();
         $treecategoria = Categoria::get_frontCategoria();
         $preguntasFrecuentes = Pregunta_Frecuente::preguntasFrecuentesFront();
-
-        return view('preguntas_frecuentes', compact('web_title','descripcion_tienda','horario_atencion','menus','moneda','cart','cart_total','treecategoria','preguntasFrecuentes', 'cart_content'));
+        $user = Auth::user();
+        return view('preguntas_frecuentes', compact('web_title','descripcion_tienda','horario_atencion','menus','moneda','cart','cart_total','treecategoria','preguntasFrecuentes', 'cart_content','user'));
     }
 
     public function getPasosCompra()
@@ -621,7 +777,8 @@ class FrontController extends Controller
         $cart = $cart_content->sort();
         $cart_total = Cart::getTotal();
         // $treecategoria = Categoria::get_frontCategoria();
-        return view('pasos_compras', compact('web_title','descripcion_tienda','horario_atencion','menus','moneda','cart','cart_total','cart_content'));
+        $user = Auth::user();
+        return view('pasos_compras', compact('web_title','descripcion_tienda','horario_atencion','menus','moneda','cart','cart_total','cart_content','user'));
     }
 
     public function contactForm()
@@ -636,8 +793,8 @@ class FrontController extends Controller
         $cart_total = Cart::getTotal();
         $treecategoria = Categoria::get_frontCategoria();
         $captchakey = Configuracion::get_valorxvariable('go_site_key');
-
-        return view('contacto', compact('web_title','descripcion_tienda','horario_atencion','menus','moneda','cart','cart_total','treecategoria','captchakey', 'cart_content'));
+        $user = Auth::user();
+        return view('contacto', compact('web_title','descripcion_tienda','horario_atencion','menus','moneda','cart','cart_total','treecategoria','captchakey', 'cart_content','user'));
     }
 
     public function medioPagosFront()
@@ -652,8 +809,8 @@ class FrontController extends Controller
         $cart_total = Cart::getTotal();
         $treecategoria = Categoria::get_frontCategoria();
         $mediosPago = FrontService::getMediosPagoFront();
-
-        return view('mediospago', compact('web_title','descripcion_tienda','horario_atencion','menus','moneda','cart','cart_total','treecategoria', 'mediosPago','cart_content'));
+        $user = Auth::user();
+        return view('mediospago', compact('web_title','descripcion_tienda','horario_atencion','menus','moneda','cart','cart_total','treecategoria', 'mediosPago','cart_content','user'));
     }
 
     public function getPoliticasPrivacidad()
@@ -667,7 +824,8 @@ class FrontController extends Controller
         $cart = $cart_content->sort();
         $cart_total = Cart::getTotal();
         // $treecategoria = Categoria::get_frontCategoria();
-        return view('politica_privacidad', compact('web_title','descripcion_tienda','horario_atencion','menus','moneda','cart','cart_total','cart_content'));
+        $user = Auth::user();
+        return view('politica_privacidad', compact('web_title','descripcion_tienda','horario_atencion','menus','moneda','cart','cart_total','cart_content','user'));
     }
 
     public function getConfirmacion_Correo(Request $request)
@@ -688,8 +846,9 @@ class FrontController extends Controller
         $type=$request->input('type');
 
         $treecategoria = Categoria::get_frontCategoria();
+        $user = Auth::user();
 
-        return view('confirmacion_correo', compact('web_title','cart','cart_content','cart_total','moneda','descripcion_tienda','horario_atencion','menus','treecategoria', 'type', 'mensaje_ok', 'mensaje_fail', 'mensaje_pending'));
+        return view('confirmacion_correo', compact('web_title','cart','cart_content','cart_total','moneda','descripcion_tienda','horario_atencion','menus','treecategoria', 'type', 'mensaje_ok', 'mensaje_fail', 'mensaje_pending','user'));
     }
 
     public function getNoticiasFront()
@@ -714,8 +873,9 @@ class FrontController extends Controller
         $cart_total = Cart::getTotal();
 
         $noticias = FrontService::getNoticiasGlobal();
+        $user = Auth::user();
         
-        return view('noticias', compact('moneda', 'menus', 'noticias','noticias_categorias','noticias_etiquetas','web_title','descripcion_tienda','horario_atencion','cart_content','cart_total', 'treecategoria'));
+        return view('noticias', compact('moneda', 'menus', 'noticias','noticias_categorias','noticias_etiquetas','web_title','descripcion_tienda','horario_atencion','cart_content','cart_total', 'treecategoria','user'));
     }
 
     public function getNoticiaFront($url)
@@ -745,14 +905,14 @@ class FrontController extends Controller
         $cart_content = Cart::getContent();
         $cart_content = $cart_content->sort();
         $cart_total = Cart::getTotal();
-
+        $user = Auth::user();
         $treecategoria = Categoria::get_frontCategoria();
 
         $fechaNoticia = FrontService::ConvertFechaToString($noticia["fecha_registro"]);
         $horaNoticia = FrontService::ConvertDatetoTime($noticia["fecha_registro"]);
 
 
-        return view('noticia', compact('moneda', 'menus', 'noticia','noticias_categorias','noticias_etiquetas','noticias_relacionadas','fechaNoticia', 'horaNoticia','web_title','descripcion_tienda','horario_atencion','cart_content','cart_total', 'treecategoria'));
+        return view('noticia', compact('moneda', 'menus', 'noticia','noticias_categorias','noticias_etiquetas','noticias_relacionadas','fechaNoticia', 'horaNoticia','web_title','descripcion_tienda','horario_atencion','cart_content','cart_total', 'treecategoria','user'));
 
     }
     
@@ -781,7 +941,7 @@ class FrontController extends Controller
         $cart_content = Cart::getContent();
         $cart_content = $cart_content->sort();
         $cart_total = Cart::getTotal();
-
+        $user = Auth::user();
         $treecategoria = Categoria::get_frontCategoria();
 
         $noticiasxcategoria = FrontService::getNoticiasxCategoriaFront($url, $sub);
@@ -801,7 +961,7 @@ class FrontController extends Controller
         endif;
 
 
-        return view('noticias_categoria', compact('web_title','noticiasxcategoria','noticia_categoria_title','descripcion_tienda', 'horario_atencion', 'moneda', 'noticias_categorias', 'noticias_etiquetas', 'menus', 'cart_content','cart_total','url_actual', 'sub_actual','url_lista','treecategoria'));
+        return view('noticias_categoria', compact('web_title','noticiasxcategoria','noticia_categoria_title','descripcion_tienda', 'horario_atencion', 'moneda', 'noticias_categorias', 'noticias_etiquetas', 'menus', 'cart_content','cart_total','url_actual', 'sub_actual','url_lista','treecategoria','user'));
 
 
     }
@@ -858,8 +1018,8 @@ class FrontController extends Controller
         $cart_total = Cart::getTotal();
         $treecategoria = Categoria::get_frontCategoria();
         $captchakey = Configuracion::get_valorxvariable('go_site_key');
-
-        return view('libro_reclamaciones', compact('captchakey','moneda', 'menus', 'web_title','descripcion_tienda','horario_atencion','treecategoria', 'cart_content', 'cart_total'));
+        $user = Auth::user();
+        return view('libro_reclamaciones', compact('captchakey','moneda', 'menus', 'web_title','descripcion_tienda','horario_atencion','treecategoria', 'cart_content', 'cart_total','user'));
     }
 
     public function getPaymentDescription($mediopagoid)
@@ -885,8 +1045,8 @@ class FrontController extends Controller
 
         $cart_content = Cart::getContent();
         $cart_total = Cart::getTotal();
-
-        return view('404', compact('moneda', 'menus', 'web_title','descripcion_tienda','horario_atencion','treecategoria', 'cart_content','cart_total'));
+        $user = Auth::user();
+        return view('404', compact('moneda', 'menus', 'web_title','descripcion_tienda','horario_atencion','treecategoria', 'cart_content','cart_total','user'));
     }
     
 

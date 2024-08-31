@@ -58,7 +58,7 @@
     <main class="as-main" style="margin-top:0px; --sticky-margin-top:0;">
 
         <!-- Mejorar el SEO -->
-        <h1 class="d-none">LolStore</h1>
+        <h1 class="d-none">VALTEC</h1>
 
         
         @section('content')

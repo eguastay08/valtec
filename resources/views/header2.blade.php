@@ -45,8 +45,13 @@
             <a href="#" role="button" class="btn btn-cart as-grid-header__cart" data-bs-toggle="modal" data-bs-target="#ModalCart">
                 <i class="fas fa-shopping-basket" aria-hidden="true"></i>
                 <span id="CartCount" class="cart-counter counter" data-cart-render="item_count">{{count($cart_content)}}</span>
+            </a>  
+            <a href="#" role="button" class="btn btn-cart as-grid-header__user" data-bs-toggle="modal" data-bs-target="#ModalUser">
+                <i class="fas fa-user" aria-hidden="true"></i>
             </a>
-          
+            <a href="/orders" role="button" class="btn btn-cart as-grid-header__orders">
+                <i class="fas fa-shopping-bag" aria-hidden="true"></i>
+            </a>               
         </div>
     </div>
 </header>
@@ -54,6 +59,12 @@
 <div class="cartmodal">
 
 @include('front-partials.modal-cart')
+
+</div>
+
+<div class="usermodal">
+
+@include('front-partials.modal-user')
 
 </div>
 

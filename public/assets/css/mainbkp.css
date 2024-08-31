@@ -1,7 +1,7 @@
 :root{
     /*|-------------------------------|-------------------|-----------------------|-----------------------|--------------------|*/
---grid-header-mobile:   [cart] min-content              [logo] auto         [menu] min-content;
---grid-header-desktop:  [logo] var(--logo-width,200px)  [menu] min-content  [search] auto           [login] min-content     [cart] min-content;
+    --grid-header-mobile:   [cart] min-content  [user] min-content [logo] auto  [menu] min-content;
+    --grid-header-desktop:  [logo] var(--logo-width,200px)  [menu] min-content  [search] auto  [cart] min-content  [user] min-content;
 }
 /*reset search*/
 input[type="search"]::-webkit-search-decoration,

@@ -44,7 +44,7 @@
              
               <div class="my-2 d-flex justify-content-center p-3" style="color:#3a3f51;"><h4> ... :: Inicio Sesión <b>Cliente</b> :: ...</h4> </div>
           
-                <!-- <form class="pt-3" method="POST" action="{{ route('admin.login') }}"> -->
+                <!-- <form class="pt-3" method="POST" action="{{ route('client.login') }}"> -->
 
               {!! Form::open(['url'=>'/login']) !!}
 
@@ -56,7 +56,7 @@
                           <div class="input-group-prepend">
                               <div class="input-group-text"><i class="fas fa-user"></i></div>
                           </div>
-                          <input type="text" class="form-control form-control-lg" id="LoginUsuario" name="LoginUsuario" placeholder="Ingrese el Usuario">
+                          <input type="text" class="form-control form-control-lg" id="LoginUsuario" name="LoginUsuario" placeholder="Ingrese el Email">
                       </div>
                   </div>
 
@@ -80,7 +80,7 @@
                       <a href="/register" class="btn btn-block btn-secondary btn-lg font-weight-medium auth-form-btn">Registrarse</a>
                   </div>
                   <div class="mt-2 text-center">
-                      <a href="/forgot-password" class="text-muted">¿Olvidé la contraseña?</a>
+                      <a href="/password/reset" class="text-muted">¿Olvidé la contraseña?</a>
                   </div>
 
 

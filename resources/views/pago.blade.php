@@ -71,32 +71,25 @@
                                 <div class="col-lg-6 col-sm-12 mt-3">
                                     <div class="form-group">
                                         <label>Nombre y Apellidos</label>
-                                        <input type="text" class="form-control boder-default" name="pagonombresapellidos" id="pagonombresapellidos">
+                                        <input type="text" class="form-control boder-default" name="pagonombresapellidos" id="pagonombresapellidos" readonly value="{{$user->nombres??''}} {{$user->apellidos??''}}">
                                         <span id="error-nomapellido" style="color:#FF0000;font-size:14px;"></span>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-sm-12 mt-3">
                                     <div class="form-group">
                                         <label>Teléfono / Whatsapp / Facebook</label>
-                                        <input type="text" class="form-control boder-default" name="pagoinformacionadicional" id="pagoinformacionadicional">
+                                        <input readonly type="text" class="form-control boder-default" name="pagoinformacionadicional" id="pagoinformacionadicional" value="{{$user->telefono??''}}"/>
                                         <span id="error-tele" style="color:#FF0000;font-size:14px;"></span>
                                     </div>
                                 </div>
                                 
-                                <div class="col-lg-6 col-sm-12 mt-3">
+                                <div class="col-lg-12 col-sm-12 mt-3">
                                     <div class="form-group">
                                         <label>Correo Electrónico</label>
-                                        <input type="email" class="form-control boder-default" name="pagoemail" id="pagoemail">
+                                        <input readonly type="email" class="form-control boder-default" name="pagoemail" id="pagoemail" value="{{$user->email??''}}">
+                                        <input type="hidden" id="pagoemailverificar" name="pagoemailverificar" value="{{$user->email??''}}">
                                         <span id="error-email" style="color:#FF0000;font-size:14px;"></span>
                                     </div>
-                                </div>
-
-                                <div class="col-lg-6 col-sm-12 mt-3">
-                                    <div class="form-group">
-                                        <label>Validar Correo Electrónico</label>
-                                        <input type="text" class="form-control boder-default" id="pagoemailverificar" name="pagoemailverificar">
-                                        <span id="error-validateEmail" style="color:#FF0000;font-size:14px;"></span>
-                                    </div>      
                                 </div>
                                 <div class="col-lg-12 col-sm-12 mt-3">
                                     <div class="form-group">
@@ -141,7 +134,7 @@
                                 <div class="col-lg-12 col-sm-12 mt-3">
                                     <div class="form-group">
                                         <label>Dirección de la calle</label>
-                                        <input type="text" class="form-control boder-default" id="address" name="address" placeholder="Nombre de la calle y número de la casa">
+                                        <input  type="text" class="form-control boder-default" id="address" name="address" placeholder="Nombre de la calle y número de la casa">
                                         <span id="error-address" style="color:#FF0000;font-size:14px;"></span>
                                     </div>      
                                 </div>

@@ -62,6 +62,40 @@ class Ordens extends Model
         return $ordenes;
     }
 
+    public static function getOrdenesByUser($email)
+    {
+        $ordenes =  Ordens::select('ordens.orden_id','ordens.nombres','ordens.informacion_adicional','ordens.email','ordens.provincia','ordens.direccion','ordens.direccion2','ordens.comentario','ordens.ciudad', 'ordens.comprobante',
+                            'ordens.fecha_pago','ordens.subtotal','ordens.descuento','ordens.total','ordens.ip', 'ordens.n_operacion',
+                            'ordens.fecha_registro','oee.orden_estado_id','oest.estado','des.cupon', 'mp.nombre as mediopago')
+                            ->leftJoin('descuentos as des', function($join)
+                            {
+                                $join->on('ordens.descuento_id', '=', 'des.descuento_id');
+                            })
+                            ->leftJoin('medio_pagos as mp', function($join)
+                            {
+                                $join->on('ordens.medio_pago_id', '=', 'mp.medio_pago_id');
+                            })
+                            // ->leftJoin('medios_pago_online as mpo', function($join)
+                            // {
+                            //     $join->on('ordens.medio_pago_online_id', '=', 'mpo.medio_pago_online_id');
+                            // })
+                            ->join('ordens_m_orden_estados as oee', function($join)
+                            {
+                                $join->on('ordens.orden_id', '=', 'oee.orden_id');
+                                $join->where('oee.estado',1);
+                            })
+                            ->join('ordens_estados as oest', function($join)
+                            {
+                                $join->on('oee.orden_estado_id', '=', 'oest.orden_estado_id');
+                                $join->where('oest.oculto',0);
+                            })
+                            ->where('email','=',$email)
+                            ->orderBy('orden_id','DESC')
+                            ->paginate(20);
+        return $ordenes;
+    }
+
+
     public static function getOrdendata($orden_id)
     {
         $ordendata = Ordens::select('ordens.nombres', 'ordens.email', 'ordens.fecha_pago', 'ordens.informacion_adicional', 'ordens.subtotal','ordens.provincia','ordens.direccion','ordens.direccion2','ordens.comentario','ordens.ciudad',

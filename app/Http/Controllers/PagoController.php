@@ -14,7 +14,7 @@ use App\Models\Producto_codigo;
 use App\Models\Producto;
 use App\Models\Moneda;
 use App\Models\Medio_Pago;
-
+use Illuminate\Support\Facades\Auth;
 use App\Services\Admin\{
 	ImageService,
     ProductoService
@@ -78,10 +78,6 @@ class PagoController extends Controller
     public function store(Request $request)
     {  
         $rules = [
-            'pagonombresapellidos' => 'required',
-            'pagoinformacionadicional' => 'required',
-            'pagoemail' => 'required|email',
-            'pagoemailverificar' => 'required|email|same:pagoemail',
             'aceptochk' =>'accepted',
             'payment' => 'required',
             'billing_state'=>'required',
@@ -95,13 +91,6 @@ class PagoController extends Controller
         endif;
         
         $messages = [
-            'pagonombresapellidos.required' => 'El Campo Nombres y Apellidos es requerido',
-            'pagoinformacionadicional.required'=> 'El Campo Teléfono/ Whatsapp / Facebook es requerido',
-            'pagoemail.required' => 'El Campo Email es requerido',
-            'pagoemail.email' => 'El Email debe ser en un formato válido',
-            'pagoemailverificar.required' => 'El Campo Verificar Email es requerido',
-            'pagoemailverificar.email' => 'El Email de verificación debe ser en un formato válido',
-            'pagoemailverificar.same' => 'Los correos Electrónicos no coinciden.',
             'aceptochk.accepted' => 'Debe Aceptar los Términos y Condiciones de uso',
             'payment.required' => 'Debe Seleccionar un medio de Pago',
             'g-recaptcha-response.required' => 'El captcha es requerido',
@@ -171,12 +160,12 @@ class PagoController extends Controller
                             $descuento = $valor_descuento;
                         endforeach;
                     endif;            
-                
+                    $user = Auth::user();
                     $data = [
                         "medio_pago_id" => $decript_medio_pago_id[0],
-                        "nombres" =>$request->pagonombresapellidos,
-                        "informacion_adicional"=>$request->pagoinformacionadicional,
-                        "email" => $request->pagoemail,
+                        "nombres" =>"$user->nombres $user->apellidos",
+                        "informacion_adicional"=>"$user->telefono",
+                        "email" => $user->email,
                         "provincia"=>$request->billing_state,
                         "ciudad"=>$request->city,
                         "direccion"=>$request->address,
@@ -305,10 +294,12 @@ class PagoController extends Controller
                                 }
                             elseif($medioPago->data_value == 'payphone'):
                                 try{
+                                    $randomNumber = mt_rand(10000, 99999); // Genera un número de 5 dígitos aleatorios
+                                    $clientTransactionID = $randomNumber . $lastorden_id;   
                                     $parametros = [
                                         "amount" => str_replace('.', '', $valor_Dolares),
                                         "amountWithoutTax" => str_replace('.', '', $valor_Dolares),
-                                        "clientTransactionID" => $lastorden_id,
+                                        "clientTransactionID" => $clientTransactionID,
                                         "responseUrl" => route('order.paymentorderpayphone', $lastorden_id),
                                         "cancellationUrl" => route('order.failureorder', $lastorden_id)
                                     ];
@@ -579,7 +570,6 @@ class PagoController extends Controller
 
                 // var_dump($arr['transactions'][0]['related_resources'][0]['sale']['create_time']);exit;
                 $data = [
-                    "email"=>$arr_body['payer']['payer_info']['email'],
                     "fecha_pago"=>$arr_body['transactions'][0]['related_resources'][0]['sale']['create_time'],
                     // "n_operacion"=>$arr['id']
                     "n_operacion"=>$arr_body['id']
@@ -649,7 +639,6 @@ class PagoController extends Controller
             if($result->transactionStatus=='Approved'):
                 // var_dump($arr['transactions'][0]['related_resources'][0]['sale']['create_time']);exit;
                 $data = [
-                    "email"=>$result->email,
                     "fecha_pago"=>$result->date,
                     // "n_operacion"=>$arr['id']
                     "n_operacion"=>$result->clientTransactionId
