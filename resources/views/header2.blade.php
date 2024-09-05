@@ -1,4 +1,4 @@
-<aside class="as-header-top style-header-top-bg">
+<!--<aside class="as-header-top style-header-top-bg">
 
     <div class="container social-links d-flex flex-row-reverse">
        <a href="https://api.whatsapp.com/send?phone=51997308677" target="_blank" class="style-social-links"><i class="fab fa-whatsapp"></i></a>
@@ -9,7 +9,7 @@
        <a href="#" target="_blank" class="style-social-links"><i class="fab fa-youtube"></i></a>
     </div>
 
-</aside>    
+</aside>    -->
 
 <header class="as-header">
     <div class="container-xxl">

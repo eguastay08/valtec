@@ -145,8 +145,8 @@
                                 </div>
                                 <div class="col-lg-12 col-sm-12 mt-3">
                                     <div class="form-group">
-                                        <label>Notas del pedido (opcional)</label>
-                                        <textarea name="order_comments" class="form-control boder-default" id="order_comments" placeholder="Notas sobre tu pedido, por ejemplo, notas especiales para la entrega." rows="2" cols="5"></textarea>
+                                        <label>Referencia</label>
+                                        <textarea name="order_comments" class="form-control boder-default" id="order_comments" placeholder="Ingrese una referencia (Ejemplo: Frente al parque, casa color Rojo)" rows="2" cols="5"></textarea>
                                     </div>      
                                 </div>
                                 <div class="col-12 d-flex justify-content-end mt-4">
@@ -167,7 +167,7 @@
                                 <div class="medios_pago_div mt-4">
 
                                     <ul class="nav nav-tabs d-flex justify-content-center" id="TabMediopago" role="tablist">
-                                        <li class="nav-item" role="presentation">
+                                        <!--<li class="nav-item" role="presentation">
                                             <button class="nav-link active" id="billetera-tab" data-bs-toggle="tab" data-bs-target="#billetera" data-tab ="billetera" type="button" role="tab" aria-controls="billetera" aria-selected="true" activado = "1">Billetera Digital</button>
                                         </li>
                                         <li class="nav-item" role="presentation">
@@ -175,9 +175,9 @@
                                         </li>
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link" id="efectivo-tab" data-bs-toggle="tab" data-bs-target="#efectivo" data-tab ="efectivo" type="button" role="tab" aria-controls="efectivo" aria-selected="false" activado = "0">En efectivo</button>
-                                        </li>
+                                        </li>-->
                                         <li class="nav-item" role="presentation">
-                                            <button class="nav-link" id="pagoOnline-tab" data-bs-toggle="tab" data-bs-target="#pagoOnline" data-tab ="pagoOnline" type="button" role="tab" aria-controls="pagoOnline" aria-selected="false" activado = "0">Pagos en Línea</button>
+                                            <button class="nav-link" id="pagoOnline-tab" data-bs-toggle="tab" data-bs-target="#pagoOnline" data-tab ="pagoOnline" type="button" role="tab" aria-controls="pagoOnline" aria-selected="true" activado = "0">Pagos en Línea</button>
                                         </li>
                                     </ul>
 
@@ -285,7 +285,7 @@
                                             @endisset
 
                                         </div>
-                                        <div class="tab-pane fade payment_tab" id="pagoOnline" role="tabpanel" aria-labelledby="pagoOnline-tab" activado ="0">
+                                        <div class="tab-pane fade payment_tab show" id="pagoOnline" role="tabpanel" aria-labelledby="pagoOnline-tab" activado ="0">
 
                                             @isset($mediosPago)
 
@@ -330,7 +330,7 @@
 
                                     <div id="comprobantefechaDiv" class="row mt-4">
                                             
-                                        <div id="comprobanteDV" class="col-md-8 col-12">
+                                        <!--<div id="comprobanteDV" class="col-md-8 col-12">
                                             <div class="form-group">
                                                 <label>Comprobante de pago (foto ó captura de pantalla)</label>
                                                 <input type="file" class="form-control boder-default mt-2" name="comprobantepago" id="comprobantepago">
@@ -338,7 +338,7 @@
 
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>-->
 
                                         <div id="fechapagoDV" class="col-md-4 col-12">
                                             <div class="form-group">
